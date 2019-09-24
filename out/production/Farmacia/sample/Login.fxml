@@ -6,14 +6,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="StackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
+<StackPane fx:id="StackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="250.0" minWidth="400.0" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
    <children>
-      <AnchorPane fx:id="AnchorPane" prefHeight="250.0" prefWidth="400.0" style="-fx-background-color: f3e5f5;">
+      <AnchorPane fx:id="AnchorPane" minHeight="250.0" minWidth="400.0" prefHeight="250.0" prefWidth="400.0" style="-fx-background-color: f3e5f5;">
          <children>
-            <JFXTextField fx:id="TxtUser" alignment="CENTER" focusColor="#ce93d8" layoutX="125.0" layoutY="74.0" promptText="Usuario" unFocusColor="BLACK" />
-            <JFXPasswordField fx:id="TxtPass" alignment="CENTER" focusColor="#ce93d8" layoutX="125.0" layoutY="131.0" />
-            <JFXButton fx:id="BtnSalir" buttonType="RAISED" layoutX="125.0" layoutY="179.0" ripplerFill="#e1bee7" style="-fx-background-color: f44336;" text="Salir" textFill="WHITE" />
-            <JFXButton fx:id="BtnEntrar" buttonType="RAISED" layoutX="231.0" layoutY="179.0" ripplerFill="#e1bee7" style="-fx-background-color: 4caf50;" text="Entrar" textFill="WHITE" />
+            <JFXTextField fx:id="TxtUser" alignment="CENTER" focusColor="#ce93d8" layoutX="133.0" layoutY="73.0" promptText="Usuario" unFocusColor="BLACK" />
+            <JFXPasswordField fx:id="TxtPass" alignment="CENTER" focusColor="#ce93d8" layoutX="133.0" layoutY="131.0" promptText="Contraseña" />
+            <JFXButton fx:id="BtnEntrar" buttonType="RAISED" layoutX="174.0" layoutY="181.0" onMouseClicked="#Ingresar" ripplerFill="#e1bee7" style="-fx-background-color: ce93d8;" text="Entrar" />
          </children>
       </AnchorPane>
    </children>
