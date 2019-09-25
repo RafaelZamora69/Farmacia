@@ -6,8 +6,10 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -49,8 +51,6 @@ public class LoginController {
     private JFXButton BtnCrear;
 
     public void Ingresar(javafx.scene.input.MouseEvent mouseEvent) {
-        System.out.println(this.StackPane.getWidth());
-        System.out.println(this.StackPane.getHeight());
         try{
             Connection con = Conexion.getConnection();
             PreparedStatement statement;
@@ -74,5 +74,9 @@ public class LoginController {
         } catch (SQLException | IOException ex){
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void Salir(MouseEvent mouseEvent) {
+        ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
     }
 }
