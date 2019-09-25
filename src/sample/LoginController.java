@@ -11,16 +11,17 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.security.Principal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Label;
 
 public class LoginController {
     @FXML
@@ -41,7 +42,15 @@ public class LoginController {
     @FXML
     private JFXButton BtnEntrar;
 
+    @FXML
+    private Label LblTitle;
+
+    @FXML
+    private JFXButton BtnCrear;
+
     public void Ingresar(javafx.scene.input.MouseEvent mouseEvent) {
+        System.out.println(this.StackPane.getWidth());
+        System.out.println(this.StackPane.getHeight());
         try{
             Connection con = Conexion.getConnection();
             PreparedStatement statement;

@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Objetos/Conexion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/Principal.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/PrincipalController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Fuentes/Roboto-Light.ttf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Base De Datos/Consultas.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Base De Datos/Consultas.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Base De Datos/Farmacia.mwb" beforeDir="false" afterPath="$PROJECT_DIR$/Base De Datos/Farmacia.mwb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Base De Datos/Farmacia.mwb.bak" beforeDir="false" afterPath="$PROJECT_DIR$/Base De Datos/Farmacia.mwb.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Base De Datos/Farmacia.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Base De Datos/Farmacia.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Farmacia.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Farmacia.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Librerias/jfoenix-8.0.8.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Librerias/jfoenix-9.0.8.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Farmacia/sample/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Farmacia/sample/Login.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Farmacia/sample/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Farmacia/sample/LoginController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Login.fxml" afterDir="false" />
