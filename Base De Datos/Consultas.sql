@@ -1,35 +1,69 @@
-use Farmacia;
+use farmacia;
 
-/* Insertar en Farmacia.Empleado */
-insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Gerardo Galván Chavez', '229 902 5028', 'GerardoGalvan', sha1('Gerardo123'), 1);
-insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Rafael Antonio Gonzalez Zamora', '229 524 2553', 'RafaelZamora'. sha1('Rafael123'), 1);
-insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('', '', ''. sha1(), 1);
-insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('', '', ''. sha1(), 1);
+/* Consulta para el login */
+select Nombre from Empleado where Usuario = ? and Password = sha1(?);
 
-/* Insertar en Farmacia.Proveedores */
-insert into Proveedor (Nombre, Telefono, Correo, Direccion) values ('Pepsico', '229 112 7509', 'evolucion_adm@hotmail.com', 'No se je');
+/* Caja registradora */
+	/* Información del producto*/
+    select Descripcion, Precio_Venta, Receta from Producto where Cod_Barras = ?;
+    /* Si no tiene codigo de barras, por Codigo */
+    select Descripcion, Precio, Venta, Receta from Producto where idProducto = ?;
+    /* Insertar una venta cuando se complete la compra */
+    insert into Venta (Fecha, Total) values (curdate(), ?);
+		/* Insertar el detalle de la venta cuando se haya insertado la venta */
+		insert into Detalle_Venta (idVenta, idProducto, idEmpleado, Cantidad, idCliente) values (?, ?, ?, ?, ?);
+	/* Actualizar puntos del cliente cuando complete una compra (si es que está registrado) */
+    update Cliente set Puntos = ? where idCliente = ?;
 
-/* Insertar en Farmacia.Categorias */
-insert into Categorias (idCategoria, Descripcion) values (1, 'Refrescos / Bebidas');
-insert into Categorias (idCategoria, Descripcion) values (2, 'Analgelsicos');
-insert into Categorias (idCategoria, Descripcion) values (3, 'Laxante');
-insert into Categorias (idCategoria, Descripcion) values (4, 'Antialérgicos');
-
-/* Insertar en Farmacia.Presentación */ 
-insert into Presentacion (idPresentacion, Descripcion) values (1, 'Lata');
-insert into Presentacion (idPresentacion, Descripcion) values (2, 'Botella');
-insert into Presentacion (idPresentacion, Descripcion) values (3, 'Tabletas');
-
-/* Insertar en Farmacia.Productos */
-insert into Producto (Cod_Barras, Descripcion, Presentación, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria) 
-    values ('7501031311309', 'Pepsi 355ML', 1, 1, 8.0, 10.0, 0, 0, 1);
-insert into Producto (Cod_Barras, Descripcion, Presentación, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501031311606', 'Pepsi 2L', 2, 1, 12.0, 15.0, 0, 0, 1);
-insert into Producto (Cod_Barras, Descripcion, Presentación, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('036731501004', 'Gatorade Naranja 500ML', 2, 1, 10.0, 13.0, 0, 0, 1);
-
-/* Insertar en Farmacia.Cliente */
-insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Abelardo Hernandez Mota', 'Su casa', '229 368 4747', '20', 0)
-insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Jorge Antonio Pedroza Rendón', 'Su casa', '229 137 0546', '20', 0)
-insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('', 'Su casa', '', '20', 0)
-insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('', 'Su casa', '', '20', 0)
+/* Inventario */
+	/* Infromación del inventario */
+    select Descripcion, Precio_Venta, Cantidad, Categoria from Producto;
+    /* Mostrar información para modificar el producto */
+    select * from Producto where idProducto = ?;
+        /* Eliminar el producto */
+        delete from Producto where idProducto = ?;
+    /* Insertar un nuevo producto */
+    insert into Producto (Cod_Barras, Descripcion, Presentación, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria) 
+        values (?, ?, ?, ?, ?, ?, ?, ?, ?);
+    
+/* Extras */
+    /* Ingresar nuevo usuario */
+    insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values (?, ?, ?, sha1(?), ?);
+    /* Mostrar Empleados */
+    Select * from Empleado;
+        /* Borrar un empleado */
+        delete from Empleado where idEmpleado = ?;
+    /* Ingresar nuevo proveedor */
+    insert into Proveedor (Nombre, Telefono, Correo, Direccion) values (?, ?, ?, ?);
+        /* Borrar proveedor */
+        delete from Proveedor where idProveedor = ?;
+    /* Mostrar proveedores */
+    select * from Proveedor;
+    /* Reporte de ventas */
+    select Venta.idVenta, Venta.Fecha, (select Nombre from Empleado where idEmpleado = Detalle_Venta.idEmpleado) as 'Empleado', Venta.Total, 
+    (select Nombre from Cliente where Cliente.idCliente = Detalle_Venta = idCliente)
+    from Venta inner join Detalle_Venta on Venta.idVenta = Detalle_Venta.idVenta
+    where Venta.fecha between ? and ?;
+        /* Mostrar productos del reporte de ventas */
+        select (select Descripcion from Producto where Producto.idProducto = Detalle_Venta.idProducto) as 'Descripcion', Detalle_Venta.Cantidad
+        from Detalle_Venta
+        where idVenta = ?;
+    /* Insertar nueva compra de producto */
+    insert into Compra (id_proveedor, Total_Compra, Fecha) values (?, ?, ?);
+        /* Insertar detalle de la compra */
+        insert into Detalle_Compra (idProducto, Cantidad, idCompra, Precio_Compra) values (?, ?, ?, ?);
+    /* Ver promociones */
+    select Descripcion, Activa
+    from promocion;
+        /* Mostrar detalles de la promocion */
+        select Producto.Descripcion
+        from Producto 
+        inner join Detalle_Promocion on Detalle_Promocion.idProducto = Producto.idProducto;
+        /* Crear una nueva Promoción */
+        insert into Promocion (Descripcion, Activa) values (?, ?);
+            /* Insertar detalles de la promoción */
+            insert into Detalle_Promocion (idPromocion, idProducto) values (?, ?);
+        /* Borrar alguna promoción */
+        delete from Promocion where idPromocion = ?
+        union
+        delete from Detalle_Promocion where idPromocion = ?;

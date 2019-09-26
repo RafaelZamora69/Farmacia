@@ -6,21 +6,24 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.security.Principal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Label;
 
 public class LoginController {
     @FXML
@@ -40,6 +43,12 @@ public class LoginController {
 
     @FXML
     private JFXButton BtnEntrar;
+
+    @FXML
+    private Label LblTitle;
+
+    @FXML
+    private JFXButton BtnCrear;
 
     public void Ingresar(javafx.scene.input.MouseEvent mouseEvent) {
         try{
@@ -65,5 +74,9 @@ public class LoginController {
         } catch (SQLException | IOException ex){
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void Salir(MouseEvent mouseEvent) {
+        ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
     }
 }
