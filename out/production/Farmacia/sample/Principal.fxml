@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.Main"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PrincipalController">
+   <children>
+      <AnchorPane fx:id="top" prefHeight="70.0" prefWidth="1200.0" style="-fx-background-color: #ce93d8;">
+         <children>
+            <Label fx:id="Lbl" layoutX="14.0" layoutY="21.0" text="Farmacia">
+               <font>
+                  <Font name="Roboto Light" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="LblName" layoutX="960.0" layoutY="21.0" prefHeight="29.0" prefWidth="239.0" text="Nombre">
+               <font>
+                  <Font name="Roboto Light" size="24.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <AnchorPane fx:id="left" layoutY="70.0" prefHeight="530.0" prefWidth="130.0" style="-fx-background-color: #ce93d8;">
+         <children>
+            <JFXButton fx:id="BtnExtras" buttonType="RAISED" layoutY="340.0" onMouseClicked="#AbrirExtras" prefHeight="40.0" prefWidth="130.0" ripplerFill="#4a148c" style="-fx-background-color: #9c27b0;" text="Extras" textFill="WHITE" />
+            <JFXButton fx:id="BtnCaja" onMouseClicked="#AbrirCaja" prefHeight="40.0" prefWidth="130.0" ripplerFill="#4a148c" style="-fx-background-color: #9c27b0;" text="Caja Registradora" textFill="WHITE" />
+            <JFXButton fx:id="BtnInventario" layoutY="170.0" onMouseClicked="#AbrirInventario" prefHeight="40.0" prefWidth="130.0" ripplerFill="#4a148c" style="-fx-background-color: #9c27b0;" text="Inventario" textFill="WHITE" />
+            <JFXButton fx:id="BtnCerrar" buttonType="RAISED" layoutY="490.0" onMouseClicked="#Cerrar" prefHeight="40.0" prefWidth="130.0" ripplerFill="#b71c1c" style="-fx-background-color: #f44336;" text="Cerrar sesión" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="Content" layoutX="129.0" layoutY="70.0" prefHeight="530.0" prefWidth="1071.0" />
+   </children>
 </AnchorPane>

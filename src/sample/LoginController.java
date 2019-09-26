@@ -58,25 +58,23 @@ public class LoginController {
             statement.setString(1, this.TxtUser.getText());
             statement.setString(2, this.TxtPass.getText());
             ResultSet rs = statement.executeQuery();
-            int Resultado = 0;
-            while (rs.next()){
+            while (rs.next()) {
                 //Cosas je
-                Resultado = 1;
-            }
-            if(Resultado == 1){
-                //Entrar a el main
+                PrincipalController p = new PrincipalController();
+                p.SetNombre("asd");
                 Stage Main = new Stage();
                 Parent Mroot = FXMLLoader.load(getClass().getResource("Principal.fxml"));
                 Scene scene = new Scene(Mroot);
                 Main.setScene(scene);
                 Main.show();
+                ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
             }
         } catch (SQLException | IOException ex){
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void Salir(MouseEvent mouseEvent) {
+    public void Salir(MouseEvent mouseEvent){
         ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
     }
 }
