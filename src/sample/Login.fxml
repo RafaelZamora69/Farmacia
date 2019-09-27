@@ -25,6 +25,11 @@
                   <Font name="Roboto Light" size="13.0" />
                </font>
             </JFXButton>
+            <JFXButton fx:id="BtnAjustes" buttonType="RAISED" layoutX="427.0" layoutY="256.0" onMouseClicked="#AbrirAjustes" style="-fx-background-color: #757575;" text="Ajustes" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="13.0" />
+               </font>
+            </JFXButton>
          </children>
       </AnchorPane>
    </children>
