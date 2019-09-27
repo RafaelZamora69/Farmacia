@@ -8,9 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
-import java.awt.*;
 import java.io.IOException;
 
 public class PrincipalController {
@@ -65,5 +66,10 @@ public class PrincipalController {
 
     public void SetNombre(String nombre){
         this.LblName.setText(nombre);
+    }
+
+    public void AbrirReporte(MouseEvent mouseEvent) throws IOException {
+        Pane pane = FXMLLoader.load(getClass().getResource("Reportes.fxml"));
+        this.Content.getChildren().setAll(pane);
     }
 }

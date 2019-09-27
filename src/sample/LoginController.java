@@ -61,7 +61,7 @@ public class LoginController {
             while (rs.next()) {
                 //Cosas je
                 PrincipalController p = new PrincipalController();
-                p.SetNombre("asd");
+                //p.SetNombre("Aqui va el nombre del empleado xd");
                 Stage Main = new Stage();
                 Parent Mroot = FXMLLoader.load(getClass().getResource("Principal.fxml"));
                 Scene scene = new Scene(Mroot);
@@ -69,7 +69,9 @@ public class LoginController {
                 Main.show();
                 ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
             }
+            Alertas.MostrarAlerta("Usuario/contraseña incorrecto", this.StackPane);
         } catch (SQLException | IOException ex){
+            Alertas.MostrarAlerta("Error al conectarse a la base de datos", this.StackPane);
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
