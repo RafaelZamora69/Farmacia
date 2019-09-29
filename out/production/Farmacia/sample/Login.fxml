@@ -30,6 +30,11 @@
                   <Font name="Roboto Light" size="13.0" />
                </font>
             </JFXButton>
+            <Label fx:id="lblStatus" layoutX="19.0" layoutY="18.0" prefHeight="17.0" prefWidth="165.0">
+               <font>
+                  <Font name="Roboto Light" size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

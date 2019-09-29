@@ -51,13 +51,20 @@ public class PrincipalController implements Initializable {
 
     public static String Nombre;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        SetNombre();
+    }
+
     public void AbrirExtras(MouseEvent mouseEvent) {
     }
 
     public void AbrirCaja(MouseEvent mouseEvent) {
     }
 
-    public void AbrirInventario(MouseEvent mouseEvent) {
+    public void AbrirInventario(MouseEvent mouseEvent) throws IOException {
+        Pane pane = FXMLLoader.load(getClass().getResource("Inventario.fxml"));
+        this.Content.getChildren().setAll(pane);
     }
 
     public void Cerrar(MouseEvent mouseEvent) throws IOException {
@@ -76,10 +83,5 @@ public class PrincipalController implements Initializable {
 
     public void SetNombre(){
         this.LblName.setText(Nombre);
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        SetNombre();
     }
 }

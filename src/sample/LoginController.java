@@ -1,11 +1,11 @@
 package sample;
 
-import Objetos.Conexion;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,17 +13,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.security.Principal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Label;
 
-public class LoginController {
+public class LoginController implements Initializable {
 
     @FXML
     private AnchorPane Background;
@@ -48,6 +53,25 @@ public class LoginController {
 
     @FXML
     private Label LblTitle;
+
+    @FXML
+    private Label lblStatus;
+
+    String [] datos = new String[2];
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            LeerConfiguracion();
+            Conexion.getConnection(datos[0], datos[1]);
+            this.lblStatus.setStyle("-fx-text-fill: #1b5e20");
+            this.lblStatus.setText("Conectado");
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            this.lblStatus.setStyle("-fx-text-fill: #d50000");
+            this.lblStatus.setText("Desconectado");
+        }
+    }
 
     public void Ingresar(javafx.scene.input.MouseEvent mouseEvent) {
         try{
@@ -87,5 +111,15 @@ public class LoginController {
         Main.setResizable(false);
         Main.show();
         ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
+    }
+
+    public void LeerConfiguracion() throws IOException {
+        BufferedReader bf = new BufferedReader(new FileReader("Configuracion.txt"));
+        String sScadena;
+        int i = 0;
+        while ((sScadena = bf.readLine()) != null){
+            datos[i] = sScadena;
+            i++;
+        }
     }
 }
