@@ -64,6 +64,5 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
             /* Insertar detalles de la promoción */
             insert into Detalle_Promocion (idPromocion, idProducto) values (?, ?);
         /* Borrar alguna promoción */
-        delete from Promocion where idPromocion = ?
-        union
+        delete from Promocion where idPromocion = ?;
         delete from Detalle_Promocion where idPromocion = ?;

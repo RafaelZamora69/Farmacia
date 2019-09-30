@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Label;
+import tray.notification.NotificationType;
 
 public class LoginController implements Initializable {
 
@@ -91,10 +92,11 @@ public class LoginController implements Initializable {
                 Main.setResizable(false);
                 Main.show();
                 ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
+                return;
             }
-            Alertas.MostrarAlerta("Usuario/contraseña incorrecto", this.StackPane);
+            Alertas.MostrarAlerta("Usuario/contraseña incorrecto", NotificationType.WARNING, "Alerta");
         } catch (SQLException | IOException ex){
-            Alertas.MostrarAlerta("Error al conectarse a la base de datos", this.StackPane);
+            Alertas.MostrarAlerta("Error al conectarse a la base de datos", NotificationType.ERROR, "Error");
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

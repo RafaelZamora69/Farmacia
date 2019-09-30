@@ -23,6 +23,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.Alertas;
+import tray.notification.NotificationType;
 
 public class Conexion {
 
@@ -61,10 +62,10 @@ public class Conexion {
         password = this.TxtPass.getText();
         try {
             Connection con = this.getConnection(user, password);
-            Alertas.MostrarAlerta("Conectado a la base de datos", this.StackPane);
+            Alertas.MostrarAlerta("Conectado a la base de datos", NotificationType.SUCCESS, "Exito");
             GuardarConfiguracion();
         } catch (SQLException | IOException e) {
-            Alertas.MostrarAlerta("Error al conectarse", this.StackPane);
+            Alertas.MostrarAlerta("Error al conectarse", NotificationType.ERROR, "Error");
             e.printStackTrace();
         }
     }
