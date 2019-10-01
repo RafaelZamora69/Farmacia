@@ -106,4 +106,5 @@ insert into Detalle_Venta(idVenta, idProducto, idEmpleado, Cantidad, idCliente) 
 insert into Detalle_Venta(idVenta, idProducto, idEmpleado, Cantidad, idCliente) values (3, 9, 3, 1, 3);
 insert into Detalle_Venta(idVenta, idProducto, idEmpleado, Cantidad, idCliente) values (3, 10, 3, 1, 3);
 select * from Detalle_Venta;
+delete from Empleado where idEmpleado = 1;
 
