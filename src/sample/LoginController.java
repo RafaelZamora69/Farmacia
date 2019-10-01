@@ -32,12 +32,6 @@ import tray.notification.NotificationType;
 public class LoginController implements Initializable {
 
     @FXML
-    private AnchorPane Background;
-
-    @FXML
-    private StackPane StackPane;
-
-    @FXML
     private AnchorPane AnchorPane;
 
     @FXML
@@ -47,13 +41,16 @@ public class LoginController implements Initializable {
     private JFXPasswordField TxtPass;
 
     @FXML
-    private JFXButton BtnSalir;
-
-    @FXML
     private JFXButton BtnEntrar;
 
     @FXML
     private Label LblTitle;
+
+    @FXML
+    private JFXButton BtnSalir;
+
+    @FXML
+    private JFXButton BtnAjustes;
 
     @FXML
     private Label lblStatus;
