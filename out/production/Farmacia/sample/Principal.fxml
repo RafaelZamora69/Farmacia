@@ -14,9 +14,9 @@
                   <Font name="Roboto Light" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="LblName" layoutX="960.0" layoutY="21.0" prefHeight="29.0" prefWidth="239.0" text="Nombre">
+            <Label fx:id="LblName" layoutX="820.0" layoutY="21.0" prefHeight="29.0" prefWidth="366.0" text="Nombre">
                <font>
-                  <Font name="Roboto Light" size="24.0" />
+                  <Font name="Roboto Light" size="18.0" />
                </font>
             </Label>
          </children></AnchorPane>

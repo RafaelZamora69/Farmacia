@@ -19,8 +19,6 @@ insert into Proveedor (Nombre, Telefono, Correo, Direccion) values ("Laboratorio
 insert into Proveedor (Nombre, Telefono, Correo, Direccion) values ("Merck Sharp y Dohme Corp.","5557284000","","Av. 16 de Septiembre no. 301, Col. Xaltocan, Ciudad de México C. P. 16090");
 insert into Proveedor (Nombre, Telefono, Correo, Direccion) values ("Productos Farmacéuticos CHINOIN","4659581804","","Km 4.2 carretera pabellón, Hidalgo, código postal: 20420");
 select * from Proveedor;
-
-
 /* Insertar en Farmacia.Categorias */
 insert into Categorias (idCategoria, Descripcion) values (1, 'Refrescos / Bebidas');
 insert into Categorias (idCategoria, Descripcion) values (2, 'Analgelsicos');
