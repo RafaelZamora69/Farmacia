@@ -1,6 +1,5 @@
 package sample;
 
-import Objetos.Conexion;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +11,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Conexion.getConnection();
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         primaryStage.setResizable(false);
         primaryStage.initStyle(StageStyle.UNDECORATED);
