@@ -66,3 +66,5 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
         /* Borrar alguna promoción */
         delete from Promocion where idPromocion = ?;
         delete from Detalle_Promocion where idPromocion = ?;
+        
+/* Consultas */
