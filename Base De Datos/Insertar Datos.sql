@@ -126,5 +126,21 @@ insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_C
 insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (7, 19, 6, 138, 103);
 select * from Detalle_Venta;
 
+insert into promocion values (0,"2X1",1);
+insert into detalle_promocion values (1,1);
+insert into detalle_promocion values (1,6);
+insert into promocion values (0,"10% descuento",1);
+insert into detalle_promocion values (2,10);
+insert into detalle_promocion values (2,13);
+insert into promocion values (0,"25% descuento",1);
+insert into detalle_promocion values (5,15);
+insert into detalle_promocion values (5,16);
+insert into promocion values (0,"3ro al 50%",0);
+insert into detalle_promocion values (6,7);
+insert into detalle_promocion values (6,8);
+insert into promocion values (0,"3x2",0);
+insert into detalle_promocion values (7,4);
+insert into detalle_promocion values (7,17);
+
 delete from Empleado where idEmpleado = 1;
 
