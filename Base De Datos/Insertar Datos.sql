@@ -94,13 +94,13 @@ insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Ma
 select * from Cliente;
 
 /* Insertar en Farmacia.Venta*/
-insert into Venta (Fecha, Total, idEmpleado) values (curdate(), 725.0, 1);
-insert into Venta (Fecha, Total, idEmpleado) values (curdate(), 180.0, 1);
-insert into Venta (Fecha, Total, idEmpleado) values (curdate(), 91.0, 1);
-insert into Venta (Fecha, Total, idEmpleado) values (curdate(), 28.5, 2);
-insert into Venta (Fecha, Total, idEmpleado) values (curdate(), 255.0, 2);
-insert into Venta (Fecha, Total, idEmpleado) values (curdate(), 41.5, 3);
-insert into Venta (Fecha, Total, idEmpleado) values (curdate(), 415.0, 4);
+insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-23', 725.0, 1);
+insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-23', 180.0, 1);
+insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-23', 91.0, 1);
+insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-24', 28.5, 2);
+insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-24', 255.0, 2);
+insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-26', 41.5, 3);
+insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-26', 415.0, 4);
 select * from Venta;
  
 /* Insertar en Farmacia.Detalle_Venta*/
@@ -133,14 +133,12 @@ insert into promocion values (0,"10% descuento",1);
 insert into detalle_promocion values (2,10);
 insert into detalle_promocion values (2,13);
 insert into promocion values (0,"25% descuento",1);
-insert into detalle_promocion values (5,15);
-insert into detalle_promocion values (5,16);
+insert into detalle_promocion values (3,15);
+insert into detalle_promocion values (3,16);
 insert into promocion values (0,"3ro al 50%",0);
-insert into detalle_promocion values (6,7);
-insert into detalle_promocion values (6,8);
+insert into detalle_promocion values (4,7);
+insert into detalle_promocion values (4,8);
 insert into promocion values (0,"3x2",0);
-insert into detalle_promocion values (7,4);
-insert into detalle_promocion values (7,17);
-
-delete from Empleado where idEmpleado = 1;
+insert into detalle_promocion values (5,4);
+insert into detalle_promocion values (5,17);
 
