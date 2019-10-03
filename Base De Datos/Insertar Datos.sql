@@ -5,7 +5,7 @@ insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('G
 insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Rafael Antonio Gonzalez Zamora', '2295242553', 'RafaelZamora', sha1('Rafael123'), 1);
 insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Karla Lizbeth Valdes Morales', '2295061936', 'KarVm', sha1('Karla123'), 1);
 insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Alejandro Vega Hernandez', '5540907400', 'AlexVega', sha1('Vega123'), 1);
-select * from Empleado; delete from Empleado;
+select * from Empleado;
 /* Insertar en Farmacia.Proveedores */
 insert into Proveedor (Nombre, Telefono, Correo, Direccion) values ('Pepsico', '2291127509', 'evolucion_adm@hotmail.com', 'Carretera Veracruz Medellin KM 2.3');
 insert into Proveedor (Nombre, Telefono, Correo, Direccion) values ('Laboratorios PISA', '229921 8654', '', 'Ejército Mexicano, Adalberto Tejada, Veracruz');
@@ -79,10 +79,10 @@ insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_C
 insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
     values ('7501035274901', 'Ectaprim, 120mL, pediátrico', 5, 9,103.00,138.00, 0, 1,9 );
 insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('75035357700', 'Cedax ceftibuteno, 36 mg/mL', 5,10,200.00,399.00, 0, 0,10);
+    values ('75035357700', 'Cedax ceftibuteno, 36 mg/mL', 5,10,200.00,399.00, 0, 0, 9);
 insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501342800158', 'Antiflu-Des 30mL pediátrico', 5,11,53.00,67.00, 0, 0,11);
-select * from producto;
+    values ('7501342800158', 'Antiflu-Des 30mL pediátrico', 5,10,53.00,67.00, 0, 0, 9);
+select * from Producto;
 
 /* Insertar en Farmacia.Cliente */
 insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Abelardo Hernandez Mota', 'Su casa', '2293684747', '20', 0,"");

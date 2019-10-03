@@ -68,3 +68,42 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
         delete from Detalle_Promocion where idPromocion = ?;
         
 /* Consultas */
+	/* El producto que más se vende */
+	select Detalle_Venta.idProducto As 'Código del producto', 
+	Producto.Descripcion As 'Descripción', 
+	concat('$', Producto.Precio_Compra) As 'Precio de compra', 
+	concat('$', Producto.Precio_Venta) As 'Precio de venta', 
+	Producto.Cantidad 'En inventario', 
+	count(Detalle_Venta.idProducto) As 'Ventas_Totales'
+	from Detalle_Venta inner join Producto 
+	on Detalle_Venta.idProducto = Producto.idProducto
+	group by Detalle_Venta.idProducto
+	order by Ventas_Totales desc
+	Limit 1;
+    /* Reporte de promociones vigentes */
+    select Descripcion, Activa
+    from Promocion
+    where Activa = 1;
+    /* Listado de productos por categoría */
+    select Producto.idProducto As 'Código del producto', 
+    Producto.Descripcion As 'Descripción', 
+    concat('$', Producto.Precio_Compra) As 'Precio de compra',
+    concat('$', Producto.Precio_Venta) As 'Precio de venta',
+    Producto.Cantidad As 'En inventario',
+    Categorias.Descripcion As 'Categoria'
+    from Producto inner join Categorias
+    on Producto.idCategoria = Categorias.idCategoria
+    order by Categorias.Descripcion desc;
+    /* Reporte de proovedores por producto */
+    select Producto.idProducto As 'Código del producto', 
+    Producto.Descripcion As 'Descripción', 
+    concat('$', Producto.Precio_Compra) As 'Precio de compra',
+    concat('$', Producto.Precio_Venta) As 'Precio de venta',
+    Producto.Cantidad As 'En inventario',
+    Proveedor.Nombre As 'Proveedor',
+    Proveedor.Telefono As 'Teléfono'
+    from Producto inner join Proveedor
+    on Producto.Proveedor = Proveedor.idProveedor
+    order by Proveedor.Nombre desc;
+    /* El cliente que más puntos tiene */
+	select * from Cliente where max(Puntos);
