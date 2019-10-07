@@ -107,3 +107,54 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
     order by Proveedor.Nombre desc;
     /* El cliente que más puntos tiene */
 	select * from Cliente where max(Puntos);
+    
+    /*Listado de compras en un mes */
+SELECT 
+    Proveedor.nombre, idCompra, Total_Compra, fecha
+FROM
+    compra
+        INNER JOIN
+    proveedor ON compra.idProveedor = proveedor.idProveedor
+WHERE
+    fecha BETWEEN '2019-09-01' AND '2019-09-30'; 
+    
+    /*Producto con mayor utilidad*/
+SELECT 
+    descripcion AS Producto,
+    Precio_venta - Precio_Compra AS Utilidad
+FROM
+    producto
+ORDER BY utilidad DESC
+LIMIT 1;
+
+   /*Empleado con mas ventas*/ 
+SELECT 
+    empleado.Nombre, COUNT(venta.idEmpleado) AS 'N° de ventas'
+FROM
+    venta
+        INNER JOIN
+    empleado ON venta.idEmpleado = empleado.idEmpleado
+GROUP BY venta.idEmpleado
+ORDER BY 'N° de ventas' DESC limit 1;
+
+/*Reporte de ventas en un mes*/
+SELECT 
+    venta.idVenta,
+    fecha,
+    total AS 'Total de la venta',
+    producto.Descripcion
+FROM
+    venta
+        INNER JOIN
+    detalle_venta ON venta.idVenta = detalle_venta.idVenta
+        INNER JOIN
+    producto ON detalle_venta.idProducto = producto.idProducto
+WHERE
+    fecha BETWEEN '2019-08-01' AND '2019-08-30'; 
+
+/*Cantidad en inventario de cada producto */
+SELECT 
+    descripcion, cantidad AS 'En inventario'
+FROM
+    producto;
+
