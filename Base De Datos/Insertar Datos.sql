@@ -142,3 +142,23 @@ insert into promocion values (0,"3x2",0);
 insert into detalle_promocion values (5,4);
 insert into detalle_promocion values (5,17);
 
+insert into compra values(1,1,1150.00,"2019-09-30");
+insert into detalle_compra values(1,50,1,8);
+insert into detalle_compra values(4,50,1,9);
+insert into detalle_compra values(6,50,1,6);
+insert into compra values(3,2,1250.00,"2019-09-30");
+insert into detalle_compra values (8,50,2,25);
+insert into compra values(4,3,2000.00,"2019-08-15");
+insert into detalle_compra values (9,50,3,40);
+insert into compra values(5,4,14000.00,"2019-07-24");
+insert into detalle_compra values (10,50,4,280);
+insert into compra values(6,5,24500.00,"2019-09-5");
+insert into detalle_compra values(15,25,5,400);
+insert into detalle_compra values(16,50,5,180);
+insert into detalle_compra values(13,50,5,15);
+insert into detalle_compra values(12,50,5,95);
+insert into compra values(7,6,4500.00,"2019-09-16");
+insert into detalle_compra values(17,50,6,90);
+insert into compra values(9,7,5150.00,"2019-05-28");
+insert into detalle_compra values(19,50,7,103);
+
