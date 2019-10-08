@@ -198,6 +198,11 @@ CREATE TABLE IF NOT EXISTS `Farmacia`.`Detalle_Venta` (
 ENGINE = InnoDB;
 
 
+        CREATE    TRIGGER  disminuirInventario
+ AFTER INSERT ON detalle_venta FOR EACH ROW 
+    UPDATE producto SET cantidad = cantidad - 1 WHERE
+        idProducto = new.idProducto;
+
 -- -----------------------------------------------------
 -- Table `Farmacia`.`Compra`
 -- -----------------------------------------------------
@@ -273,6 +278,11 @@ CREATE TABLE IF NOT EXISTS `Farmacia`.`Detalle_Compra` (
 ENGINE = InnoDB;
 
 USE `Farmacia`;
+
+CREATE    TRIGGER  aumentarInventario
+ AFTER INSERT ON detalle_compra FOR EACH ROW 
+    UPDATE producto SET cantidad = cantidad + new.cantidad WHERE
+        idProducto = new.idProducto;
 
 DELIMITER $$
 
