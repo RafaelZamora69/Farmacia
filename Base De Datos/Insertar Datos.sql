@@ -1,5 +1,9 @@
 use Farmacia;
 show tables;
+/* Insertar en Farmacia.Detalle_Jerarquia */
+insert into Detalle_Jerarquia(Descripcion) values ('Jefe');
+insert into Detalle_Jerarquia(Descripcion) values ('Encargado de turno');
+insert into Detalle_Jerarquia(Descripcion) values ('Vendedor');
 /* Insertar en Farmacia.Empleado */
 insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Gerardo Galván Chavez', '2299025028', 'GerardoGalvan', sha1('Gerardo123'), 3);
 insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Rafael Antonio Gonzalez Zamora', '2295242553', 'RafaelZamora', sha1('Rafael123'), 3);
@@ -85,44 +89,44 @@ insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_C
 select * from Producto;
 
 /* Insertar en Farmacia.Cliente */
-insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Abelardo Hernandez Mota', 'Su casa', '2293684747', '20', 29,"");
+insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Abelardo Hernandez Mota', 'Su casa', '2293684747', '20', 0,"");
 insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Jorge Antonio Pedroza Rendón', 'Su casa', '229 137 0546', '20', 0,"");
-insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Miguel Angel Nava Diaz', 'Las vegas 2, rio cotaxtla 657B', '2293317317', '20', 20,"");
-insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Julia Yahaira Román Escobar', 'Rio medio, romain y rio panuco 22', '2293979247', '20', 4,"");
+insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Miguel Angel Nava Diaz', 'Las vegas 2, rio cotaxtla 657B', '2293317317', '20', 0,"");
+insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Julia Yahaira Román Escobar', 'Rio medio, romain y rio panuco 22', '2293979247', '20', 0,"");
 insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Herlinda Robert Chávez', 'Alcatraz 124 Esq. Clavel Fracc. Jardines del Virginia Boca del Río Ver C.P. 94294 ', '2291457888', '67', 0,"ROCH511007940");
-insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('María del Rosario Chávez', 'Río Usumacinta 480B Las Vegas 2 Boca del Río Ver C.P. 94297', '2291729306', '57', 12,"");
-
+insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('María del Rosario Chávez', 'Río Usumacinta 480B Las Vegas 2 Boca del Río Ver C.P. 94297', '2291729306', '57', 0,"");
+select * from Cliente;
 /* Insertar en Farmacia.Venta*/
-insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-23', 725.0, 1);
-insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-23', 124.0, 1);
-insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-23', 462.0, 1);
-insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-24', 28.5, 2);
-insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-24', 255.0, 2);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-23', 725.0, 1, 1);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-23', 124.0, 1, 4);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-23', 462.0, 1, 3);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-24', 28.5, 2, 3);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-24', 255.0, 2, 1);
 insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-26', 41.5, 2);
-insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-26', 415.0, 1);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-26', 415.0, 1, 6);
 select * from Venta;
  
 /* Insertar en Farmacia.Detalle_Venta*/
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (1, 15, 1, 496, 400);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (1, 16, 1, 229, 180);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (2, 17, 4, 124, 90);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (3, 9, 3, 60, 40);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (3, 10, 3, 402, 280);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (4, 1, 3, 10, 8);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (4, 1, 3, 10, 8);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (4, 4, 3, 8.5, 6);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (5, 9, 1, 60, 40);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (5, 8, 1, 31, 25);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (5, 8, 1, 31, 25);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (5, 12, 1, 133, 95);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (1, 15, 496, 400);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (1, 16, 229, 180);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (2, 17, 124, 90);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (3, 9, 60, 40);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (3, 10, 402, 280);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (4, 1, 10, 8);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (4, 1, 10, 8);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (4, 4, 8.5, 6);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (5, 9, 60, 40);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (5, 8, 31, 25);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (5, 8, 31, 25);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (5, 12, 133, 95);
 insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (6, 1, 10, 8);
 insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (6, 1, 10, 8);
 insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (6, 1, 10, 8);
 insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (6, 6, 11.5, 9);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (7, 16, 6, 229, 180);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (7, 13, 6, 24, 15);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (7, 13, 6, 24, 15);
-insert into Detalle_Venta(idVenta, idProducto, idCliente, Precio_Venta, Precio_Compra) values (7, 19, 6, 138, 103);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (7, 16, 229, 180);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (7, 13, 24, 15);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (7, 13, 24, 15);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra) values (7, 19, 138, 103);
 select * from Detalle_Venta;
 
 insert into promocion values (0,"2X1",1);
