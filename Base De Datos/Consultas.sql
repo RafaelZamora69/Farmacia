@@ -106,7 +106,17 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
     on Producto.Proveedor = Proveedor.idProveedor
     order by Proveedor.Nombre desc;
     /* El cliente que más puntos tiene */
-	select * from Cliente where max(Puntos);
+	select Nombre, Puntos from Cliente
+	group by Puntos 
+    order by Puntos desc
+    limit 1;
+    
+    select Cliente.Nombre, Producto.Descripcion, count(Detalle_Venta.idProducto) As 'Count'
+    from Cliente inner join Detalle_Venta
+    on Detalle_Venta.idCliente = Cliente.idCliente
+    inner join Producto on Detalle_Venta.idProducto = Producto.idProducto
+    group by Cliente.idCliente
+    order by Count desc;
     
     /*Listado de compras en un mes */
 SELECT 
