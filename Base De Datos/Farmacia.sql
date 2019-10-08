@@ -283,16 +283,13 @@ CREATE    TRIGGER  aumentarInventario
  AFTER INSERT ON detalle_compra FOR EACH ROW 
     UPDATE producto SET cantidad = cantidad + new.cantidad WHERE
         idProducto = new.idProducto;
+        
+    Create Trigger Actualizar_Puntos After insert on Venta
+    for each row
+        update Cliente set Cliente.Puntos = Puntos + ((3 * new.Total)/100)
+        where new.idCliente = Cliente.idCliente;
 
 DELIMITER $$
-
-USE `Farmacia`$$
-DROP TRIGGER IF EXISTS `Farmacia`.`Actualizar Puntos` $$
-USE `Farmacia`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `Actualizar Puntos` AFTER INSERT ON `Compra` FOR EACH ROW
-BEGIN
-	
-END$$
 
 
 DELIMITER ;
