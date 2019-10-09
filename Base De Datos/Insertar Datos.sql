@@ -4,6 +4,7 @@ show tables;
 insert into Detalle_Jerarquia(Descripcion) values ('Jefe');
 insert into Detalle_Jerarquia(Descripcion) values ('Encargado de turno');
 insert into Detalle_Jerarquia(Descripcion) values ('Vendedor');
+select * from Detalle_Jerarquia;
 /* Insertar en Farmacia.Empleado */
 insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Gerardo Galván Chavez', '2299025028', 'GerardoGalvan', sha1('Gerardo123'), 3);
 insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Rafael Antonio Gonzalez Zamora', '2295242553', 'RafaelZamora', sha1('Rafael123'), 3);

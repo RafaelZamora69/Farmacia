@@ -71,15 +71,16 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
 	/* El producto que más se vende */
 	select Detalle_Venta.idProducto As 'Código del producto', 
 	Producto.Descripcion As 'Descripción', 
-	concat('$', Producto.Precio_Compra) As 'Precio de compra', 
-	concat('$', Producto.Precio_Venta) As 'Precio de venta', 
+	concat('$', Producto.Precio_Compra) As 'Costo', 
+	concat('$', Producto.Precio_Venta) As 'Precio', 
 	Producto.Cantidad 'En inventario', 
-	count(Detalle_Venta.idProducto) As 'Ventas_Totales'
+	count(Detalle_Venta.idProducto) As 'Cantidad Vendida',
+    sum(Detalle_Venta.Precio_Venta) As 'Venta_Total'
 	from Detalle_Venta inner join Producto 
 	on Detalle_Venta.idProducto = Producto.idProducto
 	group by Detalle_Venta.idProducto
-	order by Ventas_Totales desc
-	Limit 1;
+	order by 'Venta_Total' desc
+	;
     /* Reporte de promociones vigentes */
     select Descripcion, Activa
     from Promocion
@@ -161,10 +162,14 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
 
 /* Triggers */
 	/* Actualizar los puntos */
+<<<<<<< Updated upstream
+    
+=======
     drop trigger if exists Actualizar_Puntos;
     Create Trigger Actualizar_Puntos After insert on Venta
     for each row
-        update Cliente set Cliente.Puntos = Puntos + ((3 * new.Total)/100)
+        update Cliente set Cliente.Puntos = Cliente.Puntos + ((3 * new.Total)/100)
         where new.idCliente = Cliente.idCliente;
+>>>>>>> Stashed changes
         
     

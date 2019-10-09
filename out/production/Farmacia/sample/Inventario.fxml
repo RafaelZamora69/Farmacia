@@ -5,34 +5,42 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<JFXTabPane prefHeight="530.0" prefWidth="1071.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<JFXTabPane prefHeight="530.0" prefWidth="1071.0" style="-fx-background-color: #f3e5f5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <tabs>
-      <Tab id="tInventario" text="Inventario">
+      <Tab id="tInventario" style="-fx-background-color: #ce93d8;" text="Inventario">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
-      <Tab id="tModificar" text="Modificar">
+      <Tab id="tModificar" style="-fx-background-color: #ce93d8;" text="Modificar">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <JFXButton buttonType="RAISED" layoutX="958.0" layoutY="425.0" prefHeight="33.0" prefWidth="107.0" text="Eliminar" />
+                  <JFXButton id="btnEliminar" buttonType="RAISED" layoutX="841.0" layoutY="362.0" prefHeight="61.0" prefWidth="167.0" style="-fx-background-color: #9c27b0;" text="Eliminar" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
                </children>
             </AnchorPane>
          </content>
       </Tab>
-      <Tab id="tIngresar" text="Ingresar">
+      <Tab id="tIngresar" style="-fx-background-color: #ce93d8;" text="Ingresar">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <JFXTextField layoutX="44.0" layoutY="64.0" promptText="No. serie" />
-                  <JFXTextField layoutX="44.0" layoutY="115.0" promptText="Nombre" />
-                  <JFXTextField layoutX="44.0" layoutY="181.0" promptText="Categoria" />
-                  <JFXTextField layoutX="44.0" layoutY="234.0" promptText="Precio venta" />
-                  <JFXTextField layoutX="44.0" layoutY="284.0" promptText="Cantidad" />
-                  <JFXTextField layoutX="44.0" layoutY="343.0" promptText="Descripción" />
-                  <JFXButton buttonType="RAISED" layoutX="47.0" layoutY="430.0" prefHeight="33.0" prefWidth="122.0" text="Agregar producto" />
+                  <JFXTextField id="numSerie" focusColor="#6a1b9a" layoutX="44.0" layoutY="64.0" prefHeight="25.0" prefWidth="295.0" promptText="No. serie" />
+                  <JFXTextField id="nombrePro" focusColor="#6a1b9a" layoutX="524.0" layoutY="64.0" prefHeight="25.0" prefWidth="295.0" promptText="Nombre" />
+                  <JFXTextField id="categoria" focusColor="#6a1b9a" layoutX="44.0" layoutY="157.0" prefHeight="25.0" prefWidth="295.0" promptText="Categoria" />
+                  <JFXTextField id="preciVenta" focusColor="#6a1b9a" layoutX="524.0" layoutY="157.0" prefHeight="25.0" prefWidth="295.0" promptText="Precio venta" />
+                  <JFXTextField id="cant" focusColor="#6a1b9a" layoutX="42.0" layoutY="247.0" prefHeight="25.0" prefWidth="295.0" promptText="Cantidad" />
+                  <JFXTextField id="descrip" focusColor="#6a1b9a" layoutX="44.0" layoutY="362.0" prefHeight="25.0" prefWidth="295.0" promptText="Descripción" />
+                  <JFXButton id="btnAgregarPro" buttonType="RAISED" layoutX="841.0" layoutY="362.0" prefHeight="61.0" prefWidth="167.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Agregar producto" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+                  <JFXTextField id="preciCompra" focusColor="#6a1b9a" layoutX="524.0" layoutY="247.0" prefHeight="25.0" prefWidth="295.0" promptText="Precio compra" />
                </children>
             </AnchorPane>
          </content>
