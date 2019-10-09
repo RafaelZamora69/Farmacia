@@ -162,6 +162,14 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
 
 /* Triggers */
 	/* Actualizar los puntos */
+<<<<<<< Updated upstream
     
+=======
+    drop trigger if exists Actualizar_Puntos;
+    Create Trigger Actualizar_Puntos After insert on Venta
+    for each row
+        update Cliente set Cliente.Puntos = Cliente.Puntos + ((3 * new.Total)/100)
+        where new.idCliente = Cliente.idCliente;
+>>>>>>> Stashed changes
         
     
