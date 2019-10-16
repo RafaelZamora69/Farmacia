@@ -69,7 +69,7 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
         
 /* Consultas */
 	/* El producto que más se vende */
-	select Detalle_Venta.idProducto As 'Código del producto', 
+	select Detalle_Venta.idProducto As 'Código del producto',
 	Producto.Descripcion As 'Descripción', 
 	concat('$', Producto.Precio_Compra) As 'Costo', 
 	concat('$', Producto.Precio_Venta) As 'Precio', 
@@ -79,8 +79,7 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
 	from Detalle_Venta inner join Producto 
 	on Detalle_Venta.idProducto = Producto.idProducto
 	group by Detalle_Venta.idProducto
-	order by 'Venta_Total' desc
-	;
+	order by 'Venta_Total' desc;
     /* Reporte de promociones vigentes */
     select Descripcion, Activa
     from Promocion
@@ -107,9 +106,9 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
     on Producto.Proveedor = Proveedor.idProveedor
     order by Proveedor.Nombre desc;
     /* El cliente que más puntos tiene */
-	select Nombre, Puntos 
+	select idCliente, Nombre, Direccion, Telefono, Edad, Rfc, Puntos 
     from Cliente
-    order by Puntos desc limit 1;
+    order by Puntos desc;
     /*Listado de compras en un mes */
 	SELECT 
 		Proveedor.nombre, idCompra, Total_Compra, fecha
@@ -131,13 +130,18 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
 
    /*Empleado con mas ventas*/ 
 	SELECT 
-		empleado.Nombre, COUNT(venta.idEmpleado) AS 'N° de ventas'
+		empleado.idEmpleado, 
+        empleado.Nombre, 
+        empleado.Telefono,
+        Detalle_Jerarquia.Descripcion As 'Puesto',
+        (venta.idEmpleado) AS 'N° de ventas'
 	FROM
 		venta
 			INNER JOIN
 		empleado ON venta.idEmpleado = empleado.idEmpleado
+        inner join Detalle_Jerarquia on empleado.Jerarquia = Detalle_Jerarquia.idJerarquia
 	GROUP BY venta.idEmpleado
-	ORDER BY 'N° de ventas' DESC limit 1;
+	ORDER BY 'N° de ventas' DESC;
 
 	/*Reporte de ventas en un mes*/
 	SELECT 
@@ -159,17 +163,5 @@ select Nombre from Empleado where Usuario = ? and Password = sha1(?);
 		descripcion, cantidad AS 'En inventario'
 	FROM
 		producto;
-
-/* Triggers */
-	/* Actualizar los puntos */
-<<<<<<< Updated upstream
-    
-=======
-    drop trigger if exists Actualizar_Puntos;
-    Create Trigger Actualizar_Puntos After insert on Venta
-    for each row
-        update Cliente set Cliente.Puntos = Cliente.Puntos + ((3 * new.Total)/100)
-        where new.idCliente = Cliente.idCliente;
->>>>>>> Stashed changes
         
     
