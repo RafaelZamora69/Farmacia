@@ -5,22 +5,15 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Base De Datos/Farmacia.mwb" beforeDir="false" afterPath="$PROJECT_DIR$/Base De Datos/Farmacia.mwb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Base De Datos/Farmacia.mwb.bak" beforeDir="false" afterPath="$PROJECT_DIR$/Base De Datos/Farmacia.mwb.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Base De Datos/Farmacia.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Base De Datos/Farmacia.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Base De Datos/Insertar Datos.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Base De Datos/Insertar Datos.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Farmacia/sample/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Farmacia/sample/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Farmacia/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Farmacia/sample/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Farmacia/sample/Principal.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Farmacia/sample/Principal.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Farmacia/sample/PrincipalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Farmacia/sample/PrincipalController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Principal.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Principal.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/PrincipalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/PrincipalController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -102,10 +95,10 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../RafaelZamora-ferreteria-f6774c74c103" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="/opt/SceneBuilder/SceneBuilder.desktop" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
   </component>
   <component name="RunDashboard">
