@@ -1,15 +1,10 @@
 use Farmacia;
 show tables;
-/* Insertar en Farmacia.Detalle_Jerarquia */
-insert into Detalle_Jerarquia(Descripcion) values ('Jefe');
-insert into Detalle_Jerarquia(Descripcion) values ('Encargado de turno');
-insert into Detalle_Jerarquia(Descripcion) values ('Vendedor');
-select * from Detalle_Jerarquia;
 /* Insertar en Farmacia.Empleado */
-insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Gerardo Galván Chavez', '2299025028', 'GerardoGalvan', sha1('Gerardo123'), 3);
-insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Rafael Antonio Gonzalez Zamora', '2295242553', 'RafaelZamora', sha1('Rafael123'), 3);
-insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Karla Lizbeth Valdes Morales', '2295061936', 'KarVm', sha1('Karla123'), 2);
-insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Alejandro Vega Hernandez', '5540907400', 'AlexVega', sha1('Vega123'), 1);
+insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Gerardo Galván Chavez', '2299025028', 'GerardoGalvan', sha1('Gerardo123'), 'Jefe');
+insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Rafael Antonio Gonzalez Zamora', '2295242553', 'RafaelZamora', sha1('Rafael123'), 'Encargado de turno');
+insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Karla Lizbeth Valdes Morales', '2295061936', 'KarVm', sha1('Karla123'), 'Vendedor');
+insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values ('Alejandro Vega Hernandez', '5540907400', 'AlexVega', sha1('Vega123'), 'Vendedor');
 select * from Empleado;
 /* Insertar en Farmacia.Proveedores */
 insert into Proveedor (Nombre, Telefono, Correo, Direccion) values ('Pepsico', '2291127509', 'evolucion_adm@hotmail.com', 'Carretera Veracruz Medellin KM 2.3');
