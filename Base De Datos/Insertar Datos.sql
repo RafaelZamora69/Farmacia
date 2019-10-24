@@ -120,16 +120,16 @@ insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra, Cant
 insert into Detalle_Venta(idVenta, idProducto, Precio_Venta, Precio_Compra, Cantidad) values (7, 19, 138, 103, 1);
 select * from Detalle_Venta;
 
-insert into promocion values (0,"2X1",1);
+insert into promocion values (0,"2X1 en Pepsi 355ML",1);
 insert into detalle_promocion values (1,1);
 insert into detalle_promocion values (1,6);
-insert into promocion values (0,"10% descuento",1);
+insert into promocion values (0,"Lunes 10% desc. en Analgesicos",1);
 insert into detalle_promocion values (2,10);
 insert into detalle_promocion values (2,13);
-insert into promocion values (0,"25% descuento",1);
+insert into promocion values (0,"3x2 En Agua Natural Epura 600ML",1);
 insert into detalle_promocion values (3,15);
 insert into detalle_promocion values (3,16);
-insert into promocion values (0,"3ro al 50%",0);
+insert into promocion values (0,"Viernes de ahorcar rucas, anticoncepticos al 20% de desc.",0);
 insert into detalle_promocion values (4,7);
 insert into detalle_promocion values (4,8);
 insert into promocion values (0,"3x2",0);
