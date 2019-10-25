@@ -386,7 +386,7 @@ DROP TABLE IF EXISTS `Farmacia`.`Reporte Promociones`;
 DROP VIEW IF EXISTS `Farmacia`.`Reporte Promociones` ;
 USE `Farmacia`;
 CREATE  OR REPLACE VIEW `Reporte Promociones` AS
-select Promocion.Descripcion, Promocion.Activa,
+select Promocion.Descripcion As 'Detalles', Promocion.Activa,
 Producto.Descripcion
 from Detalle_Promocion 
 inner join Promocion on Promocion.idPromocion = Detalle_Promocion.idPromocion
