@@ -9,10 +9,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import tray.notification.NotificationType;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,8 +29,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.Label;
-import tray.notification.NotificationType;
 
 public class LoginController implements Initializable {
 
@@ -72,30 +73,7 @@ public class LoginController implements Initializable {
     }
 
     public void Ingresar(javafx.scene.input.MouseEvent mouseEvent) {
-        try{
-            Connection con = Conexion.getConnection();
-            PreparedStatement statement;
-            statement = con.prepareStatement("select Nombre from Empleado where Usuario = ? and Password = sha1(?)");
-            statement.setString(1, this.TxtUser.getText());
-            statement.setString(2, this.TxtPass.getText());
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                //Cosas je
-                PrincipalController.Nombre = rs.getString(1);
-                Stage Main = new Stage();
-                Parent Mroot = FXMLLoader.load(getClass().getResource("Principal.fxml"));
-                Scene scene = new Scene(Mroot);
-                Main.setScene(scene);
-                Main.setResizable(false);
-                Main.show();
-                ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
-                return;
-            }
-            Alertas.MostrarAlerta("Usuario/contraseña incorrecto", NotificationType.WARNING, "Alerta");
-        } catch (SQLException | IOException ex){
-            Alertas.MostrarAlerta("Error al conectarse a la base de datos", NotificationType.ERROR, "Error");
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Validar();
     }
 
     public void Salir(MouseEvent mouseEvent){
@@ -119,6 +97,43 @@ public class LoginController implements Initializable {
         while ((sScadena = bf.readLine()) != null){
             datos[i] = sScadena;
             i++;
+        }
+    }
+
+    public void Validar(){
+        try{
+            Connection con = Conexion.getConnection();
+            PreparedStatement statement;
+            statement = con.prepareStatement("select Nombre from Empleado where Usuario = ? and Password = sha1(?)");
+            statement.setString(1, this.TxtUser.getText());
+            statement.setString(2, this.TxtPass.getText());
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                //Cosas je
+                PrincipalController.Nombre = rs.getString(1);
+                Stage Main = new Stage();
+                Parent Mroot = FXMLLoader.load(getClass().getResource("Principal.fxml"));
+                Scene scene = new Scene(Mroot);
+                Main.setScene(scene);
+                Main.setResizable(false);
+                Main.show();
+                Stage stage = (Stage) TxtUser.getScene().getWindow();
+                stage.close();
+                return;
+            }
+            Alertas.MostrarAlerta("Usuario/contraseña incorrecto", NotificationType.WARNING, "Alerta");
+        } catch (SQLException | IOException ex){
+            Alertas.MostrarAlerta("Error al conectarse a la base de datos", NotificationType.ERROR, "Error");
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void IngresarT(KeyEvent event) {
+        if(event.getCode().equals(KeyCode.ENTER)){
+            if("".equals(this.TxtPass.getText()) || "".equals(this.TxtUser.getText())){
+            } else {
+                Validar();
+            }
         }
     }
 }

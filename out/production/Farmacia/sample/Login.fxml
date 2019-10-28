@@ -9,8 +9,8 @@
 
 <AnchorPane fx:id="AnchorPane" prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: f3e5f5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
    <children>
-      <JFXTextField fx:id="TxtUser" alignment="CENTER" focusColor="#ce93d8" layoutX="180.0" layoutY="74.0" prefHeight="27.0" prefWidth="165.0" promptText="Usuario" unFocusColor="BLACK" />
-      <JFXPasswordField fx:id="TxtPass" alignment="CENTER" focusColor="#ce93d8" layoutX="180.0" layoutY="137.0" prefHeight="27.0" prefWidth="165.0" promptText="Contraseña" />
+      <JFXTextField fx:id="TxtUser" alignment="CENTER" focusColor="#ce93d8" layoutX="180.0" layoutY="74.0" onKeyPressed="#IngresarT" prefHeight="27.0" prefWidth="165.0" promptText="Usuario" unFocusColor="BLACK" />
+      <JFXPasswordField fx:id="TxtPass" alignment="CENTER" focusColor="#ce93d8" layoutX="180.0" layoutY="137.0" onKeyPressed="#IngresarT" prefHeight="27.0" prefWidth="165.0" promptText="Contraseña" />
       <JFXButton fx:id="BtnEntrar" buttonType="RAISED" layoutX="235.0" layoutY="206.0" onMouseClicked="#Ingresar" ripplerFill="#e1bee7" style="-fx-background-color: ce93d8;" text="Entrar" />
       <Label fx:id="LblTitle" layoutX="226.0" layoutY="26.0" text="Farmacia" textAlignment="CENTER">
          <font>
