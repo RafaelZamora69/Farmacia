@@ -59,7 +59,10 @@ public class InventarioController implements Initializable {
     private JFXTextField TxtPrecio;
 
     @FXML
-    private JFXComboBox<?> Proveedores;
+    private JFXTextField TxtPVenta;
+
+    @FXML
+    private JFXComboBox<String> Proveedores;
 
     public static final ObservableList<Producto> LProducto = FXCollections.observableArrayList();
 
@@ -72,10 +75,8 @@ public class InventarioController implements Initializable {
         LProducto.clear();
         CargarInventario();
         InicializarTablaCompra();
+        CargarProveedores();
     }
-
-
-
 
     public void InicializarTablaCompra(){
         JFXTreeTableColumn<Producto, String> ID = new JFXTreeTableColumn<>("Código");
@@ -86,15 +87,18 @@ public class InventarioController implements Initializable {
         Desc.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetDesc());
         JFXTreeTableColumn<Producto, String> Cant = new JFXTreeTableColumn<>("Cantidad");
         Cant.setPrefWidth(100);
-        Cant.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetDesc());
+        Cant.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetStock());
         JFXTreeTableColumn<Producto, String> Comp = new JFXTreeTableColumn<>("$ Compra");
         Comp.setPrefWidth(100);
         Comp.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetCompra());
+        JFXTreeTableColumn<Producto, String> Venta = new JFXTreeTableColumn<>("$ Venta");
+        Venta.setPrefWidth(100);
+        Venta.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetVenta());
         JFXTreeTableColumn<Producto, String> Prov = new JFXTreeTableColumn<>("$ Proveedor");
         Prov.setPrefWidth(100);
         Prov.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetProveedor());
         final TreeItem<Producto> root = new RecursiveTreeItem<>(LProductoCompra, RecursiveTreeObject::getChildren);
-        this.TreeViewCompra.getColumns().setAll(ID, Desc, Cant, Comp, Prov);
+        this.TreeViewCompra.getColumns().setAll(ID, Desc, Cant, Comp, Venta, Prov);
         this.TreeViewCompra.setRoot(root);
         this.TreeViewCompra.setShowRoot(false);
     }
@@ -106,16 +110,20 @@ public class InventarioController implements Initializable {
                 Connection con = Conexion.getConnection();
                 PreparedStatement statement;
                 if(this.TxtCod.getText().length() == 13){
-                    statement = con.prepareStatement("select idProducto, Descripcion, Precio_Compra, Proveedor.Nombre from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor" +
+                    statement = con.prepareStatement("select idProducto, Descripcion, Precio_Compra, Precio_Venta, Proveedor.Nombre from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor" +
                             " where Cod_Barras = ?;");
                 } else {
-                    statement = con.prepareStatement("select idProducto, Descripcion, Precio_Compra, Proveedor.Nombre from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor" +
+                    statement = con.prepareStatement("select idProducto, Descripcion, Precio_Compra, Precio_Venta, Proveedor.Nombre from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor" +
                             " where idProducto = ?;");
                 }
                 statement.setString(1, this.TxtCod.getText());
                 ResultSet rs = statement.executeQuery();
                 while (rs.next()){
-                    LProductoCompra.add(new Producto(rs.getString(1), rs.getString(2), rs.getString(3), null,  null, rs.getString(4), null));
+                    LProductoCompra.add(new Producto(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), "1", rs.getString(5), null));
+                    this.TxtCantidad.setText("1");
+                    this.TxtPrecio.setText(rs.getString(3));
+                    this.TxtPVenta.setText(rs.getString(4));
+                    this.Proveedores.setValue(rs.getString(5));
                 }
             }
         }
@@ -176,5 +184,18 @@ public class InventarioController implements Initializable {
                 return flag;
             });
         });
+    }
+
+    public void CargarProveedores() {
+        try {
+            Connection con = Conexion.getConnection();
+            ResultSet rs = null;
+            rs = con.createStatement().executeQuery("select Nombre from Proveedor");
+            while(rs.next()){
+                this.Proveedores.getItems().add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
