@@ -35,7 +35,13 @@ public class InventarioController implements Initializable {
     private JFXTreeTableView<Producto> TreeTable;
 
     @FXML
-    private JFXTextField TxtFiltrar, TxtCod, TxtCantidad, TxtPrecio, TxtPVenta;
+    private JFXTextField TxtFiltrar, TxtCod, TxtCantidad, TxtPrecio, TxtPVenta, TxtBuscar, ModCod, ModPCompra, ModPVenta;
+
+    @FXML
+    private JFXTextArea ModDesc;
+
+    @FXML
+    private JFXCheckBox ModReceta;
 
     @FXML
     private JFXButton BtnFinalizar;
@@ -47,7 +53,7 @@ public class InventarioController implements Initializable {
     private Label lblTotal, lbl;
 
     @FXML
-    private JFXComboBox<String> Proveedores;
+    private JFXComboBox<String> Proveedores, ModProveedor, ModPresen, ModCateg;
 
     public static final ObservableList<Producto> LProducto = FXCollections.observableArrayList();
 
@@ -62,7 +68,7 @@ public class InventarioController implements Initializable {
         LProducto.clear();
         CargarInventario();
         InicializarTablaCompra();
-        CargarProveedores();
+        CargarComboBox();
     }
 
     public void InicializarTablaCompra(){
@@ -175,13 +181,22 @@ public class InventarioController implements Initializable {
         });
     }
 
-    public void CargarProveedores() {
+    public void CargarComboBox() {
         try {
             Connection con = Conexion.getConnection();
             ResultSet rs = null;
             rs = con.createStatement().executeQuery("select Nombre from Proveedor");
             while(rs.next()){
+                this.ModProveedor.getItems().add(rs.getString(1));
                 this.Proveedores.getItems().add(rs.getString(1));
+            }
+            rs = con.createStatement().executeQuery("select Descripcion from Categorias;");
+            while(rs.next()){
+                this.ModCateg.getItems().add(rs.getString(1));
+            }
+            rs = con.createStatement().executeQuery("select Descripcion from Presentacion");
+            while(rs.next()){
+                this.ModPresen.getItems().add(rs.getString(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -189,8 +204,46 @@ public class InventarioController implements Initializable {
     }
 
     public void ActualizarCantidad(KeyEvent keyEvent) {
-        for (i = 0; i < LProductoCompra.size(); i++){
-            if()
+        for (int i = 0; i < LProductoCompra.size(); i++){
+
+        }
+    }
+
+    public void Buscar(KeyEvent event) throws SQLException {
+        if(event.getCode().equals(KeyCode.ENTER)) {
+            if (!"".equals(this.TxtBuscar.getText())) {
+                Connection con = Conexion.getConnection();
+                PreparedStatement statement;
+                if(this.TxtBuscar.getText().length() == 13){
+                    statement = con.prepareStatement("select idProducto, Precio_Compra, Precio_Venta, Producto.Descripcion, Proveedor.Nombre, Presentacion.Descripcion, Categorias.Descripcion, Receta\n" +
+                            "from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor\n" +
+                            "inner join Categorias on Producto.idCategoria = Categorias.idCategoria\n" +
+                            "inner join Presentacion on Producto.Presentacion = Presentacion.idPresentacion\n" +
+                            "where Cod_Barras = ?;");
+                } else {
+                    statement = con.prepareStatement("select idProducto, Precio_Compra, Precio_Venta, Producto.Descripcion, Proveedor.Nombre, Presentacion.Descripcion, Categorias.Descripcion, Receta\n" +
+                            "from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor\n" +
+                            "inner join Categorias on Producto.idCategoria = Categorias.idCategoria\n" +
+                            "inner join Presentacion on Producto.Presentacion = Presentacion.idPresentacion\n" +
+                            "where idProducto = ?;");
+                }
+                statement.setString(1, this.TxtBuscar.getText());
+                ResultSet rs = statement.executeQuery();
+                while(rs.next()){
+                    this.ModCod.setText(rs.getString(1));
+                    this.ModPCompra.setText(rs.getString(2));
+                    this.ModPVenta.setText(rs.getString(3));
+                    this.ModDesc.setText(rs.getString(4));
+                    this.ModProveedor.setValue(rs.getString(5));
+                    this.ModPresen.setValue(rs.getString(6));
+                    this.ModCateg.setValue(rs.getString(7));
+                    if(rs.getString(8).equals("1")){
+                        this.ModReceta.setSelected(true);
+                    } else {
+                        this.ModReceta.setSelected(false);
+                    }
+                }
+            }
         }
     }
 }
