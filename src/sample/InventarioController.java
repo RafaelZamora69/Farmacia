@@ -35,7 +35,7 @@ public class InventarioController implements Initializable {
     private JFXTreeTableView<Producto> TreeTable;
 
     @FXML
-    private JFXTextField TxtFiltrar;
+    private JFXTextField TxtFiltrar, TxtCod, TxtCantidad, TxtPrecio, TxtPVenta;
 
     @FXML
     private JFXButton BtnFinalizar;
@@ -44,22 +44,7 @@ public class InventarioController implements Initializable {
     private JFXTreeTableView<Producto> TreeViewCompra;
 
     @FXML
-    private JFXTextField TxtCod;
-
-    @FXML
-    private Label lblTotal;
-
-    @FXML
-    private Label lbl;
-
-    @FXML
-    private JFXTextField TxtCantidad;
-
-    @FXML
-    private JFXTextField TxtPrecio;
-
-    @FXML
-    private JFXTextField TxtPVenta;
+    private Label lblTotal, lbl;
 
     @FXML
     private JFXComboBox<String> Proveedores;
@@ -69,6 +54,8 @@ public class InventarioController implements Initializable {
     final FilteredList<Producto> FiltroProductos = new FilteredList<>(LProducto, e -> true);
 
     public static final ObservableList<Producto> LProductoCompra = FXCollections.observableArrayList();
+
+    private Double Total = 0.0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -124,6 +111,8 @@ public class InventarioController implements Initializable {
                     this.TxtPrecio.setText(rs.getString(3));
                     this.TxtPVenta.setText(rs.getString(4));
                     this.Proveedores.setValue(rs.getString(5));
+                    this.Total += Double.parseDouble(rs.getString(3));
+                    this.lblTotal.setText(String.valueOf(this.Total));
                 }
             }
         }
@@ -196,6 +185,12 @@ public class InventarioController implements Initializable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void ActualizarCantidad(KeyEvent keyEvent) {
+        for (i = 0; i < LProductoCompra.size(); i++){
+            if()
         }
     }
 }

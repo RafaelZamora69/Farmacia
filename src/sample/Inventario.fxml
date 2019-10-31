@@ -58,7 +58,7 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="TxtCantidad" alignment="CENTER" layoutX="14.0" layoutY="406.0" prefHeight="25.0" prefWidth="157.0" promptText="Cantidad" />
+                        <JFXTextField fx:id="TxtCantidad" alignment="CENTER" layoutX="14.0" layoutY="406.0" onKeyPressed="#ActualizarCantidad" prefHeight="25.0" prefWidth="157.0" promptText="Cantidad" />
                         <JFXTextField fx:id="TxtPrecio" alignment="CENTER" layoutX="312.0" layoutY="312.0" prefHeight="25.0" prefWidth="168.0" promptText="\$ Precio Compra" />
                         <JFXComboBox fx:id="Proveedores" editable="true" layoutX="536.0" layoutY="312.0" prefHeight="25.0" prefWidth="224.0" promptText="Proveedor" />
                         <JFXTextField fx:id="TxtPVenta" alignment="CENTER" layoutX="312.0" layoutY="407.0" prefHeight="25.0" prefWidth="168.0" promptText="\$ Precio Venta" />

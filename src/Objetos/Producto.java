@@ -59,7 +59,7 @@ public class Producto extends RecursiveTreeObject<Producto>{
     }
 
     public  StringProperty sGetVenta(){
-        return this.Compra;
+        return this.Venta;
     }
 
     public void SetVenta(StringProperty Venta){
