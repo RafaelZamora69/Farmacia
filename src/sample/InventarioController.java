@@ -7,14 +7,18 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -75,6 +79,23 @@ public class InventarioController implements Initializable {
         JFXTreeTableColumn<Producto, String> Cant = new JFXTreeTableColumn<>("Cantidad");
         Cant.setPrefWidth(100);
         Cant.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetStock());
+        Cant.setCellFactory(new Callback<TreeTableColumn<Producto, String>, TreeTableCell<Producto, String>>() {
+            @Override
+            public TreeTableCell<Producto, String> call(TreeTableColumn<Producto, String> param) {
+                return new TextFieldTreeTableCell<>();
+            }
+        });
+        Cant.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn());
+        Cant.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<Producto, String>>() {
+            @Override
+            public void handle(TreeTableColumn.CellEditEvent<Producto, String> event) {
+                TreeItem<Producto> Edit = TreeViewCompra.getTreeItem(event.getTreeTablePosition().getRow());
+                Edit.getValue().SetSstock(event.getNewValue());
+                TxtCantidad.setText(event.getNewValue());
+                Total += Double.parseDouble(TxtPrecio.getText()) * Double.parseDouble(event.getNewValue());
+                lblTotal.setText(String.valueOf(Total));
+            }
+        });
         JFXTreeTableColumn<Producto, String> Comp = new JFXTreeTableColumn<>("$ Compra");
         Comp.setPrefWidth(100);
         Comp.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetCompra());
@@ -85,6 +106,7 @@ public class InventarioController implements Initializable {
         Prov.setPrefWidth(100);
         Prov.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetProveedor());
         final TreeItem<Producto> root = new RecursiveTreeItem<>(LProductoCompra, RecursiveTreeObject::getChildren);
+        this.TreeViewCompra.setEditable(true);
         this.TreeViewCompra.getColumns().setAll(ID, Desc, Cant, Comp, Venta, Prov);
         this.TreeViewCompra.setRoot(root);
         this.TreeViewCompra.setShowRoot(false);
@@ -185,12 +207,6 @@ public class InventarioController implements Initializable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void ActualizarCantidad(KeyEvent keyEvent) {
-        for (i = 0; i < LProductoCompra.size(); i++){
-            if()
         }
     }
 }

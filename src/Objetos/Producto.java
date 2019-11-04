@@ -74,8 +74,8 @@ public class Producto extends RecursiveTreeObject<Producto>{
         return Stock;
     }
 
-    public void SetStock(StringProperty Stock){
-        this.Stock = Stock;
+    public void SetSstock(String Stock){
+        this.Stock = new SimpleStringProperty(Stock);
     }
 
     public String GetProveedor(){
