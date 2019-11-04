@@ -1,49 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<JFXTabPane prefHeight="530.0" prefWidth="1071.0" style="-fx-background-color: #f3e5f5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <tabs>
-      <Tab id="tInventario" style="-fx-background-color: #ce93d8;" text="Inventario">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-         </content>
-      </Tab>
-      <Tab id="tModificar" style="-fx-background-color: #ce93d8;" text="Modificar">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <JFXButton id="btnEliminar" buttonType="RAISED" layoutX="841.0" layoutY="362.0" prefHeight="61.0" prefWidth="167.0" style="-fx-background-color: #9c27b0;" text="Eliminar" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font></JFXButton>
-               </children>
-            </AnchorPane>
-         </content>
-      </Tab>
-      <Tab id="tIngresar" style="-fx-background-color: #ce93d8;" text="Ingresar">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <JFXTextField id="numSerie" focusColor="#6a1b9a" layoutX="44.0" layoutY="64.0" prefHeight="25.0" prefWidth="295.0" promptText="No. serie" />
-                  <JFXTextField id="nombrePro" focusColor="#6a1b9a" layoutX="524.0" layoutY="64.0" prefHeight="25.0" prefWidth="295.0" promptText="Nombre" />
-                  <JFXTextField id="categoria" focusColor="#6a1b9a" layoutX="44.0" layoutY="157.0" prefHeight="25.0" prefWidth="295.0" promptText="Categoria" />
-                  <JFXTextField id="preciVenta" focusColor="#6a1b9a" layoutX="524.0" layoutY="157.0" prefHeight="25.0" prefWidth="295.0" promptText="Precio venta" />
-                  <JFXTextField id="cant" focusColor="#6a1b9a" layoutX="42.0" layoutY="247.0" prefHeight="25.0" prefWidth="295.0" promptText="Cantidad" />
-                  <JFXTextField id="descrip" focusColor="#6a1b9a" layoutX="44.0" layoutY="362.0" prefHeight="25.0" prefWidth="295.0" promptText="Descripción" />
-                  <JFXButton id="btnAgregarPro" buttonType="RAISED" layoutX="841.0" layoutY="362.0" prefHeight="61.0" prefWidth="167.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Agregar producto" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font></JFXButton>
-                  <JFXTextField id="preciCompra" focusColor="#6a1b9a" layoutX="524.0" layoutY="247.0" prefHeight="25.0" prefWidth="295.0" promptText="Precio compra" />
-               </children>
-            </AnchorPane>
-         </content>
-      </Tab>
-   </tabs>
-</JFXTabPane>
+<AnchorPane fx:id="Aroot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="1071.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.InventarioController">
+   <children>
+      <JFXTabPane fx:id="root" prefHeight="530.0" prefWidth="1071.0" style="-fx-background-color: #f3e5f5;">
+         <tabs>
+            <Tab id="tInventario" text="Inventario">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXTreeTableView fx:id="TreeTable" prefHeight="493.0" prefWidth="900.0" />
+                        <JFXTextField fx:id="TxtFiltrar" alignment="CENTER" layoutX="907.0" layoutY="111.0" prefHeight="25.0" prefWidth="150.0" promptText="Descripción, proveedor" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab id="tModificar" text="Modificar">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXButton id="btnEliminar" fx:id="BtnGuardar" buttonType="RAISED" layoutX="841.0" layoutY="362.0" prefHeight="61.0" prefWidth="167.0" style="-fx-background-color: #9c27b0;" text="Guardar" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXTextField fx:id="TxtBuscar" alignment="CENTER" focusColor="#ce93d8" layoutX="14.0" layoutY="14.0" onKeyPressed="#Buscar" promptText="Buscar" />
+                        <JFXTextField fx:id="ModCod" alignment="CENTER" focusColor="#ce93d8" layoutX="14.0" layoutY="113.0" promptText="Código" />
+                        <JFXTextField fx:id="ModPCompra" alignment="CENTER" focusColor="#ce93d8" layoutX="14.0" layoutY="193.0" promptText="\$ Compra" />
+                        <JFXTextField fx:id="ModPVenta" alignment="CENTER" focusColor="#ce93d8" layoutX="14.0" layoutY="270.0" promptText="\$ Venta" />
+                        <JFXTextArea fx:id="ModDesc" focusColor="#ce93d8" layoutX="323.0" layoutY="211.0" prefColumnCount="20" prefHeight="84.0" prefWidth="240.0" promptText="Descripción" />
+                        <JFXComboBox fx:id="ModProveedor" focusColor="#ce93d8" layoutX="323.0" layoutY="113.0" prefHeight="25.0" prefWidth="160.0" promptText="Proveedor" />
+                        <JFXComboBox fx:id="ModPresen" focusColor="#ce93d8" layoutX="575.0" layoutY="113.0" prefHeight="25.0" prefWidth="161.0" promptText="Presentación" />
+                        <JFXComboBox fx:id="ModCateg" focusColor="#ce93d8" layoutX="843.0" layoutY="113.0" prefHeight="25.0" prefWidth="164.0" promptText="Categoría" />
+                        <JFXCheckBox fx:id="ModReceta" checkedColor="#ea80fc" layoutX="625.0" layoutY="202.0" text="Receta" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab id="tIngresar" text="Compra">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXButton id="btnAgregarPro" fx:id="BtnFinalizar" buttonType="RAISED" layoutX="890.0" layoutY="418.0" prefHeight="61.0" prefWidth="167.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Finalizar Compra" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXTreeTableView fx:id="TreeViewCompra" prefHeight="300.0" prefWidth="1071.0" />
+                        <JFXTextField fx:id="TxtCod" alignment="CENTER" layoutX="14.0" layoutY="312.0" onKeyPressed="#Agregar" prefHeight="25.0" prefWidth="221.0" promptText="Código de barras" />
+                        <Label fx:id="lblTotal" layoutX="908.0" layoutY="371.0" prefHeight="35.0" prefWidth="101.0" text="0.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbl" layoutX="890.0" layoutY="371.0" text="\$">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="TxtCantidad" alignment="CENTER" layoutX="14.0" layoutY="406.0" prefHeight="25.0" prefWidth="157.0" promptText="Cantidad" />
+                        <JFXTextField fx:id="TxtPrecio" alignment="CENTER" layoutX="312.0" layoutY="312.0" prefHeight="25.0" prefWidth="168.0" promptText="\$ Precio Compra" />
+                        <JFXComboBox fx:id="Proveedores" editable="true" layoutX="536.0" layoutY="312.0" prefHeight="25.0" prefWidth="224.0" promptText="Proveedor" />
+                        <JFXTextField fx:id="TxtPVenta" alignment="CENTER" layoutX="312.0" layoutY="407.0" prefHeight="25.0" prefWidth="168.0" promptText="\$ Precio Venta" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+   </children>
+</AnchorPane>
