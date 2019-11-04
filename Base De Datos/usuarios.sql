@@ -11,8 +11,8 @@ grant all privileges on  Farmacia.* to 'GerardoGalvan';
 /*Encargado de turno*/
 Grant select,insert,update,delete on farmacia.promocion to 'RafaelZamora';
 Grant select,insert,update,delete on farmacia.detalle_promocion to 'RafaelZamora';
-Grant all privileges on `farmacia`.`reporte de ventas` to 'RafaelZamora';
-Grant all privileges on `farmacia`.`reporte de proveedores` to 'RafaelZamora';
+Grant all privileges on `farmacia`.`reporte de productos vendidos` to 'RafaelZamora';
+Grant all privileges on `farmacia`.`proveedor y productos` to 'RafaelZamora';
 
 /*Inventario*/
 grant select,insert,update on `farmacia`.`producto` to 'LorenzoHR';
