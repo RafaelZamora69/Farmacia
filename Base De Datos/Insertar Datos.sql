@@ -19,25 +19,6 @@ insert into Proveedor (Nombre, Telefono, Correo, Direccion) values ("Laboratorio
 insert into Proveedor (Nombre, Telefono, Correo, Direccion) values ("Merck Sharp y Dohme Corp.","5557284000","","Av. 16 de Septiembre no. 301, Col. Xaltocan, Ciudad de México C. P. 16090");
 insert into Proveedor (Nombre, Telefono, Correo, Direccion) values ("Productos Farmacéuticos CHINOIN","4659581804","","Km 4.2 carretera pabellón, Hidalgo, código postal: 20420");
 select * from Proveedor;
-/* Insertar en Farmacia.Categorias */
-insert into Categorias (idCategoria, Descripcion) values (1, 'Refrescos / Bebidas');
-insert into Categorias (idCategoria, Descripcion) values (2, 'Analgelsicos');
-insert into Categorias (idCategoria, Descripcion) values (3, 'Laxante');
-insert into Categorias (idCategoria, Descripcion) values (4, 'Antialérgicos');
-insert into Categorias (idCategoria, Descripcion) values (5, 'Anticonceptivos');
-insert into Categorias (idCategoria, Descripcion) values (6, 'Diabeticos');
-insert into Categorias (idCategoria, Descripcion) values (7, 'disfunción eréctil');
-insert into Categorias (idCategoria, Descripcion) values (8, 'Infantil');
-insert into Categorias (idCategoria, Descripcion) values (9, 'Suplementos alimenticios');
-select * from Categorias;
-
-/* Insertar en Farmacia.Presentación */ 
-insert into Presentacion (idPresentacion, Descripcion) values (1, 'Lata');
-insert into Presentacion (idPresentacion, Descripcion) values (2, 'Botella');
-insert into Presentacion (idPresentacion, Descripcion) values (3, 'Tabletas');
-insert into Presentacion (idPresentacion, Descripcion) values (4, 'Capsulas');
-insert into Presentacion (idPresentacion, Descripcion) values (5, 'Jarabe');
-select * from Presentacion;
 
 /* Insertar en Farmacia.Promocion y Detalle_Promocion */
 insert into Promocion (Descripcion, Activa) values ("2X1 en Pepsi 355ML",1);
@@ -47,48 +28,48 @@ insert into Promocion (Descripcion, Activa) values ("Viernes de ahorcar rucas, a
 select * from Promocion;
 
 /* Insertar en Farmacia.Productos */
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria) 
-    values ('7501031311309', 'Pepsi 355ML', 1, 1, 8.0, 10.0, 0, 0, 1);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501031311606', 'Pepsi 2L', 2, 1, 12.0, 15.0, 0, 0, 1);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('036731501004', 'Gatorade Naranja 500ML', 2, 1, 10.0, 13.0, 0, 0, 1);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501086801121', 'Agua Natural Epura 600ML', 2, 1, 6.00, 8.50, 0, 0, 1);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501086801046', 'Agua Natural Epura 1LT', 2, 1, 8.00, 10.00, 0, 0, 1);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501031360024', 'Manzanita Sol 600ML', 2, 1, 9.00, 11.50, 0, 0, 1);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501349029880', 'Tramadol, Paracetamol 325 mg.', 3, 2, 90.0, 125.0, 0, 0, 2); 
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7502223703735', 'Ketorolaco 30 Mg.', 3, 3, 25.0, 31.0, 0, 1, 2);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501075722253', 'Nineka neomicina, Caolín y Pectina', 3, 4, 40.0, 60.0, 0, 0, 2);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501086313204', 'OPTIUM 125/50/1MG', 3, 5, 280.00, 402.00, 0, 1, 2);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501086300891', 'Ad-Col Oral Ad', 3, 5,78.00,112.00, 0, 0, 4);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501050633666', 'Clarityne Solución 30ML', 5, 6,95.00,133.00, 0, 0, 4);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501008491966', 'Aspirina 40 Tabletas', 3, 6,15.00,24.00, 0, 0, 2);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7703331157506', 'Yasmin Oral 21 Tabletas', 5, 6,200.00,291.00, 0, 0, 5);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501318601314', 'Glucobay 100MG Oral', 3, 6,400.00,496.00, 0, 0, 6);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501318620223', 'Levitra 100MG Oral 1 Tab', 3, 6,180.00,229.00, 0, 0, 7);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501007532349', 'Dramamine 250mL Oral', 5, 7,90.00,124.00, 0, 0,8 );
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('637420602004', 'Ferlor A. F. cont. 30, adulto.', 3, 8,37.00,48.00, 0, 0,8 );
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501035274901', 'Ectaprim, 120mL, pediátrico', 5, 9,103.00,138.00, 0, 1,9 );
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('75035357700', 'Cedax ceftibuteno, 36 mg/mL', 5,10,200.00,399.00, 0, 0, 9);
-insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, idCategoria)
-    values ('7501342800158', 'Antiflu-Des 30mL pediátrico', 5,10,53.00,67.00, 0, 0, 9);
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501031311309', 'Pepsi 355ML', 'Lata', 1, 8.0, 10.0, 0, 0, 'Refrescos / Bebidas');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501031311606', 'Pepsi 2L', 'Botella', 1, 12.0, 15.0, 0, 0, 'Refrescos / Bebidas');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('036731501004', 'Gatorade Naranja 500ML', 'Botella', 1, 10.0, 13.0, 0, 0, 'Refrescos / Bebidas');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501086801121', 'Agua Natural Epura 600ML', 'Botella', 1, 6.00, 8.50, 0, 0, 'Refrescos / Bebidas');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501086801046', 'Agua Natural Epura 1LT', 'Botella', 1, 8.00, 10.00, 0, 0, 'Refrescos / Bebidas');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501031360024', 'Manzanita Sol 600ML', 'Botella', 1, 9.00, 11.50, 0, 0, 'Refrescos / Bebidas');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501349029880', 'Tramadol, Paracetamol 325 mg.', 'Tabletas', 2, 90.0, 125.0, 0, 0, 'Analgelsicos'); 
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7502223703735', 'Ketorolaco 30 Mg.', 'Tabletas', 3, 25.0, 31.0, 0, 1, 'Analgelsicos');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501075722253', 'Nineka neomicina, Caolín y Pectina', 'Tabletas', 4, 40.0, 60.0, 0, 0, 'Analgelsicos');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501086313204', 'OPTIUM 125/50/1MG', 'Tabletas', 5, 280.00, 402.00, 0, 1, 'Analgelsicos');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501086300891', 'Ad-Col Oral Ad', 'Tabletas', 5,78.00,112.00, 0, 0, 'Antialérgicos');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501050633666', 'Clarityne Solución 30ML', 'Jarabe', 6,95.00,133.00, 0, 0, 'Antialérgicos');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501008491966', 'Aspirina 40 Tabletas', 'Tabletas', 6,15.00,24.00, 0, 0, 'Analgelsicos');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7703331157506', 'Yasmin Oral 21 Tabletas', 'Tabletas', 6,200.00,291.00, 0, 0, 'Anticonceptivos');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501318601314', 'Glucobay 100MG Oral', 'Tabletas', 6,400.00,496.00, 0, 0, 'Diabeticos');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501318620223', 'Levitra 100MG Oral 1 Tab', 'Tabletas', 6,180.00,229.00, 0, 0, 'disfunción eréctil');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501007532349', 'Dramamine 250mL Oral', 'Jarabe', 7,90.00,124.00, 0, 0,'Infantil');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('637420602004', 'Ferlor A. F. cont. 30, adulto.', 'Tabletas', 8,37.00,48.00, 0, 0,'Infantil');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501035274901', 'Ectaprim, 120mL, pediátrico', 'Jarabe', 9,103.00,138.00, 0, 1,'Suplementos alimenticios');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('75035357700', 'Cedax ceftibuteno, 36 mg/mL', 'Jarabe',10,200.00,399.00, 0, 0, 'Suplementos alimenticios');
+insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) 
+    values ('7501342800158', 'Antiflu-Des 30mL pediátrico', 'Jarabe',10,53.00,67.00, 0, 0, 'Suplementos alimenticios');
 select * from Producto;
 
 /* Insertar en Farmacia.Detalle_Promocion */

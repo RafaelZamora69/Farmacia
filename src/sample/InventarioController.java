@@ -17,8 +17,10 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
+import tray.notification.NotificationType;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -65,7 +67,7 @@ public class InventarioController implements Initializable {
 
     public static final ObservableList<Producto> LProductoCompra = FXCollections.observableArrayList();
 
-    private Double Total = 0.0;
+    private Double Total = 0.0, Aux = 0.0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -98,7 +100,7 @@ public class InventarioController implements Initializable {
                 TreeItem<Producto> Edit = TreeViewCompra.getTreeItem(event.getTreeTablePosition().getRow());
                 Edit.getValue().SetSstock(event.getNewValue());
                 TxtCantidad.setText(event.getNewValue());
-                Total += Double.parseDouble(TxtPrecio.getText()) * Double.parseDouble(event.getNewValue());
+                Total = Total + Double.parseDouble(TxtPrecio.getText()) * Double.parseDouble(event.getNewValue());
                 lblTotal.setText(String.valueOf(Total));
             }
         });
@@ -212,24 +214,16 @@ public class InventarioController implements Initializable {
                 this.ModProveedor.getItems().add(rs.getString(1));
                 this.Proveedores.getItems().add(rs.getString(1));
             }
-            rs = con.createStatement().executeQuery("select Descripcion from Categorias;");
+            rs = con.createStatement().executeQuery("select distinct Categoria from Producto;");
             while(rs.next()){
                 this.ModCateg.getItems().add(rs.getString(1));
             }
-            rs = con.createStatement().executeQuery("select Descripcion from Presentacion");
+            rs = con.createStatement().executeQuery("select distinct Presentacion from Producto;");
             while(rs.next()){
                 this.ModPresen.getItems().add(rs.getString(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-<<<<<<< HEAD
-=======
-
-    public void ActualizarCantidad(KeyEvent keyEvent) {
-        for (int i = 0; i < LProductoCompra.size(); i++){
-
         }
     }
 
@@ -239,17 +233,11 @@ public class InventarioController implements Initializable {
                 Connection con = Conexion.getConnection();
                 PreparedStatement statement;
                 if(this.TxtBuscar.getText().length() == 13){
-                    statement = con.prepareStatement("select idProducto, Precio_Compra, Precio_Venta, Producto.Descripcion, Proveedor.Nombre, Presentacion.Descripcion, Categorias.Descripcion, Receta\n" +
-                            "from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor\n" +
-                            "inner join Categorias on Producto.idCategoria = Categorias.idCategoria\n" +
-                            "inner join Presentacion on Producto.Presentacion = Presentacion.idPresentacion\n" +
-                            "where Cod_Barras = ?;");
+                    statement = con.prepareStatement("select idProducto, Precio_Compra, Precio_Venta, Producto.Descripcion, Proveedor.Nombre, Presentacion, Categoria, Receta\n" +
+                            "from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor where Cod_Barras = ?;");
                 } else {
-                    statement = con.prepareStatement("select idProducto, Precio_Compra, Precio_Venta, Producto.Descripcion, Proveedor.Nombre, Presentacion.Descripcion, Categorias.Descripcion, Receta\n" +
-                            "from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor\n" +
-                            "inner join Categorias on Producto.idCategoria = Categorias.idCategoria\n" +
-                            "inner join Presentacion on Producto.Presentacion = Presentacion.idPresentacion\n" +
-                            "where idProducto = ?;");
+                    statement = con.prepareStatement("select idProducto, Precio_Compra, Precio_Venta, Producto.Descripcion, Proveedor.Nombre, Presentacion, Categoria, Receta\n" +
+                            "from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor where idProducto = ?;");
                 }
                 statement.setString(1, this.TxtBuscar.getText());
                 ResultSet rs = statement.executeQuery();
@@ -266,9 +254,40 @@ public class InventarioController implements Initializable {
                     } else {
                         this.ModReceta.setSelected(false);
                     }
+                    return;
                 }
+                Alertas.MostrarAlerta("No se ha encontrado el producto", NotificationType.WARNING, "Advertencia");
             }
         }
     }
->>>>>>> master
+
+    public void Actualizar(MouseEvent mouseEvent){
+        try {
+            Connection con = Conexion.getConnection();
+            PreparedStatement Statement = con.prepareStatement("update Producto set Descripcion = ?, Precio_Compra = ?, Precio_Venta = ?, Proveedor = ?, Presentacion = ?, Categoria = ?, Receta = ? where idProducto = ?;");
+            Statement.setString(1,this.ModDesc.getText());
+            Statement.setDouble(2, Double.parseDouble(this.ModPCompra.getText()));
+            Statement.setDouble(3, Double.parseDouble(this.ModPVenta.getText()));
+            Statement.setInt(4,GetIdProveedor());
+            Statement.setString(5, this.ModPresen.getValue());
+            Statement.setString(6, this.ModCateg.getValue());
+            Statement.setBoolean(7, this.ModReceta.isSelected());
+            Statement.setString(8, this.ModCod.getText());
+            Statement.executeUpdate();
+            Alertas.MostrarAlerta("Producto actualizado con exito", NotificationType.SUCCESS, "Success");
+        } catch (SQLException e) {
+            Alertas.MostrarAlerta("A ocurrido un error", NotificationType.ERROR, "Error");
+        }
+    }
+
+    public int GetIdProveedor() throws SQLException {
+        Connection con = Conexion.getConnection();
+        PreparedStatement Statement = con.prepareStatement("Select idProveedor from Proveedor where Nombre = ?");
+        Statement.setString(1,this.ModProveedor.getValue());
+        ResultSet rs = Statement.executeQuery();
+        while(rs.next()){
+            return rs.getInt(1);
+        }
+        return 0;
+    }
 }
