@@ -30,13 +30,21 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
+<<<<<<< Updated upstream
                         <JFXButton id="btnEliminar" fx:id="BtnGuardar" buttonType="RAISED" layoutX="841.0" layoutY="362.0" onMouseClicked="#Actualizar" prefHeight="61.0" prefWidth="167.0" style="-fx-background-color: #9c27b0;" text="Guardar" textFill="WHITE">
+=======
+                        <JFXButton id="btnEliminar" fx:id="BtnGuardar" buttonType="RAISED" layoutX="841.0" layoutY="362.0" prefHeight="61.0" prefWidth="167.0" style="-fx-background-color: #9c27b0;" text="Guardar" textFill="WHITE">
+>>>>>>> Stashed changes
                            <font>
                               <Font size="18.0" />
                            </font>
                         </JFXButton>
                         <JFXTextField fx:id="TxtBuscar" alignment="CENTER" focusColor="#ce93d8" layoutX="14.0" layoutY="14.0" onKeyPressed="#Buscar" promptText="Buscar" />
+<<<<<<< Updated upstream
                         <JFXTextField fx:id="ModCod" alignment="CENTER" editable="false" focusColor="#ce93d8" layoutX="14.0" layoutY="113.0" promptText="Código" />
+=======
+                        <JFXTextField fx:id="ModCod" alignment="CENTER" focusColor="#ce93d8" layoutX="14.0" layoutY="113.0" promptText="Código" />
+>>>>>>> Stashed changes
                         <JFXTextField fx:id="ModPCompra" alignment="CENTER" focusColor="#ce93d8" layoutX="14.0" layoutY="193.0" promptText="\$ Compra" />
                         <JFXTextField fx:id="ModPVenta" alignment="CENTER" focusColor="#ce93d8" layoutX="14.0" layoutY="270.0" promptText="\$ Venta" />
                         <JFXTextArea fx:id="ModDesc" focusColor="#ce93d8" layoutX="323.0" layoutY="211.0" prefColumnCount="20" prefHeight="84.0" prefWidth="240.0" promptText="Descripción" />
