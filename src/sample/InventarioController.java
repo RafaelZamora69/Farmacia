@@ -6,7 +6,6 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,14 +55,12 @@ public class InventarioController implements Initializable {
     private JFXTreeTableView<Producto> TreeViewCompra;
 
     @FXML
-    private Label lblTotal, lbl;
+    private Label lblTotal;
 
     @FXML
     private JFXComboBox<String> Proveedores, ModProveedor, ModPresen, ModCateg;
 
     public static final ObservableList<Producto> LProducto = FXCollections.observableArrayList();
-
-    final FilteredList<Producto> FiltroProductos = new FilteredList<>(LProducto, e -> true);
 
     public static final ObservableList<Producto> LProductoCompra = FXCollections.observableArrayList();
 

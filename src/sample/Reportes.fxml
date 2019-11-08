@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedAreaChart?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="root" prefHeight="530.0" prefWidth="1071.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ReporteController">
    <children>
@@ -10,7 +19,59 @@
          <tabs>
             <Tab text="Reporte ventas">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXDatePicker fx:id="FechaDe" layoutX="14.0" layoutY="146.0" />
+                        <JFXDatePicker fx:id="FechaHasta" layoutX="14.0" layoutY="257.0" />
+                        <JFXTreeTableView fx:id="TableReporte" layoutX="447.0" layoutY="-1.0" prefHeight="494.0" prefWidth="653.0">
+                           <columns>
+                              <TreeTableColumn fx:id="IDVenta" prefWidth="75.0" text="IDVenta" />
+                              <TreeTableColumn fx:id="Vendedor" prefWidth="200.0" text="Vendedor" />
+                              <TreeTableColumn fx:id="Fecha" prefWidth="100.0" text="Fecha" />
+                              <TreeTableColumn fx:id="Total" prefWidth="100.0" text="\$ Total" />
+                              <TreeTableColumn fx:id="Cliente" prefWidth="200.0" text="Cliente" />
+                           </columns>
+                        </JFXTreeTableView>
+                        <Label layoutX="212.0" layoutY="147.0" text="De">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="213.0" layoutY="258.0" text="Hasta">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="213.0" layoutY="51.0" text="Total: $">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="Total" layoutX="272.0" layoutY="51.0" prefHeight="27.0" prefWidth="87.0" text="0.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXTreeTableView fx:id="TableVendedores" layoutY="300.0" prefHeight="193.0" prefWidth="417.0">
+                           <columns>
+                              <TreeTableColumn fx:id="IdEmpleado" prefWidth="75.0" text="ID" />
+                              <TreeTableColumn fx:id="Nombre" prefWidth="250.0" text="Nombre" />
+                              <TreeTableColumn fx:id="Puesto" prefWidth="90.0" text="Puesto" />
+                           </columns>
+                        </JFXTreeTableView>
+                        <JFXTextField fx:id="TxtFiltro" alignment="CENTER" layoutX="14.0" layoutY="25.0" promptText="ID, Nombre" />
+                        <JFXButton fx:id="BtnBuscar" buttonType="RAISED" layoutX="56.0" layoutY="93.0" text="Buscar" />
+                        <Label layoutX="213.0" layoutY="22.0" text="Ventas realizadas: ">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="VentasTotales" layoutX="359.0" layoutY="24.0" prefHeight="27.0" prefWidth="55.0" text="0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
                </content>
             </Tab>
             <Tab text="Reporte compras">
@@ -18,9 +79,19 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
-            <Tab text="Reporte avanzado">
+            <Tab text="No se je ">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <StackedAreaChart fx:id="Chart">
+                          <xAxis>
+                            <NumberAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </StackedAreaChart>
+                     </children></AnchorPane>
                </content>
             </Tab>
          </tabs>
