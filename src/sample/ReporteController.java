@@ -102,6 +102,6 @@ public class ReporteController implements Initializable {
     }
 
     public void CargarReporte(){
-        
+
     }
 }
