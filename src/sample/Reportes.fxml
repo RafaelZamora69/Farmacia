@@ -28,7 +28,7 @@
                               <TreeTableColumn fx:id="IDVenta" prefWidth="75.0" text="IDVenta" />
                               <TreeTableColumn fx:id="Vendedor" prefWidth="200.0" text="Vendedor" />
                               <TreeTableColumn fx:id="Fecha" prefWidth="100.0" text="Fecha" />
-                              <TreeTableColumn fx:id="Total" prefWidth="100.0" text="\$ Total" />
+                              <TreeTableColumn fx:id="TotalVenta" prefWidth="100.0" text="\$ Total" />
                               <TreeTableColumn fx:id="Cliente" prefWidth="200.0" text="Cliente" />
                            </columns>
                         </JFXTreeTableView>
@@ -60,7 +60,7 @@
                            </columns>
                         </JFXTreeTableView>
                         <JFXTextField fx:id="TxtFiltro" alignment="CENTER" layoutX="14.0" layoutY="25.0" promptText="ID, Nombre" />
-                        <JFXButton fx:id="BtnBuscar" buttonType="RAISED" layoutX="56.0" layoutY="93.0" text="Buscar" />
+                        <JFXButton fx:id="BtnBuscar" buttonType="RAISED" layoutX="56.0" layoutY="93.0" onMouseClicked="#CargarReporte" text="Buscar" />
                         <Label layoutX="213.0" layoutY="22.0" text="Ventas realizadas: ">
                            <font>
                               <Font size="18.0" />

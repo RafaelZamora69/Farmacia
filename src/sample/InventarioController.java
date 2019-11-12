@@ -211,19 +211,11 @@ public class InventarioController implements Initializable {
                 this.ModProveedor.getItems().add(rs.getString(1));
                 this.Proveedores.getItems().add(rs.getString(1));
             }
-<<<<<<< Updated upstream
             rs = con.createStatement().executeQuery("select distinct Categoria from Producto;");
             while(rs.next()){
                 this.ModCateg.getItems().add(rs.getString(1));
             }
             rs = con.createStatement().executeQuery("select distinct Presentacion from Producto;");
-=======
-            rs = con.createStatement().executeQuery("select Descripcion from Categorias;");
-            while(rs.next()){
-                this.ModCateg.getItems().add(rs.getString(1));
-            }
-            rs = con.createStatement().executeQuery("select Descripcion from Presentacion");
->>>>>>> Stashed changes
             while(rs.next()){
                 this.ModPresen.getItems().add(rs.getString(1));
             }
@@ -231,17 +223,6 @@ public class InventarioController implements Initializable {
             e.printStackTrace();
         }
     }
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-=======
-
-    public void ActualizarCantidad(KeyEvent keyEvent) {
-        for (int i = 0; i < LProductoCompra.size(); i++){
-
-        }
-    }
->>>>>>> Stashed changes
 
     public void Buscar(KeyEvent event) throws SQLException {
         if(event.getCode().equals(KeyCode.ENTER)) {
@@ -249,25 +230,11 @@ public class InventarioController implements Initializable {
                 Connection con = Conexion.getConnection();
                 PreparedStatement statement;
                 if(this.TxtBuscar.getText().length() == 13){
-<<<<<<< Updated upstream
                     statement = con.prepareStatement("select idProducto, Precio_Compra, Precio_Venta, Producto.Descripcion, Proveedor.Nombre, Presentacion, Categoria, Receta\n" +
                             "from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor where Cod_Barras = ?;");
                 } else {
                     statement = con.prepareStatement("select idProducto, Precio_Compra, Precio_Venta, Producto.Descripcion, Proveedor.Nombre, Presentacion, Categoria, Receta\n" +
                             "from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor where idProducto = ?;");
-=======
-                    statement = con.prepareStatement("select idProducto, Precio_Compra, Precio_Venta, Producto.Descripcion, Proveedor.Nombre, Presentacion.Descripcion, Categorias.Descripcion, Receta\n" +
-                            "from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor\n" +
-                            "inner join Categorias on Producto.idCategoria = Categorias.idCategoria\n" +
-                            "inner join Presentacion on Producto.Presentacion = Presentacion.idPresentacion\n" +
-                            "where Cod_Barras = ?;");
-                } else {
-                    statement = con.prepareStatement("select idProducto, Precio_Compra, Precio_Venta, Producto.Descripcion, Proveedor.Nombre, Presentacion.Descripcion, Categorias.Descripcion, Receta\n" +
-                            "from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor\n" +
-                            "inner join Categorias on Producto.idCategoria = Categorias.idCategoria\n" +
-                            "inner join Presentacion on Producto.Presentacion = Presentacion.idPresentacion\n" +
-                            "where idProducto = ?;");
->>>>>>> Stashed changes
                 }
                 statement.setString(1, this.TxtBuscar.getText());
                 ResultSet rs = statement.executeQuery();
@@ -284,7 +251,6 @@ public class InventarioController implements Initializable {
                     } else {
                         this.ModReceta.setSelected(false);
                     }
-<<<<<<< Updated upstream
                     return;
                 }
                 Alertas.MostrarAlerta("No se ha encontrado el producto", NotificationType.WARNING, "Advertencia");
@@ -321,11 +287,4 @@ public class InventarioController implements Initializable {
         }
         return 0;
     }
-=======
-                }
-            }
-        }
-    }
->>>>>>> master
->>>>>>> Stashed changes
 }
