@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ReporteController">
    <children>
       <JFXTabPane fx:id="TabPane" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #f3e5f5;">
@@ -25,7 +24,7 @@
                      <children>
                         <JFXDatePicker fx:id="FechaDe" layoutX="38.0" layoutY="147.0" promptText="De" />
                         <JFXDatePicker fx:id="FechaHasta" layoutX="38.0" layoutY="258.0" promptText="Hasta" />
-                        <JFXTreeTableView fx:id="TableReporte" layoutX="447.0" layoutY="-1.0" prefHeight="354.0" prefWidth="653.0">
+                        <JFXTreeTableView fx:id="TableReporte" layoutX="447.0" layoutY="-1.0" prefHeight="313.0" prefWidth="653.0">
                            <columns>
                               <TreeTableColumn fx:id="IDVenta" prefWidth="75.0" text="IDVenta" />
                               <TreeTableColumn fx:id="Vendedor" prefWidth="200.0" text="Vendedor" />
@@ -47,16 +46,6 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <JFXTreeTableView fx:id="TableVendedores" layoutY="300.0" prefHeight="364.0" prefWidth="417.0">
-                           <columns>
-                              <TreeTableColumn fx:id="IdEmpleado" prefWidth="75.0" text="ID" />
-                              <TreeTableColumn fx:id="Nombre" prefWidth="250.0" text="Nombre" />
-                              <TreeTableColumn fx:id="Puesto" prefWidth="90.0" text="Puesto" />
-                           </columns>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </JFXTreeTableView>
                         <JFXTextField fx:id="TxtFiltro" alignment="CENTER" layoutX="38.0" layoutY="37.0" promptText="ID venta" />
                         <JFXButton fx:id="BtnBuscar" buttonType="RAISED" layoutX="221.0" layoutY="201.0" onMouseClicked="#CargarReporteVentas" prefHeight="30.0" prefWidth="65.0" ripplerFill="WHITE" style="-fx-background-color: #009688;" text="Buscar" textFill="WHITE" />
                         <Label layoutX="213.0" layoutY="22.0" text="Ventas realizadas: ">
@@ -69,12 +58,12 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="743.0" layoutY="364.0" text="Detalles">
+                        <Label layoutX="742.0" layoutY="314.0" text="Detalles">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <JFXTreeTableView fx:id="TableDetalleVenta" layoutX="447.0" layoutY="402.0" prefHeight="262.0" prefWidth="655.0">
+                        <JFXTreeTableView fx:id="TableDetalleVenta" layoutX="446.0" layoutY="343.0" prefHeight="320.0" prefWidth="655.0">
                            <columns>
                               <TreeTableColumn fx:id="Detalle_IDVenta" prefWidth="75.0" text="ID Venta" />
                               <TreeTableColumn fx:id="DetalleProducto" prefWidth="250.0" text="Producto" />
@@ -113,7 +102,8 @@
                               <NumberAxis side="LEFT" />
                            </yAxis>
                         </StackedAreaChart>
-                        <JFXTreeTableView layoutX="455.0" prefHeight="665.0" prefWidth="646.0" />
+                        <JFXTreeTableView fx:id="TableReporteCompra" layoutX="455.0" prefHeight="320.0" prefWidth="646.0" />
+                        <JFXTreeTableView fx:id="TableDetalleCompra" layoutX="455.0" layoutY="332.0" prefHeight="331.0" prefWidth="646.0" />
                      </children>
                   </AnchorPane>
                </content>

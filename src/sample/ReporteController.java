@@ -5,6 +5,7 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,9 +38,6 @@ public class ReporteController implements Initializable {
     private Label Total;
 
     @FXML
-    private JFXTreeTableView<Persona> TableVendedores;
-
-    @FXML
     private JFXTextField TxtFiltro;
 
     @FXML
@@ -47,15 +45,6 @@ public class ReporteController implements Initializable {
 
     @FXML
     private Label VentasTotales;
-
-    @FXML
-    private TreeTableColumn<Persona, String> IdEmpleado;
-
-    @FXML
-    private TreeTableColumn<Persona, String> Nombre;
-
-    @FXML
-    private TreeTableColumn<Persona, String> Puesto;
 
     @FXML
     private TreeTableColumn<ObjetoReporte, String> Cliente;
@@ -102,48 +91,42 @@ public class ReporteController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        CargarEmpleados();
         InicializarTablas();
-
     }
 
-    void InicializarTablas(){
+    void InicializarTablas() {
         //Tabla Reporte
-        IDVenta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) ->  param.getValue().getValue().sGetIdVenta());
-        Vendedor.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) ->  param.getValue().getValue().sGetVendedor());
-        Fecha.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) ->  param.getValue().getValue().sGetFecha());
-        TotalVenta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) ->  param.getValue().getValue().sGetTotal());
-        Cliente.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) ->  param.getValue().getValue().sGetCliente());
+        IDVenta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) -> param.getValue().getValue().sGetIdVenta());
+        Vendedor.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) -> param.getValue().getValue().sGetVendedor());
+        Fecha.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) -> param.getValue().getValue().sGetFecha());
+        TotalVenta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) -> param.getValue().getValue().sGetTotal());
+        Cliente.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) -> param.getValue().getValue().sGetCliente());
         final TreeItem<ObjetoReporte> root = new RecursiveTreeItem<>(LReporte, RecursiveTreeObject::getChildren);
         this.TableReporte.setRoot(root);
         this.TableReporte.setShowRoot(false);
+        //Filtro
+        this.TxtFiltro.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            TableReporte.setPredicate((TreeItem<ObjetoReporte> t) -> {
+                Boolean flag = t.getValue().sGetIdVenta().getValue().contains(newValue);
+                return flag;
+            });
+        });
         //Tabla Detalle de reporte
-        Detalle_IDVenta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) ->  param.getValue().getValue().GetIdVenta());
-        DetalleProducto.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) ->  param.getValue().getValue().GetDescripcion());
-        DetallePrecio.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) ->  param.getValue().getValue().GetPrecion());
-        DetalleCantidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) ->  param.getValue().getValue().GetCantidad());
-        DetallePromocion.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) ->  param.getValue().getValue().GetPromocion());
+        Detalle_IDVenta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) -> param.getValue().getValue().GetIdVenta());
+        DetalleProducto.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) -> param.getValue().getValue().GetDescripcion());
+        DetallePrecio.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) -> param.getValue().getValue().GetPrecion());
+        DetalleCantidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) -> param.getValue().getValue().GetCantidad());
+        DetallePromocion.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) -> param.getValue().getValue().GetPromocion());
         final TreeItem<ObjetoDetalleReporte> root2 = new RecursiveTreeItem<>(LDReporte, RecursiveTreeObject::getChildren);
         this.TableDetalleVenta.setRoot(root2);
         this.TableDetalleVenta.setShowRoot(false);
-    }
-
-    private void CargarEmpleados() {
-        IdEmpleado.setCellValueFactory((TreeTableColumn.CellDataFeatures<Persona, String> param) -> param.getValue().getValue().sGetIdEmpleado());
-        Nombre.setCellValueFactory((TreeTableColumn.CellDataFeatures<Persona, String> param) ->  param.getValue().getValue().sGetNombre());
-        Puesto.setCellValueFactory((TreeTableColumn.CellDataFeatures<Persona, String> param) ->  param.getValue().getValue().sGetPuesto());
-        try {
-            Connection con = Conexion.getConnection();
-            ResultSet rs = con.createStatement().executeQuery("select idEmpleado, Nombre, Jerarquia from Empleado where Jerarquia = 'Vendedor';");
-            while (rs.next()) {
-                LVendedor.add(new Persona(rs.getString(1), null, rs.getString(2), null, null, null, rs.getString(3), null, null));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        final TreeItem<Persona> root = new RecursiveTreeItem<>(LVendedor, RecursiveTreeObject::getChildren);
-        this.TableVendedores.setRoot(root);
-        this.TableVendedores.setShowRoot(false);
+        //Filtro
+        this.TxtFiltro.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            TableDetalleVenta.setPredicate((TreeItem<ObjetoDetalleReporte> t) -> {
+                Boolean flag = t.getValue().GetIdVenta().getValue().contains(newValue);
+                return flag;
+            });
+        });
     }
 
     public void CargarReporteVentas() {

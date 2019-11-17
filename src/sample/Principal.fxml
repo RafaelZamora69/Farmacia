@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PrincipalController">
+<AnchorPane fx:id="root" prefHeight="770.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PrincipalController">
    <children>
       <AnchorPane fx:id="top" prefHeight="70.0" prefWidth="1200.0" style="-fx-background-color: #ce93d8;">
          <children>
@@ -20,7 +20,7 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <AnchorPane fx:id="left" layoutY="70.0" prefHeight="530.0" prefWidth="130.0" style="-fx-background-color: #ce93d8;">
+      <AnchorPane fx:id="left" layoutY="70.0" prefHeight="700.0" prefWidth="130.0" style="-fx-background-color: #ce93d8;">
          <children>
             <JFXButton fx:id="BtnExtras" buttonType="RAISED" layoutY="240.0" onMouseClicked="#AbrirExtras" prefHeight="40.0" prefWidth="130.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Extras" textFill="WHITE">
                <font>
@@ -42,6 +42,6 @@
             </JFXButton>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Content" layoutX="129.0" layoutY="70.0" prefHeight="530.0" prefWidth="1071.0" style="-fx-background-color: #f3e5f5;" />
+      <AnchorPane fx:id="Content" layoutX="129.0" layoutY="70.0" prefHeight="700.0" prefWidth="1070.0" style="-fx-background-color: #f3e5f5;" />
    </children>
 </AnchorPane>
