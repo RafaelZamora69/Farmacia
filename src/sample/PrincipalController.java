@@ -56,7 +56,9 @@ public class PrincipalController implements Initializable {
         SetNombre();
     }
 
-    public void AbrirExtras(MouseEvent mouseEvent) {
+    public void AbrirExtras(MouseEvent mouseEvent) throws IOException {
+        Pane pane = FXMLLoader.load(getClass().getResource("Extras.fxml"));
+        this.Content.getChildren().setAll(pane);
     }
 
     public void AbrirCaja(MouseEvent mouseEvent) throws IOException {

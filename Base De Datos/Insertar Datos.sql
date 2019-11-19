@@ -21,7 +21,7 @@ insert into Proveedor (Nombre, Telefono, Correo, Direccion) values ("Productos F
 select * from Proveedor;
 
 /* Insertar en Farmacia.Promocion y Detalle_Promocion */
-insert into promocion (Descripcion, Activa) values (0, "Sin promoción", 1); 
+insert into promocion (Descripcion, Activa) values ("Sin promoción", 1); 
 insert into Promocion (Descripcion, Activa) values ("2X1 en Pepsi 355ML",1);
 insert into Promocion (Descripcion, Activa) values ("Lunes 10% desc. en Analgesicos",1);
 insert into Promocion (Descripcion, Activa) values ("3x2 En Agua Natural Epura 600ML",1);
@@ -84,6 +84,7 @@ insert into Detalle_Promocion values (4,4);
 insert into Detalle_Promocion values (5,14);
 
 /* Insertar en Farmacia.Cliente */
+insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Sin cliente', '', '', '', 0,"");
 insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Abelardo Hernandez Mota', 'Su casa', '2293684747', '20', 0,"");
 insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Jorge Antonio Pedroza Rendón', 'Su casa', '229 137 0546', '20', 0,"");
 insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('Miguel Angel Nava Diaz', 'Las vegas 2, rio cotaxtla 657B', '2293317317', '20', 0,"");
@@ -92,13 +93,13 @@ insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('He
 insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values ('María del Rosario Chávez', 'Río Usumacinta 480B Las Vegas 2 Boca del Río Ver C.P. 94297', '2291729306', '57', 0,"");
 select * from Cliente;
 /* Insertar en Farmacia.Venta*/
-insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-23', 725.0, 1, 1);
-insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-23', 124.0, 1, 4);
-insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-23', 462.0, 1, 3);
-insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-24', 35.5, 2, 3);
-insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-24', 255.0, 2, 1);
-insert into Venta (Fecha, Total, idEmpleado) values ('2019-8-26', 41.5, 2);
-insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-26', 415.0, 1, 6);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-23', 725.0, 1, 2);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-23', 124.0, 1, 5);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-23', 462.0, 1, 4);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-24', 35.5, 2, 4);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-24', 255.0, 2, 2);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-26', 41.5, 2, 1);
+insert into Venta (Fecha, Total, idEmpleado, idCliente) values ('2019-8-26', 415.0, 1, 7);
 select * from Venta;
  
 /* Insertar en Farmacia.Detalle_Venta*/
