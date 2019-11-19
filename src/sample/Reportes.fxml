@@ -42,7 +42,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="Total" layoutX="272.0" layoutY="51.0" prefHeight="27.0" prefWidth="87.0" text="0.0">
+                        <Label fx:id="Total" layoutX="277.0" layoutY="49.0" prefHeight="27.0" prefWidth="87.0" text="0.0">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -54,7 +54,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="VentasTotales" layoutX="359.0" layoutY="24.0" prefHeight="27.0" prefWidth="55.0" text="0">
+                        <Label fx:id="VentasTotales" layoutX="370.0" layoutY="21.0" prefHeight="27.0" prefWidth="55.0" text="0">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -98,7 +98,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="LblTotalCompras" layoutX="359.0" layoutY="27.0" prefHeight="27.0" prefWidth="47.0" text="0">
+                        <Label fx:id="LblTotalCompras" layoutX="367.0" layoutY="24.0" prefHeight="27.0" prefWidth="47.0" text="0">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -131,7 +131,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblTotalC" layoutX="273.0" layoutY="63.0" text="0.0">
+                        <Label fx:id="lblTotalC" layoutX="276.0" layoutY="63.0" text="0.0">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -140,7 +140,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="No se je ">
+            <Tab text="Utilidades">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
