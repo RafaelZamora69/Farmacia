@@ -4,15 +4,17 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import tray.notification.NotificationType;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,16 +49,16 @@ public class ExtrasController implements Initializable {
     private JFXTreeTableView<Empleado> TableEmpleados;
 
     @FXML
-    private TreeTableColumn<?, ?> IDEmpleado;
+    private TreeTableColumn<Empleado, String> IDEmpleado;
 
     @FXML
-    private TreeTableColumn<?, ?> NombreEmpleado;
+    private TreeTableColumn<Empleado, String> NombreEmpleado;
 
     @FXML
-    private TreeTableColumn<?, ?> TelefonoEmpleado;
+    private TreeTableColumn<Empleado, String> TelefonoEmpleado;
 
     @FXML
-    private TreeTableColumn<?, ?> PuestoEmpleado;
+    private TreeTableColumn<Empleado, String> PuestoEmpleado;
 
     @FXML
     private JFXTextField NNombreEmp;
@@ -88,9 +90,76 @@ public class ExtrasController implements Initializable {
     @FXML
     private JFXButton BtnActualizar;
 
+    @FXML
+    private JFXTreeTableView<Cliente> TableClientes;
+
+    @FXML
+    private TreeTableColumn<Cliente, String> IdCliente;
+
+    @FXML
+    private TreeTableColumn<Cliente, String> NombreCliente;
+
+    @FXML
+    private TreeTableColumn<Cliente, String> DireccionCliente;
+
+    @FXML
+    private TreeTableColumn<Cliente, String> TelefonoCliente;
+
+    @FXML
+    private TreeTableColumn<Cliente, String> PuntosCliente;
+
+    @FXML
+    private JFXTextField BuscarCli;
+
+    @FXML
+    private JFXTextField ENomCli;
+
+    @FXML
+    private JFXTextArea EDirCli;
+
+    @FXML
+    private JFXTextField ETelCli;
+
+    @FXML
+    private JFXTextField EPtsCli;
+
+
+
+    @FXML
+    private JFXTextField ERfcCli;
+
+    @FXML
+    private JFXTextField EEdadCli;
+
+    @FXML
+    private JFXTextField NNomCli;
+
+    @FXML
+    private JFXTextArea NDirCli;
+
+    @FXML
+    private JFXTextField NTelCli;
+
+    @FXML
+    private JFXTextField NRfcCli;
+
+    @FXML
+    private JFXTextField NEdadCli;
+
+    @FXML
+    private JFXButton BtnEditarCli;
+
+    @FXML
+    private JFXButton BtnAgregarCli;
+
+    private static final ObservableList<Empleado> LEmpleados = FXCollections.observableArrayList();
+    private static final ObservableList<Cliente> LClientes = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         CargarComboBox();
+        CargarTablas();
+        CargarListas();
     }
 
     private void CargarComboBox(){
@@ -105,6 +174,44 @@ public class ExtrasController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    private void CargarListas(){
+        try {
+            Connection con = Conexion.getConnection();
+            //Lista Empleados
+            ResultSet rs = con.createStatement().executeQuery("select idEmpleado, Nombre, Telefono, Jerarquia from Empleado;");
+            while(rs.next()){
+                LEmpleados.add(new Empleado(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+            }
+            rs = con.createStatement().executeQuery("select idCliente, Nombre, Direccion, Telefono, Puntos from Cliente where idCliente != 1");
+            while(rs.next()){
+                LClientes.add(new Cliente(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void CargarTablas(){
+        //Empleados
+        IDEmpleado.setCellValueFactory((TreeTableColumn.CellDataFeatures<Empleado, String> param) -> param.getValue().getValue().sGetID());
+        NombreEmpleado.setCellValueFactory((TreeTableColumn.CellDataFeatures<Empleado, String> param) -> param.getValue().getValue().sGetNombre());
+        TelefonoEmpleado.setCellValueFactory((TreeTableColumn.CellDataFeatures<Empleado, String> param) -> param.getValue().getValue().sGetTelefono());
+        PuestoEmpleado.setCellValueFactory((TreeTableColumn.CellDataFeatures<Empleado, String> param) -> param.getValue().getValue().sGetPuesto());
+        final TreeItem<Empleado> root = new RecursiveTreeItem<>(LEmpleados, RecursiveTreeObject::getChildren);
+        this.TableEmpleados.setRoot(root);
+        this.TableEmpleados.setShowRoot(false);
+        //Clientes
+        IdCliente.setCellValueFactory((TreeTableColumn.CellDataFeatures<Cliente, String> param) -> param.getValue().getValue().sGetID());
+        NombreCliente.setCellValueFactory((TreeTableColumn.CellDataFeatures<Cliente, String> param) -> param.getValue().getValue().sGetNombre());
+        DireccionCliente.setCellValueFactory((TreeTableColumn.CellDataFeatures<Cliente, String> param) -> param.getValue().getValue().sGetDireccion());
+        TelefonoCliente.setCellValueFactory((TreeTableColumn.CellDataFeatures<Cliente, String> param) -> param.getValue().getValue().sGetTelefono());
+        PuntosCliente.setCellValueFactory((TreeTableColumn.CellDataFeatures<Cliente, String> param) -> param.getValue().getValue().sGetPuntos());
+        final TreeItem<Cliente> root2 = new RecursiveTreeItem<>(LClientes, RecursiveTreeObject::getChildren);
+        this.TableClientes.setRoot(root2);
+        this.TableClientes.setShowRoot(false);
     }
 
     public void BuscarEmpleado(KeyEvent keyEvent) {
@@ -143,6 +250,9 @@ public class ExtrasController implements Initializable {
                 throw new SQLException();
             }
             statement.setString(5, NPuestoEmp.getValue());
+            statement.execute();
+            LEmpleados.add(new Empleado(String.valueOf(Integer.parseInt(LEmpleados.get(LEmpleados.size() - 1).GetID()) + 1), NNombreEmp.getText(), NTelEmp.getText(), NUsuEmp.getText()));
+            Alertas.MostrarAlerta("Empleado registrado", NotificationType.ERROR, "Exito");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -180,19 +290,50 @@ public class ExtrasController implements Initializable {
     }
 
     public void ValidarPass(KeyEvent keyEvent) {
-        if (keyEvent.getSource().equals(NPassEmp)){
+        if (keyEvent.getSource().equals(NPassEmp) || keyEvent.getSource().equals(NValidarPass)){
             if(this.NValidarPass.getText().equals(this.NPassEmp.getText()) && this.NPassEmp.getText().equals(this.NValidarPass.getText())){
                 this.ValidarPass2.setText("Correcto");
             } else {
                 this.ValidarPass2.setText("No coinciden");
             }
-        } else if (keyEvent.getSource().equals(EPassEmp)){
+        } else if (keyEvent.getSource().equals(EPassEmp) || keyEvent.getSource().equals(EValidarPass)){
             if(this.EValidarPass.getText().equals(this.EPassEmp.getText()) && this.EPassEmp.getText().equals(this.EValidarPass.getText())){
                 this.ValidarPass.setText("Correcto");
             } else {
                 this.ValidarPass.setText("No coinciden");
             }
         }
+    }
+
+    public void BuscarCliente(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)) {
+            if (!"".equals(this.BuscarCli.getText())) {
+                try {
+                    Connection con = Conexion.getConnection();
+                    PreparedStatement statement = con.prepareStatement("select Nombre, Direccion, Telefono, Edad, Puntos, Rfc from Cliente where idCliente = ?;");
+                    statement.setString(1, this.BuscarCli.getText());
+                    ResultSet rs = statement.executeQuery();
+                    while (rs.next()){
+                        this.ENomCli.setText(rs.getString(1));
+                        this.EDirCli.setText(rs.getString(2));
+                        this.ETelCli.setText(rs.getString(3));
+                        this.EEdadCli.setText(rs.getString(4));
+                        this.EPtsCli.setText(rs.getString(5));
+                        this.ERfcCli.setText(rs.getString(6));
+                        return;
+                    }
+                    Alertas.MostrarAlerta("No se encuentra el cliente", NotificationType.ERROR, "Error");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void ActualizarCliente(MouseEvent mouseEvent) {
+    }
+
+    public void AgregarCliente(MouseEvent mouseEvent) {
     }
 
     class Empleado extends RecursiveTreeObject<Empleado> {
@@ -214,5 +355,28 @@ public class ExtrasController implements Initializable {
         public StringProperty sGetTelefono(){ return Telefono; }
         public StringProperty sGetPuesto(){ return Puesto; }
 
+    }
+
+    class Cliente extends RecursiveTreeObject<Cliente>{
+        StringProperty Id, Nombre, Direccion, Telefono, Puntos;
+
+        public Cliente(String Id, String Nombre, String Direccion, String Telefono, String Puntos){
+            this.Id = new SimpleStringProperty(Id);
+            this.Nombre = new SimpleStringProperty(Nombre);
+            this.Direccion = new SimpleStringProperty(Direccion);
+            this.Telefono = new SimpleStringProperty(Telefono);
+            this.Puntos = new SimpleStringProperty(Puntos);
+        }
+
+        public String GetID(){ return Id.get(); }
+        public String GetNombre(){ return Nombre.get(); }
+        public String GetDireccion(){ return Direccion.get(); }
+        public String GetTelefono(){ return Telefono.get(); }
+        public String GetPuntos(){ return Puntos.get(); }
+        public StringProperty sGetID(){ return Id; }
+        public StringProperty sGetNombre(){ return Nombre; }
+        public StringProperty sGetDireccion(){ return Direccion; }
+        public StringProperty sGetTelefono(){ return Telefono; }
+        public StringProperty sGetPuntos(){ return Puntos; }
     }
 }

@@ -25,8 +25,6 @@ import java.util.ResourceBundle;
 
 public class ReporteController implements Initializable {
 
-
-
     @FXML
     private JFXDatePicker FechaDe;
 

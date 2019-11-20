@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
@@ -19,7 +20,43 @@
          <tabs>
             <Tab text="Clientes">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="202.0" layoutY="14.0" text="Editar Cliente">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Separator layoutX="547.0" orientation="VERTICAL" prefHeight="662.0" />
+                        <Label layoutX="840.0" layoutY="14.0" text="Nuevo Cliente">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="BuscarCli" alignment="CENTER" layoutX="14.0" layoutY="41.0" onKeyPressed="#BuscarCliente" promptText="Buscar Cliente" />
+                        <JFXTextField fx:id="ENomCli" alignment="CENTER" layoutX="14.0" layoutY="127.0" prefHeight="25.0" prefWidth="228.0" promptText="Nombre" />
+                        <JFXTextArea fx:id="EDirCli" layoutX="308.0" layoutY="77.0" prefHeight="78.0" prefWidth="219.0" promptText="Dirección" />
+                        <JFXTextField fx:id="ETelCli" alignment="CENTER" layoutX="14.0" layoutY="222.0" prefHeight="25.0" prefWidth="150.0" promptText="Teléfono" />
+                        <JFXTextField fx:id="EPtsCli" alignment="CENTER" editable="false" layoutX="308.0" layoutY="222.0" promptText="Puntos" />
+                        <JFXTreeTableView fx:id="TableClientes" layoutY="381.0" prefHeight="282.0" prefWidth="690.0">
+                           <columns>
+                              <TreeTableColumn fx:id="IdCliente" prefWidth="65.0" text="Id Cliente" />
+                              <TreeTableColumn fx:id="NombreCliente" prefWidth="200.0" text="Nombre" />
+                              <TreeTableColumn fx:id="DireccionCliente" prefWidth="230.0" text="Direccion" />
+                              <TreeTableColumn fx:id="TelefonoCliente" prefWidth="120.0" text="Telefono" />
+                              <TreeTableColumn fx:id="PuntosCliente" prefWidth="73.0" text="Puntos" />
+                           </columns>
+                        </JFXTreeTableView>
+                        <JFXTextField fx:id="ERfcCli" alignment="CENTER" layoutX="14.0" layoutY="288.0" prefHeight="25.0" prefWidth="181.0" promptText="Rfc" />
+                        <JFXTextField fx:id="EEdadCli" alignment="CENTER" layoutX="308.0" layoutY="288.0" promptText="Edad" />
+                        <JFXTextField fx:id="NNomCli" alignment="CENTER" layoutX="576.0" layoutY="127.0" promptText="Nombre" />
+                        <JFXTextArea fx:id="NDirCli" layoutX="819.0" layoutY="83.0" prefHeight="72.0" prefWidth="238.0" promptText="Dirección" />
+                        <JFXTextField fx:id="NTelCli" alignment="CENTER" layoutX="576.0" layoutY="222.0" promptText="Teléfono" />
+                        <JFXTextField fx:id="NRfcCli" alignment="CENTER" layoutX="819.0" layoutY="222.0" prefHeight="25.0" prefWidth="241.0" promptText="RFC" />
+                        <JFXTextField fx:id="NEdadCli" alignment="CENTER" layoutX="576.0" layoutY="288.0" promptText="Edad" />
+                        <JFXButton fx:id="BtnEditarCli" buttonType="RAISED" layoutX="443.0" layoutY="331.0" onMouseClicked="#ActualizarCliente" text="Actualizar" />
+                        <JFXButton fx:id="BtnAgregarCli" layoutX="819.0" layoutY="288.0" onMouseClicked="#AgregarCliente" text="Agregar" />
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="Empleados">
@@ -43,7 +80,7 @@
                         <JFXTextField fx:id="ETelEmp" alignment="CENTER" layoutX="279.0" layoutY="120.0" prefHeight="25.0" prefWidth="136.0" promptText="Teléfono" />
                         <JFXTextField fx:id="EusuEmp" alignment="CENTER" editable="false" layoutX="14.0" layoutY="190.0" promptText="Usuario" />
                         <JFXComboBox fx:id="EPuestoEmp" layoutX="276.0" layoutY="190.0" prefHeight="25.0" prefWidth="177.0" promptText="Puesto" />
-                        <JFXPasswordField fx:id="EValidarPass" alignment="CENTER" layoutX="274.0" layoutY="276.0" promptText="Comprobar " />
+                        <JFXPasswordField fx:id="EValidarPass" alignment="CENTER" layoutX="274.0" layoutY="276.0" onKeyPressed="#ValidarPass" promptText="Comprobar " />
                         <JFXTreeTableView fx:id="TableEmpleados" layoutY="361.0" prefHeight="302.0" prefWidth="567.0">
                            <columns>
                               <TreeTableColumn fx:id="IDEmpleado" prefWidth="75.0" text="ID " />
@@ -56,7 +93,7 @@
                         <JFXTextField fx:id="NTelEmp" alignment="CENTER" layoutX="841.0" layoutY="121.0" prefWidth="136.0" promptText="Teléfono" />
                         <JFXTextField fx:id="NUsuEmp" alignment="CENTER" layoutX="580.0" layoutY="190.0" promptText="Usuario" />
                         <JFXPasswordField fx:id="NPassEmp" alignment="CENTER" layoutX="580.0" layoutY="276.0" promptText="Password" />
-                        <JFXPasswordField fx:id="NValidarPass" alignment="CENTER" layoutX="842.0" layoutY="277.0" onKeyTyped="#ValidarPass" promptText="Comprobar" />
+                        <JFXPasswordField fx:id="NValidarPass" alignment="CENTER" layoutX="842.0" layoutY="277.0" onKeyPressed="#ValidarPass" promptText="Comprobar" />
                         <JFXComboBox fx:id="NPuestoEmp" layoutX="840.0" layoutY="191.0" prefHeight="25.0" prefWidth="138.0" promptText="Puesto" />
                         <Label layoutX="206.0" layoutY="124.0" text="*" textFill="RED" />
                         <Label layoutX="412.0" layoutY="124.0" text="*" textFill="RED" />
