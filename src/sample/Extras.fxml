@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -54,8 +55,8 @@
                         <JFXTextField fx:id="NTelCli" alignment="CENTER" layoutX="576.0" layoutY="222.0" promptText="Teléfono" />
                         <JFXTextField fx:id="NRfcCli" alignment="CENTER" layoutX="819.0" layoutY="222.0" prefHeight="25.0" prefWidth="241.0" promptText="RFC" />
                         <JFXTextField fx:id="NEdadCli" alignment="CENTER" layoutX="576.0" layoutY="288.0" promptText="Edad" />
-                        <JFXButton fx:id="BtnEditarCli" buttonType="RAISED" layoutX="443.0" layoutY="331.0" onMouseClicked="#ActualizarCliente" text="Actualizar" />
-                        <JFXButton fx:id="BtnAgregarCli" layoutX="819.0" layoutY="288.0" onMouseClicked="#AgregarCliente" text="Agregar" />
+                        <JFXButton fx:id="BtnEditarCli" buttonType="RAISED" layoutX="443.0" layoutY="331.0" onMouseClicked="#ActualizarCliente" style="-fx-background-color: #009688;" text="Actualizar" textFill="WHITE" />
+                        <JFXButton fx:id="BtnAgregarCli" buttonType="RAISED" layoutX="819.0" layoutY="288.0" onMouseClicked="#AgregarCliente" style="-fx-background-color: #009688;" text="Agregar" textFill="WHITE" />
                      </children></AnchorPane>
               </content>
             </Tab>
@@ -118,7 +119,32 @@
             </Tab>
             <Tab text="Promociones">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Separator layoutX="547.0" orientation="VERTICAL" prefHeight="662.0" />
+                        <Label layoutX="209.0" layoutY="24.0" text="Modificar Promoción">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="790.0" layoutY="24.0" text="Crear Promoción">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField alignment="CENTER" layoutX="14.0" layoutY="47.0" promptText="Buscar" />
+                        <JFXTextArea layoutX="14.0" layoutY="109.0" prefHeight="107.0" prefWidth="223.0" promptText="Descripción" />
+                        <JFXToggleButton layoutX="385.0" layoutY="109.0" text="Activa" />
+                        <JFXTreeTableView layoutX="2.0" layoutY="237.0" prefHeight="246.0" prefWidth="353.0">
+                           <columns>
+                              <TreeTableColumn prefWidth="100.0" text="ID" />
+                              <TreeTableColumn prefWidth="250.0" text="Producto" />
+                           </columns>
+                        </JFXTreeTableView>
+                        <JFXTextField alignment="CENTER" focusColor="#009688" layoutX="385.0" layoutY="253.0" promptText="Agregar ID" />
+                        <JFXTextField alignment="CENTER" focusColor="#f44336" layoutX="385.0" layoutY="331.0" promptText="Eliminar ID" />
+                        <JFXTextArea layoutX="567.0" layoutY="116.0" prefHeight="107.0" prefWidth="223.0" promptText="Descripción" />
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="Proveedores">

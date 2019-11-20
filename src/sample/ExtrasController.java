@@ -15,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import tray.notification.NotificationType;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -331,6 +332,21 @@ public class ExtrasController implements Initializable {
     }
 
     public void ActualizarCliente(MouseEvent mouseEvent) {
+        try {
+            Connection con = Conexion.getConnection();
+            PreparedStatement statement = con.prepareStatement("update Cliente set Nombre = ?, Direccion = ?, Telefono = ?, Rfc = ?, Edad = ?");
+            statement.setString(1, ENomCli.getText());
+            statement.setString(2, EDirCli.getText());
+            statement.setString(3, ETelCli.getText());
+            statement.setString(4, ERfcCli.getText());
+            statement.setString(5, EEdadCli.getText());
+            statement.executeUpdate();
+            Alertas.MostrarAlerta("CLiente actualizado", NotificationType.SUCCESS, "Correcto");
+        } catch (SQLException e) {
+            Alertas.MostrarAlerta("Ha ocurrido un error", NotificationType.ERROR, "Error!");
+            e.printStackTrace();
+        }
+
     }
 
     public void AgregarCliente(MouseEvent mouseEvent) {
