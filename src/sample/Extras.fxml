@@ -132,18 +132,28 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <JFXTextField alignment="CENTER" layoutX="14.0" layoutY="47.0" promptText="Buscar" />
-                        <JFXTextArea layoutX="14.0" layoutY="109.0" prefHeight="107.0" prefWidth="223.0" promptText="Descripción" />
-                        <JFXToggleButton layoutX="385.0" layoutY="109.0" text="Activa" />
-                        <JFXTreeTableView layoutX="2.0" layoutY="237.0" prefHeight="246.0" prefWidth="353.0">
+                        <JFXTextField fx:id="BuscarProm" alignment="CENTER" layoutX="14.0" layoutY="47.0" onKeyPressed="#BuscarPromocion" promptText="Buscar" />
+                        <JFXTextArea fx:id="MDescProm" layoutX="14.0" layoutY="109.0" prefHeight="107.0" prefWidth="223.0" promptText="Descripción" />
+                        <JFXToggleButton fx:id="MActProm" layoutX="385.0" layoutY="105.0" text="Activa" />
+                        <JFXTreeTableView fx:id="TableMProm" layoutY="233.0" prefHeight="246.0" prefWidth="353.0">
                            <columns>
-                              <TreeTableColumn prefWidth="100.0" text="ID" />
-                              <TreeTableColumn prefWidth="250.0" text="Producto" />
+                              <TreeTableColumn fx:id="MIdProm" prefWidth="100.0" text="ID" />
+                              <TreeTableColumn fx:id="MProdProm" prefWidth="250.0" text="Producto" />
                            </columns>
                         </JFXTreeTableView>
-                        <JFXTextField alignment="CENTER" focusColor="#009688" layoutX="385.0" layoutY="253.0" promptText="Agregar ID" />
-                        <JFXTextField alignment="CENTER" focusColor="#f44336" layoutX="385.0" layoutY="331.0" promptText="Eliminar ID" />
-                        <JFXTextArea layoutX="567.0" layoutY="116.0" prefHeight="107.0" prefWidth="223.0" promptText="Descripción" />
+                        <JFXTextField fx:id="MAgregarID" alignment="CENTER" focusColor="#009688" layoutX="385.0" layoutY="253.0" onKeyPressed="#AgregarProd" promptText="Agregar ID" />
+                        <JFXTextField fx:id="MElimIdProm" alignment="CENTER" focusColor="#f44336" layoutX="385.0" layoutY="331.0" onKeyPressed="#EliminarProd" promptText="Eliminar ID" />
+                        <JFXTextArea fx:id="CDescProm" layoutX="553.0" layoutY="109.0" prefHeight="107.0" prefWidth="223.0" promptText="Descripción" />
+                        <JFXTreeTableView fx:id="TableCPromo" layoutX="547.0" layoutY="233.0" prefHeight="246.0" prefWidth="353.0">
+                           <columns>
+                              <TreeTableColumn fx:id="CIdProm" prefWidth="100.0" text="ID" />
+                              <TreeTableColumn fx:id="CProdProm" prefWidth="250.0" text="Producto" />
+                           </columns>
+                        </JFXTreeTableView>
+                        <JFXTextField fx:id="CAddIDProm" alignment="CENTER" layoutX="915.0" layoutY="253.0" onKeyPressed="#AgregarProd" promptText="Agregar ID" />
+                        <JFXTextField fx:id="CDelIdProm" alignment="CENTER" layoutX="915.0" layoutY="331.0" onKeyPressed="#EliminarProd" promptText="Eliminar ID" />
+                        <JFXButton fx:id="BtnModProm" layoutX="427.0" layoutY="454.0" text="Guardar" />
+                        <JFXButton fx:id="BtnCrearProm" layoutX="957.0" layoutY="454.0" onMouseClicked="#CrearPromo" text="Guardar" />
                      </children></AnchorPane>
               </content>
             </Tab>

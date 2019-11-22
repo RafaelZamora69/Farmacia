@@ -22,7 +22,7 @@
          </children></AnchorPane>
       <AnchorPane fx:id="left" layoutY="70.0" prefHeight="700.0" prefWidth="130.0" style="-fx-background-color: #ce93d8;">
          <children>
-            <JFXButton fx:id="BtnExtras" buttonType="RAISED" layoutY="240.0" onMouseClicked="#AbrirExtras" prefHeight="40.0" prefWidth="130.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Extras" textFill="WHITE">
+            <JFXButton fx:id="BtnExtras" buttonType="RAISED" layoutY="240.0" onMouseClicked="#AbrirExtras" prefHeight="40.0" prefWidth="130.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Operaciones" textFill="WHITE">
                <font>
                   <Font name="Roboto Light" size="18.0" />
                </font></JFXButton>

@@ -153,8 +153,53 @@ public class ExtrasController implements Initializable {
     @FXML
     private JFXButton BtnAgregarCli;
 
+    @FXML
+    private JFXTextField BuscarProm;
+
+    @FXML
+    private JFXToggleButton MActProm;
+
+    @FXML
+    private JFXTreeTableView<Promocion> TableMProm;
+
+    @FXML
+    private TreeTableColumn<Promocion, String> MIdProm;
+
+    @FXML
+    private TreeTableColumn<Promocion, String> MProdProm;
+
+    @FXML
+    private JFXTextField MAgregarID;
+
+    @FXML
+    private JFXTextField MElimIdProm;
+
+    @FXML
+    private JFXTextArea CDescProm;
+
+    @FXML
+    private JFXTreeTableView<Promocion> TableCPromo;
+
+    @FXML
+    private TreeTableColumn<Promocion, String> CIdProm;
+
+    @FXML
+    private TreeTableColumn<Promocion, String> CProdProm;
+
+    @FXML
+    private JFXTextField CAddIDProm;
+
+    @FXML
+    private JFXTextField CDelIdProm;
+
+    @FXML
+    private JFXTextArea MDescProm;
+
+
     private static final ObservableList<Empleado> LEmpleados = FXCollections.observableArrayList();
     private static final ObservableList<Cliente> LClientes = FXCollections.observableArrayList();
+    private static final ObservableList<Promocion> LPromocion = FXCollections.observableArrayList();
+    private static final ObservableList<Promocion> LNPromocion = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -213,6 +258,18 @@ public class ExtrasController implements Initializable {
         final TreeItem<Cliente> root2 = new RecursiveTreeItem<>(LClientes, RecursiveTreeObject::getChildren);
         this.TableClientes.setRoot(root2);
         this.TableClientes.setShowRoot(false);
+        //Promocion
+        MIdProm.setCellValueFactory((TreeTableColumn.CellDataFeatures<Promocion, String> param) -> param.getValue().getValue().sGetIdProducto());
+        MProdProm.setCellValueFactory((TreeTableColumn.CellDataFeatures<Promocion, String> param) -> param.getValue().getValue().sGetProducto());
+        final TreeItem<Promocion> root3 = new RecursiveTreeItem<>(LPromocion, RecursiveTreeObject::getChildren);
+        this.TableMProm.setRoot(root3);
+        this.TableMProm.setShowRoot(false);
+        //Nueva Promocion
+        CIdProm.setCellValueFactory((TreeTableColumn.CellDataFeatures<Promocion, String> param) -> param.getValue().getValue().sGetIdProducto());
+        CProdProm.setCellValueFactory((TreeTableColumn.CellDataFeatures<Promocion, String> param) -> param.getValue().getValue().sGetProducto());
+        final TreeItem<Promocion> root4 = new RecursiveTreeItem<>(LNPromocion, RecursiveTreeObject::getChildren);
+        this.TableCPromo.setRoot(root4);
+        this.TableCPromo.setShowRoot(false);
     }
 
     public void BuscarEmpleado(KeyEvent keyEvent) {
@@ -352,6 +409,103 @@ public class ExtrasController implements Initializable {
     public void AgregarCliente(MouseEvent mouseEvent) {
     }
 
+    public void BuscarPromocion(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)) {
+            if (!"".equals(this.BuscarProm.getText())) {
+                LPromocion.clear();
+                try {
+                    Connection con = Conexion.getConnection();
+                    PreparedStatement statement = con.prepareStatement("select Descripcion, Activa from Promocion where idPromocion != 1 and idPromocion = ?;");
+                    statement.setString(1, this.BuscarProm.getText());
+                    ResultSet rs = statement.executeQuery();
+                    while(rs.next()){
+                        this.MDescProm.setText(rs.getString(1));
+                        if(rs.getString(2).equals("1")){
+                            MActProm.setSelected(true);
+                        } else {
+                            MActProm.setSelected(false);
+                        }
+                        statement = con.prepareStatement("select idPromocion, Detalle_Promocion.idProducto, Producto.Descripcion from Detalle_Promocion inner join Producto on Detalle_Promocion.idProducto = Producto.idProducto where idPromocion = ?;");
+                        statement.setString(1, BuscarProm.getText());
+                        ResultSet result = statement.executeQuery();
+                        while(result.next()){
+                            LPromocion.add(new Promocion(result.getString(1), result.getString(2), result.getString(3)));
+                        }
+                        return;
+                    }
+                    Alertas.MostrarAlerta("No se ha encontrado la promoción", NotificationType.WARNING, "Advertencia");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+    }
+
+    public void CrearPromo(MouseEvent mouseEvent) {
+        if (LNPromocion.isEmpty()){
+            Alertas.MostrarAlerta("No se puede ingresar una promoción sin articulos", NotificationType.ERROR, "Error");
+            return;
+        }
+        try {
+            Connection con = Conexion.getConnection();
+            PreparedStatement statement = con.prepareStatement("insert into Promocion (Descripcion, Activa) values (?, 1)");
+            statement.setString(1, CDescProm.getText());
+            for(Promocion objeto : LNPromocion){
+                statement = con.prepareStatement("insert into detalle_promocion values(?, ?)");
+                ResultSet rs = con.createStatement().executeQuery("select max(idPromocion) from Promocion");
+                while (rs.next()){
+                    statement.setInt(1, rs.getInt(1));
+                }
+                statement.setInt(2, Integer.parseInt(objeto.GetIdProducto()));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void AgregarProd(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)) {
+            if(keyEvent.getSource().equals("MAgregarID")){
+                if (!"".equals(this.MAgregarID.getText())) {
+                    try {
+                        Connection con = Conexion.getConnection();
+                        PreparedStatement statement = con.prepareStatement("select idProducto, Descripcion from Producto where idProducto = ?");
+                        statement.setString(1, MAgregarID.getText());
+                        ResultSet rs = statement.executeQuery();
+                        while(rs.next()){
+                            LPromocion.add(new Promocion(this.BuscarProm.getText(), rs.getString(1), rs.getString(2)));
+                            return;
+                        }
+                        Alertas.MostrarAlerta("No se encuentra el articulo", NotificationType.ERROR, "Error");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+
+            }
+        }
+    }
+
+    public void EliminarProd(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)) {
+            if(keyEvent.getSource().equals("MElimProm")){
+                if (!"".equals(this.MElimIdProm.getText())) {
+                    try {
+                        Connection con = Conexion.getConnection();
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+        }
+    }
+
     class Empleado extends RecursiveTreeObject<Empleado> {
         StringProperty ID, Nombre, Telefono, Puesto;
 
@@ -394,5 +548,22 @@ public class ExtrasController implements Initializable {
         public StringProperty sGetDireccion(){ return Direccion; }
         public StringProperty sGetTelefono(){ return Telefono; }
         public StringProperty sGetPuntos(){ return Puntos; }
+    }
+
+    class Promocion extends RecursiveTreeObject<Promocion>{
+        StringProperty IdPromocion, IdProducto, Producto;
+
+        public Promocion(String IdPromocion, String IdProducto, String Producto){
+            this.IdPromocion = new SimpleStringProperty(IdPromocion);
+            this.IdProducto = new SimpleStringProperty(IdProducto);
+            this.Producto = new SimpleStringProperty(Producto);
+        }
+
+        public String GetIdPromocion(){ return IdPromocion.get(); }
+        public String GetIdProducto(){ return IdProducto.get(); }
+        public String GetProducto(){ return Producto.get(); }
+        public StringProperty sGetIdPromocion(){ return IdPromocion; }
+        public StringProperty sGetIdProducto(){ return IdProducto; }
+        public StringProperty sGetProducto(){ return Producto; }
     }
 }
