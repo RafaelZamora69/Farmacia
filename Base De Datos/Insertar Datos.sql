@@ -74,7 +74,10 @@ insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_C
 select * from Producto;
 
 /* Insertar en Farmacia.Detalle_Promocion */
+start transaction;
 insert into Detalle_Promocion values (2,1);
+rollback;
+select * from Detalle_Promocion where idPromocion = 2;
 insert into Detalle_Promocion values (3,7);
 insert into Detalle_Promocion values (3,8);
 insert into Detalle_Promocion values (3,9);

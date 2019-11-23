@@ -124,8 +124,6 @@ public class ExtrasController implements Initializable {
     @FXML
     private JFXTextField EPtsCli;
 
-
-
     @FXML
     private JFXTextField ERfcCli;
 

@@ -7,11 +7,14 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.MouseEvent;
@@ -131,12 +134,58 @@ public class ReporteController implements Initializable {
     private JFXDatePicker FechaHastaC;
 
     @FXML
-    private LineChart<String, String> ChartVentas;
+    private JFXTreeTableView<ObjetoUtilidad> TableUtilidad;
+
+    @FXML
+    private TreeTableColumn<ObjetoUtilidad, String> UtilIdVenta;
+
+    @FXML
+    private TreeTableColumn<ObjetoUtilidad, String> UtilProd;
+
+    @FXML
+    private TreeTableColumn<ObjetoUtilidad, String> UtilPCompra;
+
+    @FXML
+    private TreeTableColumn<ObjetoUtilidad, String> UtilPVenta;
+
+    @FXML
+    private TreeTableColumn<ObjetoUtilidad, String> UtilCantidad;
+
+    @FXML
+    private TreeTableColumn<ObjetoUtilidad, String> UtilTotal;
+
+    @FXML
+    private TreeTableColumn<ObjetoUtilidad, String> UtilUtilidad;
+
+    @FXML
+    private TreeTableColumn<ObjetoUtilidad, String> UtilPromo;
+
+    @FXML
+    private Label TotalUtil;
+
+    @FXML
+    private JFXDatePicker UtilDeFecha;
+
+    @FXML
+    private JFXDatePicker UtilHastaFecha;
+
+    @FXML
+    private JFXButton BtnCargarUtil;
+
+    @FXML
+    private LineChart<String, Number> ChartVentas;
+
+    @FXML
+    private AreaChart<String, Number> ChartUtil;
+
+    @FXML
+    private LineChart<String, Number> ChartCompras;
 
     private static final ObservableList<ObjetoReporte> LReporte = FXCollections.observableArrayList();
     private static final ObservableList<ObjetoDetalleReporte> LDReporte = FXCollections.observableArrayList();
     private static final ObservableList<ObjetoCompra> LCompra = FXCollections.observableArrayList();
     private static final ObservableList<ObjetoDetalleCompra> LDCompra = FXCollections.observableArrayList();
+    private static final ObservableList<ObjetoUtilidad> LUtilidad = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -144,7 +193,7 @@ public class ReporteController implements Initializable {
     }
 
     private void InicializarTablas() {
-        //Tabla Reporte
+        //Tabla Reporte Venta
         IDVenta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) -> param.getValue().getValue().sGetIdVenta());
         Vendedor.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) -> param.getValue().getValue().sGetVendedor());
         Fecha.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoReporte, String> param) -> param.getValue().getValue().sGetFecha());
@@ -159,8 +208,12 @@ public class ReporteController implements Initializable {
                 Boolean flag = t.getValue().sGetIdVenta().getValue().contains(newValue);
                 return flag;
             });
+            TableReporte.setPredicate((TreeItem<ObjetoReporte> t) -> {
+                Boolean flag = t.getValue().sGetFecha().getValue().contains(newValue);
+                return flag;
+            });
         });
-        //Tabla Detalle de reporte
+        //Tabla Detalle de reporte Venta
         Detalle_IDVenta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) -> param.getValue().getValue().GetIdVenta());
         DetalleProducto.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) -> param.getValue().getValue().GetDescripcion());
         DetallePrecio.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) -> param.getValue().getValue().GetPrecion());
@@ -190,6 +243,10 @@ public class ReporteController implements Initializable {
                 Boolean flag = t.getValue().sGetIdCompra().getValue().contains(newValue);
                 return flag;
             });
+            TableReporteCompra.setPredicate((TreeItem<ObjetoCompra> t) -> {
+                Boolean flag = t.getValue().sGetFecha().getValue().contains(newValue);
+                return flag;
+            });
         });
         //Tabla Reporte Compra
         DtIDCompra.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleCompra, String> param) -> param.getValue().getValue().sGetIdCompra());
@@ -207,6 +264,18 @@ public class ReporteController implements Initializable {
                 return flag;
             });
         });
+        //Tabla Utilidades
+        UtilIdVenta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoUtilidad, String> param) -> param.getValue().getValue().sGetidVenta());
+        UtilProd.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoUtilidad, String> param) -> param.getValue().getValue().sGetProducto());
+        UtilPCompra.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoUtilidad, String> param) -> param.getValue().getValue().sGetPrecioCompra());
+        UtilPVenta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoUtilidad, String> param) -> param.getValue().getValue().sGetPrecioVenta());
+        UtilCantidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoUtilidad, String> param) -> param.getValue().getValue().sGetCantidad());
+        UtilTotal.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoUtilidad, String> param) -> param.getValue().getValue().sGetTotal());
+        UtilUtilidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoUtilidad, String> param) -> param.getValue().getValue().sGetUtilidad());
+        UtilPromo.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoUtilidad, String> param) -> param.getValue().getValue().sGetPromocion());
+        final TreeItem<ObjetoUtilidad> root5 = new RecursiveTreeItem<>(LUtilidad, RecursiveTreeObject::getChildren);
+        this.TableUtilidad.setRoot(root5);
+        this.TableUtilidad.setShowRoot(false);
     }
 
     public void CargarReporteVentas() {
@@ -238,7 +307,7 @@ public class ReporteController implements Initializable {
                 LReporte.add(new ObjetoReporte(rs.getString(1), rs.getString(4), rs.getString(2), rs.getString(3), rs.getString(5)));
             }
             CargarDetalleVenta();
-            ChartVentas.getData().clear();
+            GraficarVentas(LReporte);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -266,12 +335,89 @@ public class ReporteController implements Initializable {
 
     }
 
-    private void CargarChartVentas(ObservableList<ObjetoReporte> LReporte){
-        XYChart.Series<String, String> series = new XYChart.Series<String, String>();
+    private void GraficarVentas(ObservableList<ObjetoReporte> LReporte){
+        ChartVentas.getData().clear();
+        XYChart.Series<String, Number> Venta = new XYChart.Series();
+        Venta.setName("Total Ventas por día");
+        String fecha = LReporte.get(0).GetFecha();
+        Double Total = 0.0;
         for(ObjetoReporte Objeto : LReporte){
-            series.getData().add(new XYChart.Data<String, String>(Objeto.GetIdVenta(), Objeto.GetTotal()));
+            if(Objeto.GetFecha().equals(fecha)){
+                Total += Double.parseDouble(Objeto.GetTotal());
+            } else {
+                Venta.getData().add(new XYChart.Data(fecha, Total));
+                fecha = Objeto.GetFecha();
+                Total = Double.parseDouble(Objeto.GetTotal());
+            }
         }
-        //ChartVentas.getData().add(new XYChart.Data<String, String>(Objeto.GetIdVenta(), Objeto.GetTotal()));
+        Venta.getData().add(new XYChart.Data(fecha, Total));
+        ChartVentas.getData().add(Venta);
+        for(final XYChart.Data<String, Number> data : Venta.getData()){
+            data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Tooltip.install(data.getNode(), new Tooltip("Fecha: " + data.getXValue() + "\nTotal: $" + data.getYValue()));
+                }
+            });
+        }
+    }
+
+    private void GraficarUtilidades(ObservableList<ObjetoUtilidad> Objeto){
+        ChartUtil.getData().clear();
+        XYChart.Series <String, Number> Compra = new XYChart.Series();
+        XYChart.Series <String, Number> Venta = new XYChart.Series();
+        XYChart.Series <String, Number> Utilidad = new XYChart.Series();
+        Compra.setName("Total Compra");
+        Venta.setName("Total Venta");
+        Utilidad.setName("Utilidad");
+        String fecha= Objeto.get(0).sGetFecha().get();
+        Double TotalCompra = 0.0, TotalVenta = 0.0, Utilidades = 0.0;
+        for(ObjetoUtilidad objeto : LUtilidad){
+            if(objeto.sGetFecha().get().equals(fecha)){
+                TotalCompra += Double.parseDouble(objeto.sGetPrecioCompra().get());
+                TotalVenta += Double.parseDouble(objeto.sGetPrecioVenta().get());
+            } else {
+                Utilidades = TotalVenta - TotalCompra;
+                Compra.getData().add(new XYChart.Data(fecha, TotalCompra));
+                Venta.getData().add(new XYChart.Data(fecha, TotalVenta));
+                Utilidad.getData().add(new XYChart.Data(fecha, Utilidades));
+                fecha = objeto.sGetFecha().get();
+                TotalCompra = Double.parseDouble(objeto.sGetPrecioCompra().get());
+                TotalVenta = Double.parseDouble(objeto.sGetPrecioVenta().get());
+            }
+        }
+        Utilidades = TotalVenta - TotalCompra;
+        Compra.getData().add(new XYChart.Data(fecha, TotalCompra));
+        Venta.getData().add(new XYChart.Data(fecha, TotalVenta));
+        Utilidad.getData().add(new XYChart.Data(fecha, Utilidades));
+        ChartUtil.getData().addAll(Compra, Venta, Utilidad);
+    }
+
+    private void GraficarCompras(ObservableList<ObjetoCompra> LCompra){
+        ChartCompras.getData().clear();
+        XYChart.Series<String, Number> Compra = new XYChart.Series();
+        Compra.setName("Total de compras por día");
+        String fecha = LCompra.get(0).GetFecha();
+        Double Total = 0.0;
+        for(ObjetoCompra Objeto : LCompra){
+            if(Objeto.GetFecha().equals(fecha)){
+                Total += Double.parseDouble(Objeto.GetTotal());
+            } else {
+                Compra.getData().add(new XYChart.Data(fecha, Total));
+                fecha = Objeto.GetFecha();
+                Total = Double.parseDouble(Objeto.GetTotal());
+            }
+        }
+        Compra.getData().add(new XYChart.Data(fecha, Total));
+        ChartCompras.getData().add(Compra);
+        for(final XYChart.Data<String, Number> data : Compra.getData()){
+            data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Tooltip.install(data.getNode(), new Tooltip("Fecha: " + data.getXValue() + "\nTotal: $" + data.getYValue()));
+                }
+            });
+        }
     }
 
     public void CargarReporteCompras(MouseEvent mouseEvent) {
@@ -294,6 +440,7 @@ public class ReporteController implements Initializable {
             while (rs.next()){
                 LCompra.add(new ObjetoCompra(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
             }
+            GraficarCompras(LCompra);
             CargarDetalleCompra();
         } catch (SQLException e){
             e.printStackTrace();
@@ -320,6 +467,31 @@ public class ReporteController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void CargarUtilidad(MouseEvent mouseEvent) {
+        try {
+            Connection con = Conexion.getConnection();
+            LUtilidad.clear();
+            PreparedStatement statement = con.prepareStatement("SELECT idVenta, Descripcion, `Precio de compra`, `Precio de venta`, Cantidad, Total, Promocion, Utilidad, Fecha FROM farmacia.`reporte de utilidades` where Fecha between ? and ?;");
+            statement.setString(1, this.UtilDeFecha.getValue().toString());
+            statement.setString(2, this.UtilHastaFecha.getValue().toString());
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                LUtilidad.add(new ObjetoUtilidad(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+            }
+            statement = con.prepareStatement("select sum(Utilidad) from farmacia.`reporte de utilidades` where Fecha between ? and ?;");
+            statement.setString(1, this.UtilDeFecha.getValue().toString());
+            statement.setString(2, this.UtilHastaFecha.getValue().toString());
+            rs = statement.executeQuery();
+            while (rs.next()){
+                this.TotalUtil.setText(rs.getString(1));
+            }
+            GraficarUtilidades(LUtilidad);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     class ObjetoReporte extends RecursiveTreeObject<ObjetoReporte> {
@@ -408,6 +580,32 @@ public class ReporteController implements Initializable {
         public StringProperty sGetPrecio(){return Precio; }
         public StringProperty sGetCantidad(){return Cantidad; }
         public StringProperty sGetTotal(){return Total; }
+    }
+
+    class ObjetoUtilidad extends RecursiveTreeObject<ObjetoUtilidad>{
+        StringProperty idVenta, Producto, PrecioCompra, PrecioVenta, Cantidad, Total, Promocion, Utilidad, Fecha;
+
+        public ObjetoUtilidad(String idVenta, String Producto, String PrecioCompra, String PrecioVenta, String Cantidad, String Total, String Promocion, String Utilidad, String Fecha){
+            this.idVenta = new SimpleStringProperty(idVenta);
+            this.Producto = new SimpleStringProperty(Producto);
+            this.PrecioCompra = new SimpleStringProperty(PrecioCompra);
+            this.PrecioVenta = new SimpleStringProperty(PrecioVenta);
+            this.Cantidad = new SimpleStringProperty(Cantidad);
+            this.Total = new SimpleStringProperty(Total);
+            this.Promocion = new SimpleStringProperty(Promocion);
+            this.Utilidad = new SimpleStringProperty(Utilidad);
+            this.Fecha = new SimpleStringProperty(Fecha);
+        }
+
+        public StringProperty sGetidVenta(){ return idVenta; }
+        public StringProperty sGetProducto(){ return Producto; }
+        public StringProperty sGetPrecioCompra(){ return PrecioCompra; }
+        public StringProperty sGetPrecioVenta(){ return PrecioVenta; }
+        public StringProperty sGetCantidad(){ return Cantidad; }
+        public StringProperty sGetTotal(){ return Total; }
+        public StringProperty sGetPromocion(){ return Promocion; }
+        public StringProperty sGetUtilidad(){ return Utilidad; }
+        public StringProperty sGetFecha(){ return Fecha; }
     }
 
 }
