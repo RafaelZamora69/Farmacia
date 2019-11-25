@@ -3,24 +3,28 @@ package sample;
 import Objetos.Producto;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Callback;
+import javafx.stage.Stage;
 import tray.notification.NotificationType;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,19 +56,47 @@ public class InventarioController implements Initializable {
     private JFXButton BtnFinalizar;
 
     @FXML
-    private JFXTreeTableView<Producto> TreeViewCompra;
+    private JFXTreeTableView<ProductoCompra> TreeViewCompra;
 
     @FXML
     private Label lblTotal;
+
+    @FXML
+    private JFXTextField TxtMod;
+
+    @FXML
+    private JFXTextField TxtEliminar;
+
+    @FXML
+    private TreeTableColumn<ProductoCompra, String> Num;
+
+    @FXML
+    private TreeTableColumn<ProductoCompra, String> ID;
+
+    @FXML
+    private TreeTableColumn<ProductoCompra, String> Desc;
+
+    @FXML
+    private TreeTableColumn<ProductoCompra, String> Cant;
+
+    @FXML
+    private TreeTableColumn<ProductoCompra, String> Comp;
+
+    @FXML
+    private TreeTableColumn<ProductoCompra, String> Venta;
+
+    @FXML
+    private TreeTableColumn<ProductoCompra, String> Prov;
 
     @FXML
     private JFXComboBox<String> Proveedores, ModProveedor, ModPresen, ModCateg;
 
     public static final ObservableList<Producto> LProducto = FXCollections.observableArrayList();
 
-    public static final ObservableList<Producto> LProductoCompra = FXCollections.observableArrayList();
+    public static final ObservableList<ProductoCompra> LProductoCompra = FXCollections.observableArrayList();
 
-    private Double Total = 0.0, Aux = 0.0;
+    private Double Total = 0.0, Aux = 0.0, AuxPCompra = 0.0;
+    int i = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,45 +104,19 @@ public class InventarioController implements Initializable {
         CargarInventario();
         InicializarTablaCompra();
         CargarComboBox();
+        this.TxtPrecio.setTooltip(new Tooltip("Precio de compra"));
+        this.TxtPVenta.setTooltip(new Tooltip("Precio de venta"));
+        this.TxtCantidad.setTooltip(new Tooltip("Cantidad"));
     }
 
     public void InicializarTablaCompra(){
-        JFXTreeTableColumn<Producto, String> ID = new JFXTreeTableColumn<>("Código");
-        ID.setPrefWidth(100);
-        ID.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetID());
-        JFXTreeTableColumn<Producto, String> Desc = new JFXTreeTableColumn<>("Descripción");
-        Desc.setPrefWidth(385);
-        Desc.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetDesc());
-        JFXTreeTableColumn<Producto, String> Cant = new JFXTreeTableColumn<>("Cantidad");
-        Cant.setPrefWidth(100);
-        Cant.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetStock());
-        Cant.setCellFactory(new Callback<TreeTableColumn<Producto, String>, TreeTableCell<Producto, String>>() {
-            @Override
-            public TreeTableCell<Producto, String> call(TreeTableColumn<Producto, String> param) {
-                return new TextFieldTreeTableCell<>();
-            }
-        });
-        Cant.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn());
-        Cant.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<Producto, String>>() {
-            @Override
-            public void handle(TreeTableColumn.CellEditEvent<Producto, String> event) {
-                TreeItem<Producto> Edit = TreeViewCompra.getTreeItem(event.getTreeTablePosition().getRow());
-                Edit.getValue().SetSstock(event.getNewValue());
-                TxtCantidad.setText(event.getNewValue());
-                Total = Total + Double.parseDouble(TxtPrecio.getText()) * Double.parseDouble(event.getNewValue());
-                lblTotal.setText(String.valueOf(Total));
-            }
-        });
-        JFXTreeTableColumn<Producto, String> Comp = new JFXTreeTableColumn<>("$ Compra");
-        Comp.setPrefWidth(100);
-        Comp.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetCompra());
-        JFXTreeTableColumn<Producto, String> Venta = new JFXTreeTableColumn<>("$ Venta");
-        Venta.setPrefWidth(100);
-        Venta.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetVenta());
-        JFXTreeTableColumn<Producto, String> Prov = new JFXTreeTableColumn<>("$ Proveedor");
-        Prov.setPrefWidth(100);
-        Prov.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetProveedor());
-        final TreeItem<Producto> root = new RecursiveTreeItem<>(LProductoCompra, RecursiveTreeObject::getChildren);
+        ID.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoCompra, String> param) -> param.getValue().getValue().sGetId());
+        Desc.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoCompra, String> param) -> param.getValue().getValue().sGetDescripcion());
+        Cant.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoCompra, String> param) -> param.getValue().getValue().sGetCantidad());
+        Comp.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoCompra, String> param) -> param.getValue().getValue().sGetCompra());
+        Venta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoCompra, String> param) -> param.getValue().getValue().sGetVenta());
+        Prov.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoCompra, String> param) -> param.getValue().getValue().sGetProveedor());
+        final TreeItem<ProductoCompra> root = new RecursiveTreeItem<>(LProductoCompra, RecursiveTreeObject::getChildren);
         this.TreeViewCompra.setEditable(true);
         this.TreeViewCompra.getColumns().setAll(ID, Desc, Cant, Comp, Venta, Prov);
         this.TreeViewCompra.setRoot(root);
@@ -133,7 +139,7 @@ public class InventarioController implements Initializable {
                 statement.setString(1, this.TxtCod.getText());
                 ResultSet rs = statement.executeQuery();
                 while (rs.next()){
-                    LProductoCompra.add(new Producto(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), "1", rs.getString(5), null));
+                    LProductoCompra.add(new ProductoCompra(String.valueOf(i), rs.getString(1), rs.getString(2),"1", rs.getString(3), rs.getString(4), rs.getString(5)));
                     this.TxtCantidad.setText("1");
                     this.TxtPrecio.setText(rs.getString(3));
                     this.TxtPVenta.setText(rs.getString(4));
@@ -286,5 +292,103 @@ public class InventarioController implements Initializable {
             return rs.getInt(1);
         }
         return 0;
+    }
+
+    public void Editar(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)){
+            if(!"".equals(this.TxtMod.getText())){
+                Aux = Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad());
+                TxtCod.setText(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetId());
+                TxtCantidad.setText(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad());
+                TxtPrecio.setText(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra());
+                TxtPVenta.setText(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetVenta());
+                Proveedores.setValue(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetProveedor());
+                if(keyEvent.getSource().equals(TxtCantidad)){
+                    LProductoCompra.get(Integer.parseInt(TxtMod.getText())- 1).Cantidad = new SimpleStringProperty(TxtCantidad.getText());
+                } else if(keyEvent.getSource().equals(TxtPrecio)){
+                    LProductoCompra.get(Integer.parseInt(TxtMod.getText())- 1).Compra = new SimpleStringProperty(TxtCantidad.getText());
+                }
+            }
+        }
+    }
+
+    public void ActualizarTotalCompra(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)){
+            if(keyEvent.getSource().equals(TxtCantidad)){
+                if(!"".equals(TxtMod.getText())){
+                    if((Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText())) < Aux){
+                        this.Total -= Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText());
+                        this.lblTotal.setText(String.valueOf(this.Total));
+                    } else {
+                        this.Total += Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText());
+                        this.lblTotal.setText(String.valueOf(this.Total));
+                    }
+                } else {
+                    if((Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText())) < Aux){
+
+                    }
+                }
+                LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).Cantidad = new SimpleStringProperty(this.TxtCantidad.getText());
+                Aux = Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad());
+            } else if(keyEvent.getSource().equals(TxtPrecio)){
+                if((Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Double.parseDouble(this.TxtPrecio.getText())) < Aux){
+                    this.Total -= Double.parseDouble(this.TxtPrecio.getText()) * Integer.parseInt(this.TxtCantidad.getText());
+                    this.lblTotal.setText(String.valueOf(this.Total));
+                } else {
+                    this.Total += Double.parseDouble(this.TxtPrecio.getText()) * Integer.parseInt(this.TxtCantidad.getText());
+                    this.lblTotal.setText(String.valueOf(this.Total));
+                }
+                LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).Compra = new SimpleStringProperty(this.TxtCantidad.getText());
+                Aux = Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad());
+            }
+        }
+    }
+
+    public void FinalizarCompra(MouseEvent mouseEvent) throws IOException {
+        if(LProductoCompra.size() > 0){
+            FinalizarCompraController.Total = Total;
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FinalizarCompra.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+    }
+
+    public void Eliminar(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)){
+            if(!"".equals(TxtEliminar.getText())){
+                Total -= Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtEliminar.getText()) - 1).GetCompra()) * Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtEliminar.getText()) - 1).GetCantidad());
+                lblTotal.setText(String.valueOf(Total));
+                LProductoCompra.remove(Integer.parseInt(TxtEliminar.getText()) - 1);
+            }
+        }
+    }
+
+    public class ProductoCompra extends RecursiveTreeObject<ProductoCompra>{
+        StringProperty num, Id, Descripcion, Cantidad, Compra, Venta, Proveedor;
+        public ProductoCompra(String num, String Id, String Descripcion, String Cantidad, String Compra, String Venta, String Proveedor){
+            this.num = new SimpleStringProperty(num);
+            this.Id = new SimpleStringProperty(Id);
+            this.Descripcion = new SimpleStringProperty(Descripcion);
+            this.Cantidad = new SimpleStringProperty(Cantidad);
+            this.Compra = new SimpleStringProperty(Compra);
+            this.Venta = new SimpleStringProperty(Venta);
+            this.Proveedor = new SimpleStringProperty(Proveedor);
+        }
+        String GetNum(){ return num.get(); }
+        String GetId(){ return Id.get(); }
+        String GetDescripcion(){ return Descripcion.get(); }
+        String GetCantidad(){ return Cantidad.get(); }
+        String GetCompra(){ return Compra.get(); }
+        String GetVenta(){ return Venta.get(); }
+        String GetProveedor(){ return Proveedor.get(); }
+        StringProperty sGetNum(){ return num; }
+        StringProperty sGetId(){ return Id; }
+        StringProperty sGetDescripcion(){ return Descripcion; }
+        StringProperty sGetCantidad(){ return Cantidad; }
+        StringProperty sGetCompra(){ return Compra; }
+        StringProperty sGetVenta(){ return Venta; }
+        StringProperty sGetProveedor(){ return Proveedor; }
     }
 }
