@@ -316,6 +316,7 @@ public class InventarioController implements Initializable {
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
             if(keyEvent.getSource().equals(TxtCantidad)){
                 if(!"".equals(TxtMod.getText())){
+                    Aux = Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad());
                     if((Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText())) < Aux){
                         this.Total -= Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText());
                         this.lblTotal.setText(String.valueOf(this.Total));
@@ -323,23 +324,34 @@ public class InventarioController implements Initializable {
                         this.Total += Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText());
                         this.lblTotal.setText(String.valueOf(this.Total));
                     }
+                    LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).Cantidad = new SimpleStringProperty(this.TxtCantidad.getText());
                 } else {
-                    if((Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText())) < Aux){
-
+                    Aux = Double.parseDouble(LProductoCompra.get(LProductoCompra.size() - 1).GetCompra()) * Double.parseDouble(LProductoCompra.get(LProductoCompra.size() - 1).GetCantidad());
+                    if((Double.parseDouble(LProductoCompra.get(LProductoCompra.size() - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText())) < Aux){
+                        this.Total -= Double.parseDouble(LProductoCompra.get(LProductoCompra.size() - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText());
+                        this.lblTotal.setText(String.valueOf(this.Total));
+                    }
+                    LProductoCompra.get(LProductoCompra.size() - 1).Cantidad = new SimpleStringProperty(this.TxtCantidad.getText());
+                }
+            } else if(keyEvent.getSource().equals(TxtPrecio)){
+                if(!"".equals(TxtMod.getText())){
+                    Aux = Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad());
+                    if((Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Double.parseDouble(this.TxtPrecio.getText())) < Aux){
+                        this.Total -= Double.parseDouble(this.TxtPrecio.getText()) * Integer.parseInt(this.TxtCantidad.getText());
+                        this.lblTotal.setText(String.valueOf(this.Total));
+                    } else {
+                        this.Total += Double.parseDouble(this.TxtPrecio.getText()) * Integer.parseInt(this.TxtCantidad.getText());
+                        this.lblTotal.setText(String.valueOf(this.Total));
+                    }
+                    LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).Compra = new SimpleStringProperty(this.TxtCantidad.getText());
+                    Aux = Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad());
+                } else {
+                    Aux = Double.parseDouble(LProductoCompra.get(LProductoCompra.size() - 1).GetCompra()) * Double.parseDouble(LProductoCompra.get(LProductoCompra.size() - 1).GetCantidad());
+                    if((Double.parseDouble(LProductoCompra.get(LProductoCompra.size() - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText())) < Aux){
+                        this.Total -= Double.parseDouble(LProductoCompra.get(LProductoCompra.size() - 1).GetCompra()) * Integer.parseInt(this.TxtCantidad.getText());
+                        this.lblTotal.setText(String.valueOf(this.Total));
                     }
                 }
-                LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).Cantidad = new SimpleStringProperty(this.TxtCantidad.getText());
-                Aux = Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad());
-            } else if(keyEvent.getSource().equals(TxtPrecio)){
-                if((Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Double.parseDouble(this.TxtPrecio.getText())) < Aux){
-                    this.Total -= Double.parseDouble(this.TxtPrecio.getText()) * Integer.parseInt(this.TxtCantidad.getText());
-                    this.lblTotal.setText(String.valueOf(this.Total));
-                } else {
-                    this.Total += Double.parseDouble(this.TxtPrecio.getText()) * Integer.parseInt(this.TxtCantidad.getText());
-                    this.lblTotal.setText(String.valueOf(this.Total));
-                }
-                LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).Compra = new SimpleStringProperty(this.TxtCantidad.getText());
-                Aux = Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCompra()) * Double.parseDouble(LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad());
             }
         }
     }

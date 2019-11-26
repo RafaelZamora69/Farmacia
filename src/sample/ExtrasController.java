@@ -193,6 +193,39 @@ public class ExtrasController implements Initializable {
     @FXML
     private JFXTextArea MDescProm;
 
+    @FXML
+    private JFXTextField BuscarProveedor;
+
+    @FXML
+    private JFXTextArea ENombProv;
+
+    @FXML
+    private JFXTextField ETelProv;
+
+    @FXML
+    private JFXTextField ECorrProv;
+
+    @FXML
+    private JFXTextArea EDirProv;
+
+    @FXML
+    private JFXTextArea NProvNom;
+
+    @FXML
+    private JFXTextField NTelProv;
+
+    @FXML
+    private JFXTextField NCorrProv;
+
+    @FXML
+    private JFXTextArea NDirProv;
+
+    @FXML
+    private JFXButton BtnActualizarProveedor;
+
+    @FXML
+    private JFXButton BtnNuevoProveedor;
+
 
     private static final ObservableList<Empleado> LEmpleados = FXCollections.observableArrayList();
     private static final ObservableList<Cliente> LClientes = FXCollections.observableArrayList();
@@ -474,6 +507,7 @@ public class ExtrasController implements Initializable {
                         ResultSet rs = statement.executeQuery();
                         while(rs.next()){
                             LPromocion.add(new Promocion(this.BuscarProm.getText(), rs.getString(1), rs.getString(2)));
+                            Conexion.InsertarProd("insert into Detalle_Promocion (idProducto) values (" + MAgregarID.getText() + ") where idPromocion = " + BuscarProm.getText() + ";");
                             return;
                         }
                         Alertas.MostrarAlerta("No se encuentra el articulo", NotificationType.ERROR, "Error");
@@ -489,19 +523,88 @@ public class ExtrasController implements Initializable {
 
     public void EliminarProd(KeyEvent keyEvent) {
         if(keyEvent.getCode().equals(KeyCode.ENTER)) {
-            if(keyEvent.getSource().equals("MElimProm")){
+            if(keyEvent.getSource().equals(MElimIdProm)){
                 if (!"".equals(this.MElimIdProm.getText())) {
                     try {
-                        Connection con = Conexion.getConnection();
-
+                        int i = 0;
+                        for(Promocion objeto : LPromocion){
+                            if(objeto.GetIdProducto().equals(MElimIdProm.getText())){
+                                Conexion.EliminarProd("delete from Detalle_Promocion where idProducto = " + objeto.GetIdProducto());
+                                LPromocion.remove(i);
+                            }
+                            i++;
+                        }
+                        Alertas.MostrarAlerta("No se encuentra el articulo", NotificationType.ERROR, "Error");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-
-
                 }
             }
         }
+    }
+
+    public void ActualizarProveedor(MouseEvent mouseEvent) {
+        try {
+            Connection con = Conexion.getConnection();
+            PreparedStatement statement = con.prepareStatement("update Proveedor set Nombre = ?, Telefono = ?, Correo = ?, Direccion = ? where idProveedor = ?;");
+            statement.setString(1, ENombProv.getText());
+            statement.setString(2, ETelProv.getText());
+            statement.setString(3, ECorrProv.getText());
+            statement.setString(4, EDirProv.getText());
+            statement.setString(5, BuscarProveedor.getText());
+            statement.executeUpdate();
+            Alertas.MostrarAlerta("Proveedor actualizado", NotificationType.SUCCESS, "Éxito");
+        } catch (SQLException e) {
+            Alertas.MostrarAlerta("Hubo un problema al actualizar el proveedor", NotificationType.ERROR, "Error");
+            e.printStackTrace();
+        }
+    }
+
+    public void NuevoProveedor(MouseEvent mouseEvent) {
+        try {
+            Connection con = Conexion.getConnection();
+            PreparedStatement statement = con.prepareStatement("insert into Proveedor(Nombre, Telefono, Correo, Direccion) values (?, ?, ?, ?)");
+            statement.setString(1, NProvNom.getText());
+            statement.setString(2, NTelProv.getText());
+            statement.setString(3, NCorrProv.getText());
+            statement.setString(4, NDirProv.getText());
+            statement.executeUpdate();
+            Alertas.MostrarAlerta("Proveedor registrado", NotificationType.SUCCESS, "Éxito");
+        } catch (SQLException e) {
+            Alertas.MostrarAlerta("Hubo un problema al registrar el proveedor", NotificationType.ERROR, "Error");
+            e.printStackTrace();
+        }
+    }
+
+    public void BuscarProveedor(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)){
+            if(!"".equals(BuscarProveedor.getText())){
+                try{
+                    Connection con = Conexion.getConnection();
+                    PreparedStatement statement = con.prepareStatement("select Nombre, Telefono, Correo, Direccion from Proveedor where idProveedor = ?");
+                    statement.setString(1, BuscarProveedor.getText());
+                    ResultSet rs = statement.executeQuery();
+                    if(rs.next()){
+                        ENombProv.setText(rs.getString(1));
+                        ETelProv.setText(rs.getString(2));
+                        ECorrProv.setText(rs.getString(3));
+                        EDirProv.setText(rs.getString(4));
+                        return;
+                    }
+                    Alertas.MostrarAlerta("No se encontró el proveedor", NotificationType.ERROR, "Error");
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void CancelEditProm(MouseEvent mouseEvent) throws SQLException {
+        Conexion.ConexionTransaction.rollback();
+    }
+
+    public void ActualizarPromo(MouseEvent mouseEvent) throws SQLException {
+        Conexion.ConexionTransaction.commit();
     }
 
     class Empleado extends RecursiveTreeObject<Empleado> {

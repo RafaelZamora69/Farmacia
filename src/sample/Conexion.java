@@ -4,14 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -21,9 +13,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import sample.Alertas;
 import tray.notification.NotificationType;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.*;
 
 public class Conexion {
 
@@ -49,6 +44,7 @@ public class Conexion {
     private JFXButton BtnCerrar;
 
     static String user, password;
+    static Connection ConexionTransaction;
 
     public  static Connection getConnection(String User, String Password) throws SQLException{
         Connection conexion = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Farmacia?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", User, Password);
@@ -73,6 +69,18 @@ public class Conexion {
     public static Connection getConnection() throws SQLException {
         Connection conexion = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Farmacia?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", user, password);
         return conexion;
+    }
+
+    public static void EliminarProd(String Query) throws SQLException {
+        ConexionTransaction.setAutoCommit(false);
+        Statement statement = ConexionTransaction.createStatement();
+        statement.executeUpdate(Query);
+    }
+
+    public static  void InsertarProd(String Query) throws SQLException {
+        ConexionTransaction.setAutoCommit(false);
+        Statement statement = ConexionTransaction.createStatement();
+        statement.executeUpdate(Query);
     }
 
     public void Cerrar(MouseEvent mouseEvent) throws IOException {
