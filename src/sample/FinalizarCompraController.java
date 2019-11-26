@@ -1,6 +1,5 @@
 package sample;
 
-import Objetos.Producto;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
@@ -70,10 +69,10 @@ public class FinalizarCompraController implements Initializable {
             statement.setString(1, TxtProveedor.getText());
             statement.setString(2, lblTotal.getText());
             statement.executeQuery();
-            for(Producto objeto : InventarioController.LProductoCompra){
+            for(InventarioController.ProductoCompra objeto : InventarioController.LProductoCompra){
                 statement = con.prepareStatement("insert into Detalle_Compra(idProducto, Cantidad, idCompra, Precio_Compra) values (?, ?, ?, ?)");
-                statement.setString(1, objeto.GetID());
-                statement.setString(2, objeto.GetStock());
+                statement.setString(1, objeto.GetId());
+                statement.setString(2, objeto.GetCantidad());
                 statement.setString(3, GetIdCompra());
                 statement.setString(4, objeto.GetCompra());
                 statement.executeQuery();
