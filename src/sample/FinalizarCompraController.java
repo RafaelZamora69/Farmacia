@@ -18,6 +18,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import tray.notification.NotificationType;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -68,16 +69,19 @@ public class FinalizarCompraController implements Initializable {
             PreparedStatement statement = con.prepareStatement("insert into Compra(idProveedor, Total_Compra, Fecha) values (?, ?, curdate());");
             statement.setString(1, TxtProveedor.getText());
             statement.setString(2, lblTotal.getText());
-            statement.executeQuery();
+            statement.executeUpdate();
             for(InventarioController.ProductoCompra objeto : InventarioController.LProductoCompra){
                 statement = con.prepareStatement("insert into Detalle_Compra(idProducto, Cantidad, idCompra, Precio_Compra) values (?, ?, ?, ?)");
                 statement.setString(1, objeto.GetId());
                 statement.setString(2, objeto.GetCantidad());
                 statement.setString(3, GetIdCompra());
                 statement.setString(4, objeto.GetCompra());
-                statement.executeQuery();
+                statement.executeUpdate();
             }
+            Alertas.MostrarAlerta("Venta registrada", NotificationType.SUCCESS, "Éxito");
+            this.FinalizarCompra.setDisable(true);
         } catch (SQLException e) {
+            Alertas.MostrarAlerta("Ocurrió un problema", NotificationType.ERROR, "Error");
             e.printStackTrace();
         }
     }

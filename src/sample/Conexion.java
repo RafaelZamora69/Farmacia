@@ -71,16 +71,15 @@ public class Conexion {
         return conexion;
     }
 
-    public static void EliminarProd(String Query) throws SQLException {
-        ConexionTransaction.setAutoCommit(false);
-        Statement statement = ConexionTransaction.createStatement();
-        statement.executeUpdate(Query);
-    }
-
-    public static  void InsertarProd(String Query) throws SQLException {
-        ConexionTransaction.setAutoCommit(false);
-        Statement statement = ConexionTransaction.createStatement();
-        statement.executeUpdate(Query);
+    public static Connection GetConexionPromocion() {
+        try {
+            Connection conexion = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Farmacia?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", user, password);
+            conexion.setAutoCommit(false);
+            return conexion;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void Cerrar(MouseEvent mouseEvent) throws IOException {

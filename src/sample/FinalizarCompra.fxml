@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.FinalizarCompraController">
    <children>
       <JFXTreeTableView fx:id="TableProveedor" layoutX="296.0" prefHeight="500.0" prefWidth="404.0">
@@ -44,7 +43,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <JFXButton buttonType="RAISED" layoutX="83.0" layoutY="287.0" ripplerFill="WHITE" style="-fx-background-color: #f44336;" text="Cancelar" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="83.0" layoutY="287.0" ripplerFill="WHITE" style="-fx-background-color: #f44336;" text="Cerrar" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>

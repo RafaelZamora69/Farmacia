@@ -231,6 +231,7 @@ public class ExtrasController implements Initializable {
     private static final ObservableList<Cliente> LClientes = FXCollections.observableArrayList();
     private static final ObservableList<Promocion> LPromocion = FXCollections.observableArrayList();
     private static final ObservableList<Promocion> LNPromocion = FXCollections.observableArrayList();
+    Connection con = Conexion.GetConexionPromocion();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -498,16 +499,19 @@ public class ExtrasController implements Initializable {
 
     public void AgregarProd(KeyEvent keyEvent) {
         if(keyEvent.getCode().equals(KeyCode.ENTER)) {
-            if(keyEvent.getSource().equals("MAgregarID")){
+            if(keyEvent.getSource().equals(MAgregarID)){
                 if (!"".equals(this.MAgregarID.getText())) {
                     try {
-                        Connection con = Conexion.getConnection();
                         PreparedStatement statement = con.prepareStatement("select idProducto, Descripcion from Producto where idProducto = ?");
                         statement.setString(1, MAgregarID.getText());
                         ResultSet rs = statement.executeQuery();
-                        while(rs.next()){
+                        if(rs.next()){
                             LPromocion.add(new Promocion(this.BuscarProm.getText(), rs.getString(1), rs.getString(2)));
-                            Conexion.InsertarProd("insert into Detalle_Promocion (idProducto) values (" + MAgregarID.getText() + ") where idPromocion = " + BuscarProm.getText() + ";");
+                            statement = con.prepareStatement("insert into Detalle_Promocion (idPromocion, idProducto) values (?, ?)");
+                            statement.setString(1, BuscarProm.getText());
+                            statement.setString(2, MAgregarID.getText());
+                            statement.executeUpdate();
+
                             return;
                         }
                         Alertas.MostrarAlerta("No se encuentra el articulo", NotificationType.ERROR, "Error");
@@ -529,8 +533,11 @@ public class ExtrasController implements Initializable {
                         int i = 0;
                         for(Promocion objeto : LPromocion){
                             if(objeto.GetIdProducto().equals(MElimIdProm.getText())){
-                                Conexion.EliminarProd("delete from Detalle_Promocion where idProducto = " + objeto.GetIdProducto());
+                                PreparedStatement statement = con.prepareStatement("delete from Detalle_Promocion where idProducto = ?");
+                                statement.setString(1, MElimIdProm.getText());
                                 LPromocion.remove(i);
+                                statement.executeUpdate();
+                                return;
                             }
                             i++;
                         }
@@ -600,11 +607,11 @@ public class ExtrasController implements Initializable {
     }
 
     public void CancelEditProm(MouseEvent mouseEvent) throws SQLException {
-        Conexion.ConexionTransaction.rollback();
+        con.rollback();
     }
 
     public void ActualizarPromo(MouseEvent mouseEvent) throws SQLException {
-        Conexion.ConexionTransaction.commit();
+        con.commit();
     }
 
     class Empleado extends RecursiveTreeObject<Empleado> {
