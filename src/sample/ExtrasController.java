@@ -240,11 +240,11 @@ public class ExtrasController implements Initializable {
         CargarListas();
     }
 
-    private void CargarComboBox(){
+    private void CargarComboBox() {
         try {
             Connection con = Conexion.getConnection();
             ResultSet rs = con.createStatement().executeQuery("select distinct Jerarquia from Empleado;");
-            while(rs.next()){
+            while (rs.next()) {
                 this.EPuestoEmp.getItems().add(rs.getString(1));
                 this.NPuestoEmp.getItems().add(rs.getString(1));
             }
@@ -254,16 +254,16 @@ public class ExtrasController implements Initializable {
 
     }
 
-    private void CargarListas(){
+    private void CargarListas() {
         try {
             Connection con = Conexion.getConnection();
             //Lista Empleados
             ResultSet rs = con.createStatement().executeQuery("select idEmpleado, Nombre, Telefono, Jerarquia from Empleado;");
-            while(rs.next()){
+            while (rs.next()) {
                 LEmpleados.add(new Empleado(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
             }
             rs = con.createStatement().executeQuery("select idCliente, Nombre, Direccion, Telefono, Puntos from Cliente where idCliente != 1");
-            while(rs.next()){
+            while (rs.next()) {
                 LClientes.add(new Cliente(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
             }
         } catch (SQLException e) {
@@ -272,7 +272,7 @@ public class ExtrasController implements Initializable {
 
     }
 
-    private void CargarTablas(){
+    private void CargarTablas() {
         //Empleados
         IDEmpleado.setCellValueFactory((TreeTableColumn.CellDataFeatures<Empleado, String> param) -> param.getValue().getValue().sGetID());
         NombreEmpleado.setCellValueFactory((TreeTableColumn.CellDataFeatures<Empleado, String> param) -> param.getValue().getValue().sGetNombre());
@@ -305,15 +305,15 @@ public class ExtrasController implements Initializable {
     }
 
     public void BuscarEmpleado(KeyEvent keyEvent) {
-        if(keyEvent.getCode().equals(KeyCode.ENTER)){
-            if(!"".equals(this.BuscarEmp.getText())){
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+            if (!"".equals(this.BuscarEmp.getText())) {
                 try {
                     ValidarPass.setText("");
                     Connection con = Conexion.getConnection();
                     PreparedStatement statement = con.prepareStatement("select Nombre, Telefono, Usuario, Jerarquia from Empleado where idEmpleado = ?;");
                     statement.setString(1, this.BuscarEmp.getText());
                     ResultSet rs = statement.executeQuery();
-                    while(rs.next()){
+                    while (rs.next()) {
                         this.ENombreEmp.setText(rs.getString(1));
                         this.ETelEmp.setText(rs.getString(2));
                         this.EusuEmp.setText(rs.getString(3));
@@ -333,7 +333,7 @@ public class ExtrasController implements Initializable {
             statement.setString(1, NNombreEmp.getText());
             statement.setString(2, NTelEmp.getText());
             statement.setString(3, NUsuEmp.getText());
-            if(this.ValidarPass2.getText().equals("Correcto")){
+            if (this.ValidarPass2.getText().equals("Correcto")) {
                 statement.setString(4, NPassEmp.getText());
             } else {
                 Alertas.MostrarAlerta("Las contraseñas no coinciden", NotificationType.ERROR, "Error!");
@@ -353,7 +353,7 @@ public class ExtrasController implements Initializable {
         try {
             Connection con = Conexion.getConnection();
             PreparedStatement statement;
-            if(ValidarPass.getText().equals("")){
+            if (ValidarPass.getText().equals("")) {
                 statement = con.prepareStatement("update Empleado set Nombre = ?, Telefono = ?, Puesto = ?;");
                 statement.setString(1, ENombreEmp.getText());
                 statement.setString(2, ETelEmp.getText());
@@ -365,7 +365,7 @@ public class ExtrasController implements Initializable {
                 statement.setString(1, ENombreEmp.getText());
                 statement.setString(2, ETelEmp.getText());
                 statement.setString(3, EPuestoEmp.getValue());
-                if(ValidarPass.getText().equals("Correcto")){
+                if (ValidarPass.getText().equals("Correcto")) {
                     statement.setString(4, EPassEmp.getText());
                 } else {
                     Alertas.MostrarAlerta("Las contraseñas no coinciden", NotificationType.ERROR, "Error!");
@@ -380,14 +380,14 @@ public class ExtrasController implements Initializable {
     }
 
     public void ValidarPass(KeyEvent keyEvent) {
-        if (keyEvent.getSource().equals(NPassEmp) || keyEvent.getSource().equals(NValidarPass)){
-            if(this.NValidarPass.getText().equals(this.NPassEmp.getText()) && this.NPassEmp.getText().equals(this.NValidarPass.getText())){
+        if (keyEvent.getSource().equals(NPassEmp) || keyEvent.getSource().equals(NValidarPass)) {
+            if (this.NValidarPass.getText().equals(this.NPassEmp.getText()) && this.NPassEmp.getText().equals(this.NValidarPass.getText())) {
                 this.ValidarPass2.setText("Correcto");
             } else {
                 this.ValidarPass2.setText("No coinciden");
             }
-        } else if (keyEvent.getSource().equals(EPassEmp) || keyEvent.getSource().equals(EValidarPass)){
-            if(this.EValidarPass.getText().equals(this.EPassEmp.getText()) && this.EPassEmp.getText().equals(this.EValidarPass.getText())){
+        } else if (keyEvent.getSource().equals(EPassEmp) || keyEvent.getSource().equals(EValidarPass)) {
+            if (this.EValidarPass.getText().equals(this.EPassEmp.getText()) && this.EPassEmp.getText().equals(this.EValidarPass.getText())) {
                 this.ValidarPass.setText("Correcto");
             } else {
                 this.ValidarPass.setText("No coinciden");
@@ -396,14 +396,14 @@ public class ExtrasController implements Initializable {
     }
 
     public void BuscarCliente(KeyEvent keyEvent) {
-        if(keyEvent.getCode().equals(KeyCode.ENTER)) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             if (!"".equals(this.BuscarCli.getText())) {
                 try {
                     Connection con = Conexion.getConnection();
                     PreparedStatement statement = con.prepareStatement("select Nombre, Direccion, Telefono, Edad, Puntos, Rfc from Cliente where idCliente = ?;");
                     statement.setString(1, this.BuscarCli.getText());
                     ResultSet rs = statement.executeQuery();
-                    while (rs.next()){
+                    while (rs.next()) {
                         this.ENomCli.setText(rs.getString(1));
                         this.EDirCli.setText(rs.getString(2));
                         this.ETelCli.setText(rs.getString(3));
@@ -442,7 +442,7 @@ public class ExtrasController implements Initializable {
     }
 
     public void BuscarPromocion(KeyEvent keyEvent) {
-        if(keyEvent.getCode().equals(KeyCode.ENTER)) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             if (!"".equals(this.BuscarProm.getText())) {
                 LPromocion.clear();
                 try {
@@ -450,9 +450,9 @@ public class ExtrasController implements Initializable {
                     PreparedStatement statement = con.prepareStatement("select Descripcion, Activa from Promocion where idPromocion != 1 and idPromocion = ?;");
                     statement.setString(1, this.BuscarProm.getText());
                     ResultSet rs = statement.executeQuery();
-                    while(rs.next()){
+                    while (rs.next()) {
                         this.MDescProm.setText(rs.getString(1));
-                        if(rs.getString(2).equals("1")){
+                        if (rs.getString(2).equals("1")) {
                             MActProm.setSelected(true);
                         } else {
                             MActProm.setSelected(false);
@@ -460,7 +460,7 @@ public class ExtrasController implements Initializable {
                         statement = con.prepareStatement("select idPromocion, Detalle_Promocion.idProducto, Producto.Descripcion from Detalle_Promocion inner join Producto on Detalle_Promocion.idProducto = Producto.idProducto where idPromocion = ?;");
                         statement.setString(1, BuscarProm.getText());
                         ResultSet result = statement.executeQuery();
-                        while(result.next()){
+                        while (result.next()) {
                             LPromocion.add(new Promocion(result.getString(1), result.getString(2), result.getString(3)));
                         }
                         return;
@@ -469,14 +469,13 @@ public class ExtrasController implements Initializable {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
             }
         }
 
     }
 
     public void CrearPromo(MouseEvent mouseEvent) {
-        if (LNPromocion.isEmpty()){
+        if (LNPromocion.isEmpty()) {
             Alertas.MostrarAlerta("No se puede ingresar una promoción sin articulos", NotificationType.ERROR, "Error");
             return;
         }
@@ -484,10 +483,10 @@ public class ExtrasController implements Initializable {
             Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("insert into Promocion (Descripcion, Activa) values (?, 1)");
             statement.setString(1, CDescProm.getText());
-            for(Promocion objeto : LNPromocion){
+            for (Promocion objeto : LNPromocion) {
                 statement = con.prepareStatement("insert into detalle_promocion values(?, ?)");
                 ResultSet rs = con.createStatement().executeQuery("select max(idPromocion) from Promocion");
-                while (rs.next()){
+                if (rs.next()) {
                     statement.setInt(1, rs.getInt(1));
                 }
                 statement.setInt(2, Integer.parseInt(objeto.GetIdProducto()));
@@ -498,41 +497,36 @@ public class ExtrasController implements Initializable {
     }
 
     public void AgregarProd(KeyEvent keyEvent) {
-        if(keyEvent.getCode().equals(KeyCode.ENTER)) {
-            if(keyEvent.getSource().equals(MAgregarID)){
-                if (!"".equals(this.MAgregarID.getText())) {
-                    try {
-                        PreparedStatement statement = con.prepareStatement("select idProducto, Descripcion from Producto where idProducto = ?");
-                        statement.setString(1, MAgregarID.getText());
-                        ResultSet rs = statement.executeQuery();
-                        if(rs.next()){
-                            LPromocion.add(new Promocion(this.BuscarProm.getText(), rs.getString(1), rs.getString(2)));
-                            statement = con.prepareStatement("insert into Detalle_Promocion (idPromocion, idProducto) values (?, ?)");
-                            statement.setString(1, BuscarProm.getText());
-                            statement.setString(2, MAgregarID.getText());
-                            statement.executeUpdate();
-
-                            return;
-                        }
-                        Alertas.MostrarAlerta("No se encuentra el articulo", NotificationType.ERROR, "Error");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+            if (!"".equals(this.MAgregarID.getText())) {
+                try {
+                    PreparedStatement statement = con.prepareStatement("select idProducto, Descripcion from Producto where idProducto = ?");
+                    statement.setString(1, MAgregarID.getText());
+                    ResultSet rs = statement.executeQuery();
+                    if (rs.next()) {
+                        LPromocion.add(new Promocion(this.BuscarProm.getText(), rs.getString(1), rs.getString(2)));
+                        statement = con.prepareStatement("insert into Detalle_Promocion (idPromocion, idProducto) values (?, ?)");
+                        statement.setString(1, BuscarProm.getText());
+                        statement.setString(2, MAgregarID.getText());
+                        statement.executeUpdate();
+                        return;
                     }
+                    Alertas.MostrarAlerta("No se encuentra el articulo", NotificationType.ERROR, "Error");
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-            } else {
-
             }
         }
     }
 
     public void EliminarProd(KeyEvent keyEvent) {
-        if(keyEvent.getCode().equals(KeyCode.ENTER)) {
-            if(keyEvent.getSource().equals(MElimIdProm)){
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+            if (keyEvent.getSource().equals(MElimIdProm)) {
                 if (!"".equals(this.MElimIdProm.getText())) {
                     try {
                         int i = 0;
-                        for(Promocion objeto : LPromocion){
-                            if(objeto.GetIdProducto().equals(MElimIdProm.getText())){
+                        for (Promocion objeto : LPromocion) {
+                            if (objeto.GetIdProducto().equals(MElimIdProm.getText())) {
                                 PreparedStatement statement = con.prepareStatement("delete from Detalle_Promocion where idProducto = ?");
                                 statement.setString(1, MElimIdProm.getText());
                                 LPromocion.remove(i);
@@ -584,14 +578,14 @@ public class ExtrasController implements Initializable {
     }
 
     public void BuscarProveedor(KeyEvent keyEvent) {
-        if(keyEvent.getCode().equals(KeyCode.ENTER)){
-            if(!"".equals(BuscarProveedor.getText())){
-                try{
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+            if (!"".equals(BuscarProveedor.getText())) {
+                try {
                     Connection con = Conexion.getConnection();
                     PreparedStatement statement = con.prepareStatement("select Nombre, Telefono, Correo, Direccion from Proveedor where idProveedor = ?");
                     statement.setString(1, BuscarProveedor.getText());
                     ResultSet rs = statement.executeQuery();
-                    if(rs.next()){
+                    if (rs.next()) {
                         ENombProv.setText(rs.getString(1));
                         ETelProv.setText(rs.getString(2));
                         ECorrProv.setText(rs.getString(3));
@@ -599,7 +593,7 @@ public class ExtrasController implements Initializable {
                         return;
                     }
                     Alertas.MostrarAlerta("No se encontró el proveedor", NotificationType.ERROR, "Error");
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
@@ -608,37 +602,86 @@ public class ExtrasController implements Initializable {
 
     public void CancelEditProm(MouseEvent mouseEvent) throws SQLException {
         con.rollback();
+        Connection conection = Conexion.getConnection();
+        PreparedStatement statement = conection.prepareStatement("select idPromocion, Detalle_Promocion.idProducto, Producto.Descripcion from Detalle_Promocion inner join Producto on Detalle_Promocion.idProducto = Producto.idProducto where idPromocion = ?;");
+        statement.setString(1, BuscarProm.getText());
+        ResultSet rs = statement.executeQuery();
+        LPromocion.clear();
+        while (rs.next()) {
+            LPromocion.add(new Promocion(rs.getString(1), rs.getString(2), rs.getString(3)));
+        }
     }
 
     public void ActualizarPromo(MouseEvent mouseEvent) throws SQLException {
         con.commit();
     }
 
+    public void Agregar(KeyEvent keyEvent) {
+        try {
+            Connection con = Conexion.getConnection();
+            PreparedStatement statement = con.prepareStatement("select idProducto, Descripcion from Producto where idProducto = ?");
+            statement.setString(1, CAddIDProm.getText());
+            ResultSet rs = statement.executeQuery();
+            System.out.println(statement.toString());
+            if (rs.next()) {
+                LPromocion.add(new Promocion(null, rs.getString(1), rs.getString(2)));
+                return;
+            }
+            Alertas.MostrarAlerta("No se encuentra el articulo", NotificationType.ERROR, "Error");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     class Empleado extends RecursiveTreeObject<Empleado> {
         StringProperty ID, Nombre, Telefono, Puesto;
 
-        public Empleado(String ID, String Nombre, String Telefono, String Puesto){
+        public Empleado(String ID, String Nombre, String Telefono, String Puesto) {
             this.ID = new SimpleStringProperty(ID);
             this.Nombre = new SimpleStringProperty(Nombre);
             this.Telefono = new SimpleStringProperty(Telefono);
             this.Puesto = new SimpleStringProperty(Puesto);
         }
 
-        public String GetID(){ return ID.get(); }
-        public String GetNombre(){ return Nombre.get(); }
-        public String GetTelefono(){ return Telefono.get(); }
-        public String GetPuesto(){ return Puesto.get(); }
-        public StringProperty sGetID(){ return ID; }
-        public StringProperty sGetNombre(){ return Nombre; }
-        public StringProperty sGetTelefono(){ return Telefono; }
-        public StringProperty sGetPuesto(){ return Puesto; }
+        public String GetID() {
+            return ID.get();
+        }
+
+        public String GetNombre() {
+            return Nombre.get();
+        }
+
+        public String GetTelefono() {
+            return Telefono.get();
+        }
+
+        public String GetPuesto() {
+            return Puesto.get();
+        }
+
+        public StringProperty sGetID() {
+            return ID;
+        }
+
+        public StringProperty sGetNombre() {
+            return Nombre;
+        }
+
+        public StringProperty sGetTelefono() {
+            return Telefono;
+        }
+
+        public StringProperty sGetPuesto() {
+            return Puesto;
+        }
 
     }
 
-    class Cliente extends RecursiveTreeObject<Cliente>{
+    class Cliente extends RecursiveTreeObject<Cliente> {
         StringProperty Id, Nombre, Direccion, Telefono, Puntos;
 
-        public Cliente(String Id, String Nombre, String Direccion, String Telefono, String Puntos){
+        public Cliente(String Id, String Nombre, String Direccion, String Telefono, String Puntos) {
             this.Id = new SimpleStringProperty(Id);
             this.Nombre = new SimpleStringProperty(Nombre);
             this.Direccion = new SimpleStringProperty(Direccion);
@@ -646,32 +689,78 @@ public class ExtrasController implements Initializable {
             this.Puntos = new SimpleStringProperty(Puntos);
         }
 
-        public String GetID(){ return Id.get(); }
-        public String GetNombre(){ return Nombre.get(); }
-        public String GetDireccion(){ return Direccion.get(); }
-        public String GetTelefono(){ return Telefono.get(); }
-        public String GetPuntos(){ return Puntos.get(); }
-        public StringProperty sGetID(){ return Id; }
-        public StringProperty sGetNombre(){ return Nombre; }
-        public StringProperty sGetDireccion(){ return Direccion; }
-        public StringProperty sGetTelefono(){ return Telefono; }
-        public StringProperty sGetPuntos(){ return Puntos; }
+        public String GetID() {
+            return Id.get();
+        }
+
+        public String GetNombre() {
+            return Nombre.get();
+        }
+
+        public String GetDireccion() {
+            return Direccion.get();
+        }
+
+        public String GetTelefono() {
+            return Telefono.get();
+        }
+
+        public String GetPuntos() {
+            return Puntos.get();
+        }
+
+        public StringProperty sGetID() {
+            return Id;
+        }
+
+        public StringProperty sGetNombre() {
+            return Nombre;
+        }
+
+        public StringProperty sGetDireccion() {
+            return Direccion;
+        }
+
+        public StringProperty sGetTelefono() {
+            return Telefono;
+        }
+
+        public StringProperty sGetPuntos() {
+            return Puntos;
+        }
     }
 
-    class Promocion extends RecursiveTreeObject<Promocion>{
+    class Promocion extends RecursiveTreeObject<Promocion> {
         StringProperty IdPromocion, IdProducto, Producto;
 
-        public Promocion(String IdPromocion, String IdProducto, String Producto){
+        public Promocion(String IdPromocion, String IdProducto, String Producto) {
             this.IdPromocion = new SimpleStringProperty(IdPromocion);
             this.IdProducto = new SimpleStringProperty(IdProducto);
             this.Producto = new SimpleStringProperty(Producto);
         }
 
-        public String GetIdPromocion(){ return IdPromocion.get(); }
-        public String GetIdProducto(){ return IdProducto.get(); }
-        public String GetProducto(){ return Producto.get(); }
-        public StringProperty sGetIdPromocion(){ return IdPromocion; }
-        public StringProperty sGetIdProducto(){ return IdProducto; }
-        public StringProperty sGetProducto(){ return Producto; }
+        public String GetIdPromocion() {
+            return IdPromocion.get();
+        }
+
+        public String GetIdProducto() {
+            return IdProducto.get();
+        }
+
+        public String GetProducto() {
+            return Producto.get();
+        }
+
+        public StringProperty sGetIdPromocion() {
+            return IdPromocion;
+        }
+
+        public StringProperty sGetIdProducto() {
+            return IdProducto;
+        }
+
+        public StringProperty sGetProducto() {
+            return Producto;
+        }
     }
 }

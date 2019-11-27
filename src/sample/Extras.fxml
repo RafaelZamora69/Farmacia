@@ -158,7 +158,7 @@
                               <TreeTableColumn fx:id="CProdProm" prefWidth="250.0" text="Producto" />
                            </columns>
                         </JFXTreeTableView>
-                        <JFXTextField fx:id="CAddIDProm" alignment="CENTER" layoutX="915.0" layoutY="253.0" onKeyPressed="#AgregarProd" promptText="Agregar ID" />
+                        <JFXTextField fx:id="CAddIDProm" alignment="CENTER" layoutX="915.0" layoutY="253.0" onKeyPressed="#Agregar" promptText="Agregar ID" />
                         <JFXTextField fx:id="CDelIdProm" alignment="CENTER" layoutX="915.0" layoutY="331.0" onKeyPressed="#EliminarProd" promptText="Eliminar ID" />
                         <JFXButton fx:id="BtnModProm" buttonType="RAISED" layoutX="409.0" layoutY="440.0" onMouseClicked="#ActualizarPromo" ripplerFill="WHITE" style="-fx-background-color: #009688;" text="Guardar" textFill="WHITE">
                            <font>
@@ -170,11 +170,6 @@
                            </font></JFXButton>
                         <Label layoutX="790.0" layoutY="126.0" text="*" textFill="#cd0000" />
                         <JFXButton fx:id="CancelEditProm" buttonType="RAISED" layoutX="407.0" layoutY="498.0" onMouseClicked="#CancelEditProm" ripplerFill="WHITE" style="-fx-background-color: #f44336;" text="Cancelar" textFill="WHITE">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXButton buttonType="RAISED" layoutX="937.0" layoutY="498.0" ripplerFill="WHITE" style="-fx-background-color: #f44336;" text="Cancelar" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
