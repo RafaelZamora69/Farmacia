@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.KeyCode;
@@ -44,9 +43,6 @@ public class ExtrasController implements Initializable {
     private JFXComboBox<String> EPuestoEmp;
 
     @FXML
-    private JFXPasswordField EValidarPass;
-
-    @FXML
     private JFXTreeTableView<Empleado> TableEmpleados;
 
     @FXML
@@ -78,12 +74,6 @@ public class ExtrasController implements Initializable {
 
     @FXML
     private JFXComboBox<String> NPuestoEmp;
-
-    @FXML
-    private Label ValidarPass;
-
-    @FXML
-    private Label ValidarPass2;
 
     @FXML
     private JFXButton BtnAgregar;
@@ -229,6 +219,33 @@ public class ExtrasController implements Initializable {
     @FXML
     private JFXButton BtnNuevoProveedor;
 
+    @FXML
+    private JFXTextArea ProdDEsc;
+
+    @FXML
+    private JFXTextField CodBarras;
+
+    @FXML
+    private JFXComboBox<String> ProdPresen;
+
+    @FXML
+    private JFXComboBox<String> ProdProveedor;
+
+    @FXML
+    private JFXTextField ProdPCompra;
+
+    @FXML
+    private JFXTextField ProdPVenta;
+
+    @FXML
+    private JFXToggleButton ProdReceta;
+
+    @FXML
+    private JFXComboBox<String> ProdCategoria;
+
+    @FXML
+    private JFXButton BtnNuevoProd;
+
 
     private static final ObservableList<Empleado> LEmpleados = FXCollections.observableArrayList();
     private static final ObservableList<Cliente> LClientes = FXCollections.observableArrayList();
@@ -250,6 +267,18 @@ public class ExtrasController implements Initializable {
             while (rs.next()) {
                 this.EPuestoEmp.getItems().add(rs.getString(1));
                 this.NPuestoEmp.getItems().add(rs.getString(1));
+            }
+            rs = con.createStatement().executeQuery("select Nombre from Proveedor;");
+            while (rs.next()){
+                this.ProdProveedor.getItems().add(rs.getString(1));
+            }
+            rs = con.createStatement().executeQuery("select distinct(Presentacion) from Producto;");
+            while(rs.next()){
+                this.ProdPresen.getItems().add(rs.getString(1));
+            }
+            rs = con.createStatement().executeQuery("select distinct(Categoria) from Producto;");
+            while(rs.next()){
+                this.ProdCategoria.getItems().add(rs.getString(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -311,7 +340,6 @@ public class ExtrasController implements Initializable {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             if (!"".equals(this.BuscarEmp.getText())) {
                 try {
-                    ValidarPass.setText("");
                     Connection con = Conexion.getConnection();
                     PreparedStatement statement = con.prepareStatement("select Nombre, Telefono, Usuario, Jerarquia from Empleado where idEmpleado = ?;");
                     statement.setString(1, this.BuscarEmp.getText());
@@ -336,12 +364,6 @@ public class ExtrasController implements Initializable {
             statement.setString(1, NNombreEmp.getText());
             statement.setString(2, NTelEmp.getText());
             statement.setString(3, NUsuEmp.getText());
-            if (this.ValidarPass2.getText().equals("Correcto")) {
-                statement.setString(4, NPassEmp.getText());
-            } else {
-                Alertas.MostrarAlerta("Las contraseñas no coinciden", NotificationType.ERROR, "Error!");
-                throw new SQLException();
-            }
             statement.setString(5, NPuestoEmp.getValue());
             statement.execute();
             LEmpleados.add(new Empleado(String.valueOf(Integer.parseInt(LEmpleados.get(LEmpleados.size() - 1).GetID()) + 1), NNombreEmp.getText(), NTelEmp.getText(), NUsuEmp.getText()));
@@ -356,28 +378,24 @@ public class ExtrasController implements Initializable {
         try {
             Connection con = Conexion.getConnection();
             PreparedStatement statement;
-            if (ValidarPass.getText().equals("")) {
-                statement = con.prepareStatement("update Empleado set Nombre = ?, Telefono = ?, Puesto = ?;");
+            if(EPassEmp.getText().equals("")){
+                statement = con.prepareStatement("update Empleado set Nombre = ?, Telefono = ?, Jerarquia = ? where idEmpleado = ?;");
                 statement.setString(1, ENombreEmp.getText());
                 statement.setString(2, ETelEmp.getText());
                 statement.setString(3, EPuestoEmp.getValue());
-                statement.executeUpdate();
-                Alertas.MostrarAlerta("Empleado actualizado", NotificationType.SUCCESS, "Correcto");
+                statement.setString(4, BuscarEmp.getText());
             } else {
-                statement = con.prepareStatement("update Empleado set Nombre = ?, Telefono = ?, Puesto = ?, Password = sha1(?);");
+                statement = con.prepareStatement("update Empleado set Nombre = ?, Telefono = ?, Jerarquia = ?, Password = sha1(?) where idEmpleado = ?;");
                 statement.setString(1, ENombreEmp.getText());
                 statement.setString(2, ETelEmp.getText());
                 statement.setString(3, EPuestoEmp.getValue());
-                if (ValidarPass.getText().equals("Correcto")) {
-                    statement.setString(4, EPassEmp.getText());
-                } else {
-                    Alertas.MostrarAlerta("Las contraseñas no coinciden", NotificationType.ERROR, "Error!");
-                    throw new SQLException();
-                }
-                statement.executeUpdate();
-                Alertas.MostrarAlerta("Empleado actualizado", NotificationType.SUCCESS, "Correcto");
+                statement.setString(4, EPassEmp.getText());
+                statement.setString(5, BuscarEmp.getText());
             }
+            statement.executeUpdate();
+            Alertas.MostrarAlerta("Empleado actualizado", NotificationType.SUCCESS, "Correcto");
         } catch (SQLException e) {
+            Alertas.MostrarAlerta("Ocurrió un problema al actualizar", NotificationType.ERROR, "Error");
             e.printStackTrace();
         }
     }
@@ -428,18 +446,20 @@ public class ExtrasController implements Initializable {
     public void AgregarCliente(MouseEvent mouseEvent) {
         try{
             Connection con = Conexion.getConnection();
-            PreparedStatement statement = con.prepareStatement("insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values (?, ?, ?, ?, ?);");
+            PreparedStatement statement = con.prepareStatement("insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values (?, ?, ?, ?, 0, ?);");
             statement.setString(1, NNomCli.getText());
             statement.setString(2, NDirCli.getText());
             statement.setString(3, NTelCli.getText());
             statement.setString(4, NEdadCli.getText());
             statement.setString(5, NRfcCli.getText());
             statement.executeUpdate();
+            Alertas.MostrarAlerta("Cliente registrado", NotificationType.SUCCESS, "Correcto");
             ResultSet rs = con.createStatement().executeQuery("select max(idCliente) from Cliente;");
             if(rs.next()){
                 LClientes.add(new Cliente(rs.getString(1), NNomCli.getText(), NDirCli.getText(), NTelCli.getText(), "0"));
             }
         }catch(SQLException e){
+            Alertas.MostrarAlerta("Hubo un problema al registrar el cliente", NotificationType.ERROR, "Error");
             e.printStackTrace();
         }
     }
@@ -664,6 +684,50 @@ public class ExtrasController implements Initializable {
             Alertas.MostrarAlerta("Hubo un error al eliminar la promoción", NotificationType.ERROR, "Error");
             e.printStackTrace();
         }
+    }
+
+    public void GuardarProd(MouseEvent mouseEvent) {
+        try{
+            Connection con = Conexion.getConnection();
+            PreparedStatement statement = con.prepareStatement("insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) \n" +
+                    "values (?, ?, ?, ?, ?, ?, 0, ?, ?);");
+            statement.setString(1, CodBarras.getText());
+            statement.setString(2, ProdDEsc.getText());
+            statement.setString(3, ProdPresen.getValue());
+            statement.setInt(4, GetIdProveedor());
+            statement.setDouble(5, Double.parseDouble(ProdPCompra.getText()));
+            statement.setDouble(6, Double.parseDouble(ProdPVenta.getText()));
+            statement.setBoolean(7, ProdReceta.isSelected());
+            statement.setString(8, ProdCategoria.getValue());
+            statement.executeUpdate();
+            Alertas.MostrarAlerta("Producto registrado correctamente", NotificationType.SUCCESS, "Correcto");
+        }catch (SQLException e){
+            Alertas.MostrarAlerta("Hubo un error al registrar el producto", NotificationType.ERROR, "Error");
+            e.printStackTrace();
+        }
+    }
+
+    private int GetIdProveedor(){
+        try{
+            Connection con = Conexion.getConnection();
+            PreparedStatement statement = con.prepareStatement("select idProveedor from Proveedor where Nombre = ?");
+            statement.setString(1, ProdProveedor.getValue());
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public void CancelarProd(MouseEvent mouseEvent) {
+        CodBarras.clear();
+        ProdDEsc.clear();
+        ProdPCompra.clear();
+        ProdPVenta.clear();
+        ProdReceta.setSelected(false);
     }
 
     class Empleado extends RecursiveTreeObject<Empleado> {

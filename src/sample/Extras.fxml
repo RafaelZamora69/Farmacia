@@ -223,6 +223,37 @@
                      </children></AnchorPane>
               </content>
             </Tab>
+            <Tab text="Producto">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="328.0" layoutY="48.0" text="Nuevo Producto">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXTextArea fx:id="ProdDEsc" layoutX="14.0" layoutY="138.0" prefHeight="90.0" prefWidth="244.0" promptText="Descripción" />
+                        <JFXTextField fx:id="CodBarras" alignment="CENTER" layoutX="326.0" layoutY="138.0" prefHeight="25.0" prefWidth="222.0" promptText="Código de barras" />
+                        <JFXComboBox fx:id="ProdPresen" editable="true" layoutX="326.0" layoutY="203.0" prefHeight="25.0" prefWidth="222.0" promptText="Presentación" />
+                        <JFXComboBox fx:id="ProdProveedor" layoutX="326.0" layoutY="285.0" prefHeight="25.0" prefWidth="223.0" promptText="Proveedor" />
+                        <JFXTextField fx:id="ProdPCompra" alignment="CENTER" layoutX="14.0" layoutY="285.0" promptText="Precio de compra" />
+                        <JFXTextField fx:id="ProdPVenta" alignment="CENTER" layoutX="14.0" layoutY="356.0" promptText="Precio de venta" />
+                        <JFXToggleButton fx:id="ProdReceta" layoutX="328.0" layoutY="356.0" text="Receta" />
+                        <JFXComboBox fx:id="ProdCategoria" editable="true" layoutX="599.0" layoutY="203.0" prefHeight="25.0" prefWidth="170.0" promptText="Categoría" />
+                        <JFXButton fx:id="BtnNuevoProd" buttonType="RAISED" layoutX="658.0" layoutY="285.0" onMouseClicked="#GuardarProd" style="-fx-background-color: #009688;" text="Registrar" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton buttonType="RAISED" layoutX="660.0" layoutY="349.0" onMouseClicked="#CancelarProd" style="-fx-background-color: #f44336;" text="Cancelar" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
          </tabs></JFXTabPane>
    </children>
 </AnchorPane>
