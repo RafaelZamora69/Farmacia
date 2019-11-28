@@ -194,6 +194,9 @@ public class ExtrasController implements Initializable {
     private JFXTextArea MDescProm;
 
     @FXML
+    private JFXButton BtnEliminarProm;
+
+    @FXML
     private JFXTextField BuscarProveedor;
 
     @FXML
@@ -379,22 +382,6 @@ public class ExtrasController implements Initializable {
         }
     }
 
-    public void ValidarPass(KeyEvent keyEvent) {
-        if (keyEvent.getSource().equals(NPassEmp) || keyEvent.getSource().equals(NValidarPass)) {
-            if (this.NValidarPass.getText().equals(this.NPassEmp.getText()) && this.NPassEmp.getText().equals(this.NValidarPass.getText())) {
-                this.ValidarPass2.setText("Correcto");
-            } else {
-                this.ValidarPass2.setText("No coinciden");
-            }
-        } else if (keyEvent.getSource().equals(EPassEmp) || keyEvent.getSource().equals(EValidarPass)) {
-            if (this.EValidarPass.getText().equals(this.EPassEmp.getText()) && this.EPassEmp.getText().equals(this.EValidarPass.getText())) {
-                this.ValidarPass.setText("Correcto");
-            } else {
-                this.ValidarPass.setText("No coinciden");
-            }
-        }
-    }
-
     public void BuscarCliente(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             if (!"".equals(this.BuscarCli.getText())) {
@@ -439,6 +426,22 @@ public class ExtrasController implements Initializable {
     }
 
     public void AgregarCliente(MouseEvent mouseEvent) {
+        try{
+            Connection con = Conexion.getConnection();
+            PreparedStatement statement = con.prepareStatement("insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values (?, ?, ?, ?, ?);");
+            statement.setString(1, NNomCli.getText());
+            statement.setString(2, NDirCli.getText());
+            statement.setString(3, NTelCli.getText());
+            statement.setString(4, NEdadCli.getText());
+            statement.setString(5, NRfcCli.getText());
+            statement.executeUpdate();
+            ResultSet rs = con.createStatement().executeQuery("select max(idCliente) from Cliente;");
+            if(rs.next()){
+                LClientes.add(new Cliente(rs.getString(1), NNomCli.getText(), NDirCli.getText(), NTelCli.getText(), "0"));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public void BuscarPromocion(KeyEvent keyEvent) {
@@ -483,6 +486,7 @@ public class ExtrasController implements Initializable {
             Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("insert into Promocion (Descripcion, Activa) values (?, 1)");
             statement.setString(1, CDescProm.getText());
+            statement.executeUpdate();
             for (Promocion objeto : LNPromocion) {
                 statement = con.prepareStatement("insert into detalle_promocion values(?, ?)");
                 ResultSet rs = con.createStatement().executeQuery("select max(idPromocion) from Promocion");
@@ -490,8 +494,11 @@ public class ExtrasController implements Initializable {
                     statement.setInt(1, rs.getInt(1));
                 }
                 statement.setInt(2, Integer.parseInt(objeto.GetIdProducto()));
+                statement.executeUpdate();
             }
+            Alertas.MostrarAlerta("Promoción registrada", NotificationType.SUCCESS, "Éxito");
         } catch (SQLException e) {
+            Alertas.MostrarAlerta("Ocurrió un error", NotificationType.ERROR, "Error");
             e.printStackTrace();
         }
     }
@@ -612,26 +619,51 @@ public class ExtrasController implements Initializable {
         }
     }
 
-    public void ActualizarPromo(MouseEvent mouseEvent) throws SQLException {
-        con.commit();
+    public void ActualizarPromo(MouseEvent mouseEvent) {
+        try {
+            PreparedStatement statement = con.prepareStatement("update promocion set Descripcion = ? where idPromocion = ?;");
+            statement.setString(1, MDescProm.getText());
+            statement.setString(2, BuscarProm.getText());
+            statement.executeUpdate();
+            con.commit();
+            Alertas.MostrarAlerta("Promoción actualizada", NotificationType.SUCCESS, "Éxito");
+        } catch (SQLException e) {
+            Alertas.MostrarAlerta("No se pudo Actualizar la promoción", NotificationType.ERROR, "Error");
+            e.printStackTrace();
+        }
     }
 
     public void Agregar(KeyEvent keyEvent) {
-        try {
-            Connection con = Conexion.getConnection();
-            PreparedStatement statement = con.prepareStatement("select idProducto, Descripcion from Producto where idProducto = ?");
-            statement.setString(1, CAddIDProm.getText());
-            ResultSet rs = statement.executeQuery();
-            System.out.println(statement.toString());
-            if (rs.next()) {
-                LPromocion.add(new Promocion(null, rs.getString(1), rs.getString(2)));
-                return;
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+            if (!"".equals(CAddIDProm.getText())) {
+                try {
+                    Connection con = Conexion.getConnection();
+                    PreparedStatement statement = con.prepareStatement("select idProducto, Descripcion from Producto where idProducto = ?");
+                    statement.setString(1, CAddIDProm.getText());
+                    ResultSet rs = statement.executeQuery();
+                    if (rs.next()) {
+                        LNPromocion.add(new Promocion(null, rs.getString(1), rs.getString(2)));
+                        return;
+                    }
+                    Alertas.MostrarAlerta("No se encuentra el articulo", NotificationType.ERROR, "Error");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-            Alertas.MostrarAlerta("No se encuentra el articulo", NotificationType.ERROR, "Error");
-        } catch (SQLException e) {
+        }
+    }
+
+    public void EliminarProm(MouseEvent mouseEvent) {
+        try{
+            Connection con = Conexion.getConnection();
+            PreparedStatement statement = con.prepareStatement("delete from Promocion where idPromocion = ?;");
+            statement.setString(1, BuscarProm.getText());
+            statement.executeUpdate();
+            Alertas.MostrarAlerta("Promoción eliminada!", NotificationType.SUCCESS, "Correcto");
+        } catch(SQLException e){
+            Alertas.MostrarAlerta("Hubo un error al eliminar la promoción", NotificationType.ERROR, "Error");
             e.printStackTrace();
         }
-
     }
 
     class Empleado extends RecursiveTreeObject<Empleado> {

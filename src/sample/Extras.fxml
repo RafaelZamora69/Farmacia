@@ -174,6 +174,11 @@
                               <Font size="18.0" />
                            </font>
                         </JFXButton>
+                        <JFXButton fx:id="BtnEliminarProm" buttonType="RAISED" layoutX="148.0" layoutY="537.0" onMouseClicked="#EliminarProm" style="-fx-background-color: #f44336;" text="Eliminar Promoción" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
                      </children></AnchorPane>
               </content>
             </Tab>
