@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -52,6 +53,9 @@ public class FinalizarCompraController implements Initializable {
 
     @FXML
     private Label lblCambio;
+
+    @FXML
+    private JFXButton BtnCerrar;
 
     public static final ObservableList<Proveedor> LProveedor = FXCollections.observableArrayList();
     public static Double Total;
@@ -130,6 +134,9 @@ public class FinalizarCompraController implements Initializable {
 
     }
 
+    public void Cerrar(MouseEvent mouseEvent) {
+        ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
+    }
 
 
     public class Proveedor extends RecursiveTreeObject<Proveedor>{

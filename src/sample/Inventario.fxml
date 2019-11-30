@@ -15,14 +15,14 @@
 
 <AnchorPane fx:id="Aroot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.InventarioController">
    <children>
-      <JFXTabPane fx:id="root" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #f3e5f5;">
+      <JFXTabPane fx:id="root" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #f3e5f5;" stylesheets="@Style.css">
          <tabs>
             <Tab id="tInventario" text="Inventario">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <JFXTreeTableView fx:id="TreeTable" prefHeight="665.0" prefWidth="900.0" />
-                        <JFXTextField fx:id="TxtFiltrar" alignment="CENTER" layoutX="907.0" layoutY="111.0" prefHeight="25.0" prefWidth="150.0" promptText="Descripción, proveedor" />
+                        <JFXTextField fx:id="TxtFiltrar" alignment="CENTER" layoutX="920.0" layoutY="80.0" prefHeight="25.0" prefWidth="150.0" promptText="Descripción, proveedor" />
                      </children>
                   </AnchorPane>
                </content>
@@ -68,7 +68,7 @@
                               <TreeTableColumn fx:id="Venta" prefWidth="130.0" text="\$ Venta" />
                               <TreeTableColumn fx:id="Prov" prefWidth="310.0" text="Proveedor" />
                            </columns></JFXTreeTableView>
-                        <JFXTextField fx:id="TxtCod" alignment="CENTER" layoutX="14.0" layoutY="419.0" onKeyPressed="#Agregar" prefHeight="25.0" prefWidth="221.0" promptText="Código de barras" />
+                        <JFXTextField fx:id="TxtCod" alignment="CENTER" focusColor="#009688" layoutX="14.0" layoutY="419.0" onKeyPressed="#Agregar" prefHeight="25.0" prefWidth="221.0" promptText="Código de barras" />
                         <Label fx:id="lblTotal" layoutX="900.0" layoutY="432.0" prefHeight="35.0" prefWidth="101.0" text="0.0">
                            <font>
                               <Font size="24.0" />
@@ -83,8 +83,8 @@
                         <JFXTextField fx:id="TxtPrecio" alignment="CENTER" layoutX="312.0" layoutY="419.0" onKeyPressed="#ActualizarTotalCompra" prefHeight="25.0" prefWidth="168.0" promptText="\$ Precio Compra" />
                         <JFXComboBox fx:id="Proveedores" editable="true" layoutX="536.0" layoutY="419.0" prefHeight="25.0" prefWidth="224.0" promptText="Proveedor" />
                         <JFXTextField fx:id="TxtPVenta" alignment="CENTER" layoutX="312.0" layoutY="514.0" prefHeight="25.0" prefWidth="168.0" promptText="\$ Precio Venta" />
-                        <JFXTextField fx:id="TxtMod" alignment="CENTER" layoutX="14.0" layoutY="332.0" onKeyPressed="#Editar" promptText="Modificar" />
-                        <JFXTextField fx:id="TxtEliminar" alignment="CENTER" layoutX="235.0" layoutY="332.0" onKeyPressed="#Eliminar" promptText="Eliminar" />
+                        <JFXTextField fx:id="TxtMod" alignment="CENTER" focusColor="#ffc107" layoutX="14.0" layoutY="332.0" onKeyPressed="#Editar" promptText="Modificar" />
+                        <JFXTextField fx:id="TxtEliminar" alignment="CENTER" focusColor="#f44336" layoutX="235.0" layoutY="332.0" onKeyPressed="#Eliminar" promptText="Eliminar" />
                      </children>
                   </AnchorPane>
                </content>
