@@ -63,12 +63,21 @@ public class FinalizarCompraController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.lblTotal.setText(String.valueOf(Total));
+        LProveedor.clear();
         CargarTabla();
         CargarProveedor();
     }
 
     public void FinalizarCompra(MouseEvent mouseEvent) {
         try {
+            if(TxtProveedor.getText().equals("")){
+                Alertas.MostrarAlerta("Ingrese un proveedor antes de ingresar la compra!", NotificationType.WARNING, "Aviso!");
+                return;
+            }
+            if(TxtPago.getText().equals("")){
+                Alertas.MostrarAlerta("Ingrese el pago", NotificationType.WARNING, "Aviso!");
+                return;
+            }
             Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("insert into Compra(idProveedor, Total_Compra, Fecha) values (?, ?, curdate());");
             statement.setString(1, TxtProveedor.getText());
@@ -93,7 +102,7 @@ public class FinalizarCompraController implements Initializable {
     private String GetIdCompra() throws SQLException {
             Connection con = Conexion.getConnection();
             ResultSet rs = con.createStatement().executeQuery("select max(idCompra) from Compra;");
-            while(rs.next()){
+            if(rs.next()){
                 return rs.getString(1);
             }
             return null;
