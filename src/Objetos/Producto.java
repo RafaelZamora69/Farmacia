@@ -6,7 +6,7 @@ import javafx.beans.property.StringProperty;
 
 public class Producto extends RecursiveTreeObject<Producto>{
 
-    StringProperty ID, Desc, Compra, Venta, Stock, Proveedor, Telefono;
+    StringProperty Cod,ID, Desc, Compra, Venta, Stock, Proveedor, Telefono;
 
     public Producto(String ID, String Desc, String Compra, String Venta, String Stock, String Proveedor, String Telefono){
         this.ID = new SimpleStringProperty(ID);
@@ -17,6 +17,21 @@ public class Producto extends RecursiveTreeObject<Producto>{
         this.Proveedor = new SimpleStringProperty(Proveedor);
         this.Telefono = new SimpleStringProperty(Telefono);
     }
+
+    public Producto(int id,String sku,String desc,String cantidad,String compra ,String venta){
+        this.Cod = new SimpleStringProperty(sku);
+        this.ID = new SimpleStringProperty(String.valueOf(id));
+        this.Desc = new SimpleStringProperty(desc);
+        this.Stock = new SimpleStringProperty(cantidad);
+        this.Compra = new SimpleStringProperty(compra);
+        this.Venta = new SimpleStringProperty(venta);
+    }
+
+    public StringProperty sGetCod() {return Cod;}
+
+    public String GetCod() { return Cod.get();}
+
+    public void setStock(StringProperty Stock){this.Stock = Stock;}
 
     public String GetID(){
         return ID.get();

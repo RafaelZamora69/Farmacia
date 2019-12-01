@@ -11,7 +11,7 @@
    <children>
       <JFXTextField fx:id="TxtUser" alignment="CENTER" focusColor="#ce93d8" layoutX="180.0" layoutY="74.0" onKeyPressed="#IngresarT" prefHeight="27.0" prefWidth="165.0" promptText="Usuario" unFocusColor="BLACK" />
       <JFXPasswordField fx:id="TxtPass" alignment="CENTER" focusColor="#ce93d8" layoutX="180.0" layoutY="137.0" onKeyPressed="#IngresarT" prefHeight="27.0" prefWidth="165.0" promptText="Contraseña" />
-      <JFXButton fx:id="BtnEntrar" buttonType="RAISED" layoutX="235.0" layoutY="206.0" onMouseClicked="#Ingresar" ripplerFill="#e1bee7" style="-fx-background-color: ce93d8;" text="Entrar" />
+      <JFXButton fx:id="BtnEntrar" buttonType="RAISED" layoutX="235.0" layoutY="206.0" onMouseClicked="#Ingresar" ripplerFill="#e1bee7" style="-fx-background-color: ce93d8;" text="Entrar" textFill="WHITE" />
       <Label fx:id="LblTitle" layoutX="226.0" layoutY="26.0" text="Farmacia" textAlignment="CENTER">
          <font>
             <Font name="Roboto Light" size="18.0" />
