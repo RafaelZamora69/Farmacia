@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.FinalizarCompraController">
+   <children>
+      <JFXTreeTableView fx:id="TableProveedor" layoutX="296.0" prefHeight="500.0" prefWidth="404.0">
+         <columns>
+            <TreeTableColumn fx:id="IDProveedor" prefWidth="100.0" text="ID" />
+            <TreeTableColumn fx:id="NombreProveedor" prefWidth="305.0" text="Nombre" />
+         </columns>
+      </JFXTreeTableView>
+      <JFXTextField fx:id="TxtProveedor" alignment="CENTER" layoutX="14.0" layoutY="14.0" promptText="ID Proveedor" />
+      <Label layoutX="14.0" layoutY="185.0" text="Total: $">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTotal" layoutX="82.0" layoutY="185.0" text="0.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="FinalizarCompra" buttonType="RAISED" layoutX="190.0" layoutY="287.0" onMouseClicked="#FinalizarCompra" ripplerFill="WHITE" style="-fx-background-color: #009688;" text="Finalizar" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXTextField fx:id="TxtPago" alignment="CENTER" layoutX="14.0" layoutY="101.0" onKeyPressed="#CargarCambio" promptText="Pagó" />
+      <Label layoutX="15.0" layoutY="223.0" text="Cambio: $">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCambio" layoutX="107.0" layoutY="223.0" text="0.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="BtnCerrar" buttonType="RAISED" layoutX="83.0" layoutY="287.0" onMouseClicked="#Cerrar" ripplerFill="WHITE" style="-fx-background-color: #f44336;" text="Cerrar" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

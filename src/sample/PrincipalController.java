@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -56,10 +57,14 @@ public class PrincipalController implements Initializable {
         SetNombre();
     }
 
-    public void AbrirExtras(MouseEvent mouseEvent) {
+    public void AbrirExtras(MouseEvent mouseEvent) throws IOException {
+        Pane pane = FXMLLoader.load(getClass().getResource("Extras.fxml"));
+        this.Content.getChildren().setAll(pane);
     }
 
-    public void AbrirCaja(MouseEvent mouseEvent) {
+    public void AbrirCaja(MouseEvent mouseEvent) throws IOException {
+        Pane pane = FXMLLoader.load(getClass().getResource("CajaRegistradora.fxml"));
+        this.Content.getChildren().setAll(pane);
     }
 
     public void AbrirInventario(MouseEvent mouseEvent) throws IOException {
@@ -72,6 +77,7 @@ public class PrincipalController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
         ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
     }

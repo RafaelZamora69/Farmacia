@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import tray.notification.NotificationType;
 
 import java.io.BufferedReader;
@@ -115,7 +116,8 @@ public class LoginController implements Initializable {
                 Parent Mroot = FXMLLoader.load(getClass().getResource("Principal.fxml"));
                 Scene scene = new Scene(Mroot);
                 Main.setScene(scene);
-                Main.setResizable(false);
+                Main.setResizable(true);
+                Main.initStyle(StageStyle.UNDECORATED);
                 Main.show();
                 Stage stage = (Stage) TxtUser.getScene().getWindow();
                 stage.close();
