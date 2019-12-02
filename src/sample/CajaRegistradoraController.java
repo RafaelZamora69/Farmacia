@@ -28,6 +28,7 @@ import javafx.util.Callback;
 
 import javax.print.*;
 import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +42,7 @@ public class CajaRegistradoraController extends Application implements Initializ
     double total = 0,puntos = 0;
     boolean lleno = false , existe = false;
     String codBarras = "", cliente = "";
-    Connection con = Conexion.getConnection("GerardoGalvan", "Gerardo123");
+    Connection con = Conexion.getConnection("KarVm", "Karla123");
     ResultSet rs;
     PreparedStatement ps;
 
@@ -174,7 +175,18 @@ public class CajaRegistradoraController extends Application implements Initializ
         }
     }
 
-    public void vender(ActionEvent actionEvent) {
+    public void vender(ActionEvent actionEvent) throws IOException {
+        String ticket = "===================="
+                +"\t\t\t\t\tFARMACIAS VERACRUZANAS\n";
+        Object [] pago ={"Efectivo","Tarjeta"};
+        Object formaPago = JOptionPane.showInputDialog(null,"Selecciona una forma de pago", "",JOptionPane.QUESTION_MESSAGE,null,pago, pago[0]);
+        if (formaPago.toString().equals("Efectivo")) {
+            double cantidad = Double.parseDouble(JOptionPane.showInputDialog(null, "Con cuanto paga?"));
+            double cambio = cantidad-total;
+        }
+        if(formaPago.toString().equals("Tarjeta")){
+
+        }
         int idventa = 0;
         try {
             ps = con.prepareStatement("select count(*) from venta ");
@@ -189,17 +201,6 @@ public class CajaRegistradoraController extends Application implements Initializ
             ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        PrintService service = PrintServiceLookup.lookupDefaultPrintService();
-        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-        DocPrintJob pj = service.createPrintJob();
-        String lineas = new String("====================\nFARMACIAS VERACRUZANAS");
-        byte[] bytes = lineas.getBytes();
-        Doc doc = new SimpleDoc(bytes,flavor,null);
-        try {
-            pj.print(doc,null);
-        } catch (Exception e){
-
         }
 
        for (Producto p:lista){
@@ -217,6 +218,17 @@ public class CajaRegistradoraController extends Application implements Initializ
                e.printStackTrace();
            }
        }
+        PrintService service = PrintServiceLookup.lookupDefaultPrintService();
+        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+        DocPrintJob pj = service.createPrintJob();
+        byte[] bytes;
+        bytes = ticket.getBytes();
+        Doc doc = new SimpleDoc(bytes, flavor, null);
+        try {
+            pj.print(doc, null);
+        } catch (PrintException ex) {
+            System.out.println("Error al imprimir");
+        }
        limpiarVentana();
     }
 
@@ -239,7 +251,7 @@ public class CajaRegistradoraController extends Application implements Initializ
         int numClientes = 0;
         cliente = JOptionPane.showInputDialog("Ingrese el ID del cliente:");
         try {
-            ps = con.prepareStatement("select count(*) from cliente");
+            ps = con.prepareStatement("select count(*) from `reporte clientes`;");
             rs = ps.executeQuery();
             while (rs.next()){
                 numClientes = rs.getInt("count(*)");
@@ -248,7 +260,7 @@ public class CajaRegistradoraController extends Application implements Initializ
         }
         if (esNumerico(cliente) && Integer.parseInt(cliente) <= numClientes){
             try {
-                ps = con.prepareStatement("Select * from cliente where idCliente = ?");
+                ps = con.prepareStatement("Select * from `reporte clientes` where idCliente = ?");
                 ps.setString(1,cliente);
                 rs =ps.executeQuery();
                 while (rs.next()){
