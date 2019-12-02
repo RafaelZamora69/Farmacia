@@ -98,6 +98,7 @@ public class InventarioController implements Initializable {
 
     private Double Total = 0.0, Aux = 0.0;
     private int i = 0;
+    private Connection con = Conexion.getConnection();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -127,7 +128,6 @@ public class InventarioController implements Initializable {
         if(event.getCode().equals(KeyCode.ENTER)){
             if("".equals(this.TxtCod.getText())){
             } else {
-                Connection con = Conexion.getConnection();
                 PreparedStatement statement;
                 if(this.TxtCod.getText().length() == 13){
                     statement = con.prepareStatement("select idProducto, Descripcion, Precio_Compra, Precio_Venta, Proveedor.Nombre from Producto inner join Proveedor on Producto.Proveedor = Proveedor.idProveedor" +
@@ -176,7 +176,6 @@ public class InventarioController implements Initializable {
         Tel.setPrefWidth(110);
         Tel.setCellValueFactory((TreeTableColumn.CellDataFeatures<Producto, String> param) -> (ObservableValue<String>) param.getValue().getValue().sGetTel());
         try{
-            Connection con = Conexion.getConnection();
             ResultSet rs = con.createStatement().executeQuery("select Producto.idProducto As 'Código del producto', \n" +
                     "    Producto.Descripcion As 'Descripción', \n" +
                     "    concat('$', Producto.Precio_Compra) As 'Precio de compra',\n" +
@@ -212,7 +211,6 @@ public class InventarioController implements Initializable {
 
     public void CargarComboBox() {
         try {
-            Connection con = Conexion.getConnection();
             ResultSet rs = null;
             rs = con.createStatement().executeQuery("select distinct Categoria from Producto;");
             while(rs.next()){
@@ -222,6 +220,10 @@ public class InventarioController implements Initializable {
             while(rs.next()){
                 this.ModPresen.getItems().add(rs.getString(1));
             }
+            rs = con.createStatement().executeQuery("select Nombre from Proveedor");
+            while (rs.next()){
+                this.ModProveedor.getItems().add(rs.getString(1));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -230,7 +232,6 @@ public class InventarioController implements Initializable {
     public void Buscar(KeyEvent event) throws SQLException {
         if(event.getCode().equals(KeyCode.ENTER)) {
             if (!"".equals(this.TxtBuscar.getText())) {
-                Connection con = Conexion.getConnection();
                 PreparedStatement statement;
                 if(this.TxtBuscar.getText().length() == 13){
                     statement = con.prepareStatement("select idProducto, Precio_Compra, Precio_Venta, Producto.Descripcion, Proveedor.Nombre, Presentacion, Categoria, Receta\n" +
@@ -263,7 +264,6 @@ public class InventarioController implements Initializable {
 
     public void Actualizar(MouseEvent mouseEvent){
         try {
-            Connection con = Conexion.getConnection();
             PreparedStatement Statement = con.prepareStatement("update Producto set Descripcion = ?, Precio_Compra = ?, Precio_Venta = ?, Proveedor = ?, Presentacion = ?, Categoria = ?, Receta = ? where idProducto = ?;");
             Statement.setString(1,this.ModDesc.getText());
             Statement.setDouble(2, Double.parseDouble(this.ModPCompra.getText()));
@@ -281,7 +281,6 @@ public class InventarioController implements Initializable {
     }
 
     public int GetIdProveedor() throws SQLException {
-        Connection con = Conexion.getConnection();
         PreparedStatement Statement = con.prepareStatement("Select idProveedor from Proveedor where Nombre = ?");
         Statement.setString(1,this.ModProveedor.getValue());
         ResultSet rs = Statement.executeQuery();
@@ -309,7 +308,7 @@ public class InventarioController implements Initializable {
 
     public void ActualizarTotalCompra(KeyEvent keyEvent) {
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
-            if(keyEvent.getSource().equals(TxtMod)){
+            if(!"".equals(TxtMod.getText())){
                 LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).SetCantidad(TxtCantidad.getText());
                 LProductoCompra.get(Integer.parseInt(TxtMod.getText()) - 1).SetCompra(TxtPrecio.getText());
                 if(Integer.parseInt(TxtCantidad.getText()) * Double.parseDouble(TxtPrecio.getText()) < Aux){

@@ -7,11 +7,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
@@ -51,6 +51,7 @@ public class PrincipalController implements Initializable {
     private AnchorPane Content;
 
     public static String Nombre;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

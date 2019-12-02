@@ -186,6 +186,7 @@ public class ReporteController implements Initializable {
     private static final ObservableList<ObjetoCompra> LCompra = FXCollections.observableArrayList();
     private static final ObservableList<ObjetoDetalleCompra> LDCompra = FXCollections.observableArrayList();
     private static final ObservableList<ObjetoUtilidad> LUtilidad = FXCollections.observableArrayList();
+    private Connection con = Conexion.getConnection();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -281,7 +282,6 @@ public class ReporteController implements Initializable {
     public void CargarReporteVentas() {
         LReporte.clear();
         try {
-            Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("select count(*) from Venta where Fecha between ? and ?;");
             statement.setString(1, this.FechaDe.getValue().toString());
             statement.setString(2, this.FechaHasta.getValue().toString());
@@ -317,7 +317,6 @@ public class ReporteController implements Initializable {
     private void CargarDetalleVenta(){
         LDReporte.clear();
         try {
-            Connection con = Conexion.getConnection();
             for(ObjetoReporte Objeto : LReporte){
                 PreparedStatement statement = con.prepareStatement("select Detalle_Venta.idVenta, Producto.Descripcion, Detalle_Venta.Precio_Venta, Detalle_Venta.Cantidad, Promocion.Descripcion\n" +
                         "from Detalle_Venta inner join Producto on Producto.idProducto = Detalle_Venta.idProducto\n" +
@@ -423,7 +422,6 @@ public class ReporteController implements Initializable {
     public void CargarReporteCompras(MouseEvent mouseEvent) {
         LCompra.clear();
         try{
-            Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("select count(*) from Compra where Compra.Fecha between ? and ?;");
             statement.setString(1, FechaDeC.getValue().toString());
             statement.setString(2, FechaHastaC.getValue().toString());
@@ -451,7 +449,6 @@ public class ReporteController implements Initializable {
         Double Total = 0.0;
         LDCompra.clear();
         try {
-            Connection con = Conexion.getConnection();
             for(ObjetoCompra Objeto : LCompra){
                 PreparedStatement statement = con.prepareStatement("select Detalle_Compra.idCompra, Producto.Descripcion, Detalle_Compra.Precio_Compra, Detalle_Compra.Cantidad\n" +
                         "from Detalle_Compra inner join Producto on Detalle_Compra.idProducto = Producto.idProducto\n" +
@@ -471,7 +468,6 @@ public class ReporteController implements Initializable {
 
     public void CargarUtilidad(MouseEvent mouseEvent) {
         try {
-            Connection con = Conexion.getConnection();
             LUtilidad.clear();
             PreparedStatement statement = con.prepareStatement("SELECT idVenta, Descripcion, `Precio de compra`, `Precio de venta`, Cantidad, Total, Promocion, Utilidad, Fecha FROM farmacia.`reporte de utilidades` where Fecha between ? and ?;");
             statement.setString(1, this.UtilDeFecha.getValue().toString());

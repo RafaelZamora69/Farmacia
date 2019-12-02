@@ -251,10 +251,14 @@ public class ExtrasController implements Initializable {
     private static final ObservableList<Cliente> LClientes = FXCollections.observableArrayList();
     private static final ObservableList<Promocion> LPromocion = FXCollections.observableArrayList();
     private static final ObservableList<Promocion> LNPromocion = FXCollections.observableArrayList();
-    Connection con = Conexion.GetConexionPromocion();
+    private Connection ConTransact = Conexion.GetConexionPromocion();
+    private Connection con = Conexion.getConnection();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        LEmpleados.clear();
+        LClientes.clear();
         CargarComboBox();
         CargarTablas();
         CargarListas();
@@ -262,7 +266,6 @@ public class ExtrasController implements Initializable {
 
     private void CargarComboBox() {
         try {
-            Connection con = Conexion.getConnection();
             ResultSet rs = con.createStatement().executeQuery("select distinct Jerarquia from Empleado;");
             while (rs.next()) {
                 this.EPuestoEmp.getItems().add(rs.getString(1));
@@ -288,7 +291,6 @@ public class ExtrasController implements Initializable {
 
     private void CargarListas() {
         try {
-            Connection con = Conexion.getConnection();
             //Lista Empleados
             ResultSet rs = con.createStatement().executeQuery("select idEmpleado, Nombre, Telefono, Jerarquia from Empleado;");
             while (rs.next()) {
@@ -340,7 +342,6 @@ public class ExtrasController implements Initializable {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             if (!"".equals(this.BuscarEmp.getText())) {
                 try {
-                    Connection con = Conexion.getConnection();
                     PreparedStatement statement = con.prepareStatement("select Nombre, Telefono, Usuario, Jerarquia from Empleado where idEmpleado = ?;");
                     statement.setString(1, this.BuscarEmp.getText());
                     ResultSet rs = statement.executeQuery();
@@ -359,7 +360,6 @@ public class ExtrasController implements Initializable {
 
     public void InsertarEmpleado(MouseEvent mouseEvent) {
         try {
-            Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values (?, ?, ?, sha1(?), ?)");
             statement.setString(1, NNombreEmp.getText());
             statement.setString(2, NTelEmp.getText());
@@ -376,7 +376,6 @@ public class ExtrasController implements Initializable {
 
     public void ActualizarEmpleado(MouseEvent mouseEvent) {
         try {
-            Connection con = Conexion.getConnection();
             PreparedStatement statement;
             if(EPassEmp.getText().equals("")){
                 statement = con.prepareStatement("update Empleado set Nombre = ?, Telefono = ?, Jerarquia = ? where idEmpleado = ?;");
@@ -404,7 +403,6 @@ public class ExtrasController implements Initializable {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             if (!"".equals(this.BuscarCli.getText())) {
                 try {
-                    Connection con = Conexion.getConnection();
                     PreparedStatement statement = con.prepareStatement("select Nombre, Direccion, Telefono, Edad, Puntos, Rfc from Cliente where idCliente = ?;");
                     statement.setString(1, this.BuscarCli.getText());
                     ResultSet rs = statement.executeQuery();
@@ -427,7 +425,6 @@ public class ExtrasController implements Initializable {
 
     public void ActualizarCliente(MouseEvent mouseEvent) {
         try {
-            Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("update Cliente set Nombre = ?, Direccion = ?, Telefono = ?, Rfc = ?, Edad = ?");
             statement.setString(1, ENomCli.getText());
             statement.setString(2, EDirCli.getText());
@@ -445,7 +442,6 @@ public class ExtrasController implements Initializable {
 
     public void AgregarCliente(MouseEvent mouseEvent) {
         try{
-            Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values (?, ?, ?, ?, 0, ?);");
             statement.setString(1, NNomCli.getText());
             statement.setString(2, NDirCli.getText());
@@ -469,7 +465,6 @@ public class ExtrasController implements Initializable {
             if (!"".equals(this.BuscarProm.getText())) {
                 LPromocion.clear();
                 try {
-                    Connection con = Conexion.getConnection();
                     PreparedStatement statement = con.prepareStatement("select Descripcion, Activa from Promocion where idPromocion != 1 and idPromocion = ?;");
                     statement.setString(1, this.BuscarProm.getText());
                     ResultSet rs = statement.executeQuery();
@@ -503,7 +498,6 @@ public class ExtrasController implements Initializable {
             return;
         }
         try {
-            Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("insert into Promocion (Descripcion, Activa) values (?, 1)");
             statement.setString(1, CDescProm.getText());
             statement.executeUpdate();
@@ -527,7 +521,7 @@ public class ExtrasController implements Initializable {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             if (!"".equals(this.MAgregarID.getText())) {
                 try {
-                    PreparedStatement statement = con.prepareStatement("select idProducto, Descripcion from Producto where idProducto = ?");
+                    PreparedStatement statement = ConTransact.prepareStatement("select idProducto, Descripcion from Producto where idProducto = ?");
                     statement.setString(1, MAgregarID.getText());
                     ResultSet rs = statement.executeQuery();
                     if (rs.next()) {
@@ -554,7 +548,7 @@ public class ExtrasController implements Initializable {
                         int i = 0;
                         for (Promocion objeto : LPromocion) {
                             if (objeto.GetIdProducto().equals(MElimIdProm.getText())) {
-                                PreparedStatement statement = con.prepareStatement("delete from Detalle_Promocion where idProducto = ?");
+                                PreparedStatement statement = ConTransact.prepareStatement("delete from Detalle_Promocion where idProducto = ?");
                                 statement.setString(1, MElimIdProm.getText());
                                 LPromocion.remove(i);
                                 statement.executeUpdate();
@@ -573,7 +567,6 @@ public class ExtrasController implements Initializable {
 
     public void ActualizarProveedor(MouseEvent mouseEvent) {
         try {
-            Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("update Proveedor set Nombre = ?, Telefono = ?, Correo = ?, Direccion = ? where idProveedor = ?;");
             statement.setString(1, ENombProv.getText());
             statement.setString(2, ETelProv.getText());
@@ -590,14 +583,17 @@ public class ExtrasController implements Initializable {
 
     public void NuevoProveedor(MouseEvent mouseEvent) {
         try {
-            Connection con = Conexion.getConnection();
-            PreparedStatement statement = con.prepareStatement("insert into Proveedor(Nombre, Telefono, Correo, Direccion) values (?, ?, ?, ?)");
-            statement.setString(1, NProvNom.getText());
-            statement.setString(2, NTelProv.getText());
-            statement.setString(3, NCorrProv.getText());
-            statement.setString(4, NDirProv.getText());
-            statement.executeUpdate();
-            Alertas.MostrarAlerta("Proveedor registrado", NotificationType.SUCCESS, "Éxito");
+            if(NProvNom.getText().equals("") || NTelProv.getText().equals("") || NDirProv.getText().equals("")){
+                Alertas.MostrarAlerta("No debe haber campos importantes vacios", NotificationType.ERROR, "Error");
+            } else {
+                PreparedStatement statement = con.prepareStatement("insert into Proveedor(Nombre, Telefono, Correo, Direccion) values (?, ?, ?, ?)");
+                statement.setString(1, NProvNom.getText());
+                statement.setString(2, NTelProv.getText());
+                statement.setString(3, NCorrProv.getText());
+                statement.setString(4, NDirProv.getText());
+                statement.executeUpdate();
+                Alertas.MostrarAlerta("Proveedor registrado", NotificationType.SUCCESS, "Éxito");
+            }
         } catch (SQLException e) {
             Alertas.MostrarAlerta("Hubo un problema al registrar el proveedor", NotificationType.ERROR, "Error");
             e.printStackTrace();
@@ -608,7 +604,6 @@ public class ExtrasController implements Initializable {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             if (!"".equals(BuscarProveedor.getText())) {
                 try {
-                    Connection con = Conexion.getConnection();
                     PreparedStatement statement = con.prepareStatement("select Nombre, Telefono, Correo, Direccion from Proveedor where idProveedor = ?");
                     statement.setString(1, BuscarProveedor.getText());
                     ResultSet rs = statement.executeQuery();
@@ -628,9 +623,8 @@ public class ExtrasController implements Initializable {
     }
 
     public void CancelEditProm(MouseEvent mouseEvent) throws SQLException {
-        con.rollback();
-        Connection conection = Conexion.getConnection();
-        PreparedStatement statement = conection.prepareStatement("select idPromocion, Detalle_Promocion.idProducto, Producto.Descripcion from Detalle_Promocion inner join Producto on Detalle_Promocion.idProducto = Producto.idProducto where idPromocion = ?;");
+        ConTransact.rollback();
+        PreparedStatement statement = con.prepareStatement("select idPromocion, Detalle_Promocion.idProducto, Producto.Descripcion from Detalle_Promocion inner join Producto on Detalle_Promocion.idProducto = Producto.idProducto where idPromocion = ?;");
         statement.setString(1, BuscarProm.getText());
         ResultSet rs = statement.executeQuery();
         LPromocion.clear();
@@ -641,11 +635,11 @@ public class ExtrasController implements Initializable {
 
     public void ActualizarPromo(MouseEvent mouseEvent) {
         try {
-            PreparedStatement statement = con.prepareStatement("update promocion set Descripcion = ? where idPromocion = ?;");
+            PreparedStatement statement = ConTransact.prepareStatement("update promocion set Descripcion = ? where idPromocion = ?;");
             statement.setString(1, MDescProm.getText());
             statement.setString(2, BuscarProm.getText());
             statement.executeUpdate();
-            con.commit();
+            ConTransact.commit();
             Alertas.MostrarAlerta("Promoción actualizada", NotificationType.SUCCESS, "Éxito");
         } catch (SQLException e) {
             Alertas.MostrarAlerta("No se pudo Actualizar la promoción", NotificationType.ERROR, "Error");
@@ -657,7 +651,6 @@ public class ExtrasController implements Initializable {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             if (!"".equals(CAddIDProm.getText())) {
                 try {
-                    Connection con = Conexion.getConnection();
                     PreparedStatement statement = con.prepareStatement("select idProducto, Descripcion from Producto where idProducto = ?");
                     statement.setString(1, CAddIDProm.getText());
                     ResultSet rs = statement.executeQuery();
@@ -675,7 +668,6 @@ public class ExtrasController implements Initializable {
 
     public void EliminarProm(MouseEvent mouseEvent) {
         try{
-            Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("delete from Promocion where idPromocion = ?;");
             statement.setString(1, BuscarProm.getText());
             statement.executeUpdate();
@@ -688,7 +680,6 @@ public class ExtrasController implements Initializable {
 
     public void GuardarProd(MouseEvent mouseEvent) {
         try{
-            Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) \n" +
                     "values (?, ?, ?, ?, ?, ?, 0, ?, ?);");
             statement.setString(1, CodBarras.getText());
@@ -709,7 +700,6 @@ public class ExtrasController implements Initializable {
 
     private int GetIdProveedor(){
         try{
-            Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("select idProveedor from Proveedor where Nombre = ?");
             statement.setString(1, ProdProveedor.getValue());
             ResultSet rs = statement.executeQuery();

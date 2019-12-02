@@ -59,6 +59,7 @@ public class FinalizarCompraController implements Initializable {
 
     public static final ObservableList<Proveedor> LProveedor = FXCollections.observableArrayList();
     public static Double Total;
+    private Connection con = Conexion.getConnection();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,7 +79,6 @@ public class FinalizarCompraController implements Initializable {
                 Alertas.MostrarAlerta("Ingrese el pago", NotificationType.WARNING, "Aviso!");
                 return;
             }
-            Connection con = Conexion.getConnection();
             PreparedStatement statement = con.prepareStatement("insert into Compra(idProveedor, Total_Compra, Fecha) values (?, ?, curdate());");
             statement.setString(1, TxtProveedor.getText());
             statement.setString(2, lblTotal.getText());
@@ -100,7 +100,6 @@ public class FinalizarCompraController implements Initializable {
     }
 
     private String GetIdCompra() throws SQLException {
-            Connection con = Conexion.getConnection();
             ResultSet rs = con.createStatement().executeQuery("select max(idCompra) from Compra;");
             if(rs.next()){
                 return rs.getString(1);
