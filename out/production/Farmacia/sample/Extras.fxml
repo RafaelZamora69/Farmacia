@@ -8,10 +8,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
-<<<<<<< Updated upstream
 <?import com.jfoenix.controls.JFXTreeView?>
-=======
->>>>>>> Stashed changes
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
@@ -195,10 +192,7 @@
                            </font>
                         </Label>
                         <JFXTextField fx:id="BuscarProveedor" alignment="CENTER" layoutX="14.0" layoutY="76.0" onKeyPressed="#BuscarProveedor" promptText="Buscar ID" />
-<<<<<<< Updated upstream
                         <JFXTreeView layoutY="447.0" prefHeight="216.0" prefWidth="248.0" />
-=======
->>>>>>> Stashed changes
                         <JFXTextArea fx:id="ENombProv" layoutX="12.0" layoutY="139.0" prefHeight="77.0" prefWidth="204.0" promptText="Nombre" />
                         <JFXTextField fx:id="ETelProv" alignment="CENTER" layoutX="248.0" layoutY="139.0" prefHeight="25.0" prefWidth="175.0" promptText="Teléfono" />
                         <JFXTextField fx:id="ECorrProv" alignment="CENTER" layoutX="248.0" layoutY="280.0" prefHeight="25.0" prefWidth="176.0" promptText="Correo" />
@@ -213,20 +207,12 @@
                         <JFXTextField fx:id="NTelProv" alignment="CENTER" layoutX="809.0" layoutY="101.0" prefHeight="25.0" prefWidth="175.0" promptText="Teléfono" />
                         <JFXTextField fx:id="NCorrProv" alignment="CENTER" layoutX="809.0" layoutY="242.0" prefHeight="25.0" prefWidth="176.0" promptText="Correo" />
                         <JFXTextArea fx:id="NDirProv" layoutX="571.0" layoutY="213.0" prefHeight="108.0" prefWidth="208.0" promptText="Dirección" />
-<<<<<<< Updated upstream
                         <JFXButton fx:id="BtnActualizarProveedor" buttonType="RAISED" layoutX="446.0" layoutY="332.0" onMouseClicked="#ActualizarProveedor" text="Guardar">
-=======
-                        <JFXButton fx:id="BtnActualizarProveedor" buttonType="RAISED" layoutX="446.0" layoutY="332.0" onMouseClicked="#ActualizarProveedor" style="-fx-background-color: #009688;" text="Guardar" textFill="WHITE">
->>>>>>> Stashed changes
                            <font>
                               <Font size="18.0" />
                            </font>
                         </JFXButton>
-<<<<<<< Updated upstream
                         <JFXButton fx:id="BtnNuevoProveedor" buttonType="RAISED" layoutX="877.0" layoutY="329.0" onMouseClicked="#NuevoProveedor" text="Guardar">
-=======
-                        <JFXButton fx:id="BtnNuevoProveedor" buttonType="RAISED" layoutX="877.0" layoutY="329.0" onMouseClicked="#NuevoProveedor" style="-fx-background-color: #009688;" text="Guardar" textFill="WHITE">
->>>>>>> Stashed changes
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -241,11 +227,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-<<<<<<< Updated upstream
                         <Label layoutX="328.0" layoutY="48.0" text="Nuevo Producto">
-=======
-                        <Label layoutX="193.0" layoutY="33.0" text="Nuevo Producto">
->>>>>>> Stashed changes
                            <font>
                               <Font size="18.0" />
                            </font>
