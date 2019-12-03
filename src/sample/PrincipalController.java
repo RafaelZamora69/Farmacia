@@ -48,20 +48,29 @@ public class PrincipalController implements Initializable {
     private JFXButton BtnCerrar;
 
     @FXML
+    private JFXButton BtnReportes;
+
+    @FXML
     private AnchorPane Content;
 
-    public static String Nombre;
+    public static String Nombre, Jerarquia;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if(Jerarquia.equals("Vendedor")){
+            this.BtnInventario.setDisable(true);
+            this.BtnExtras.setDisable(true);
+            this.BtnReportes.setDisable(true);
+        } else if(Jerarquia.equals("Inventario")){
+            this.BtnCaja.setDisable(true);
+        }
         SetNombre();
     }
 
     public void AbrirExtras(MouseEvent mouseEvent) throws IOException {
         Parent pane = FXMLLoader.load(getClass().getResource("Extras.fxml"));
         this.Content.getChildren().setAll(pane);
-        ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
     }
 
     public void AbrirCaja(MouseEvent mouseEvent) throws IOException {

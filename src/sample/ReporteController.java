@@ -13,10 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -181,6 +178,13 @@ public class ReporteController implements Initializable {
     @FXML
     private LineChart<String, Number> ChartCompras;
 
+    @FXML
+    private Tab ReporteVenta;
+    @FXML
+    private Tab ReporteCompra;
+    @FXML
+    private Tab ReporteUtil;
+
     private static final ObservableList<ObjetoReporte> LReporte = FXCollections.observableArrayList();
     private static final ObservableList<ObjetoDetalleReporte> LDReporte = FXCollections.observableArrayList();
     private static final ObservableList<ObjetoCompra> LCompra = FXCollections.observableArrayList();
@@ -191,6 +195,12 @@ public class ReporteController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         InicializarTablas();
+        if(PrincipalController.Jerarquia.equals("Inventario")){
+            ReporteVenta.setDisable(true);
+            ReporteUtil.setDisable(true);
+        } else if(PrincipalController.Jerarquia.equals("Encargado de turno")){
+            ReporteUtil.setDisable(true);
+        }
     }
 
     private void InicializarTablas() {

@@ -19,7 +19,7 @@
    <children>
       <JFXTabPane prefHeight="700.0" prefWidth="1100.0" stylesheets="@Style.css">
          <tabs>
-            <Tab text="Clientes">
+            <Tab fx:id="TablClient" text="Clientes">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -70,7 +70,7 @@
                      </children></AnchorPane>
               </content>
             </Tab>
-            <Tab text="Empleados">
+            <Tab fx:id="TabEmp" text="Empleados">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -124,7 +124,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Promociones">
+            <Tab fx:id="TabPromo" text="Promociones">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -181,7 +181,7 @@
                      </children></AnchorPane>
               </content>
             </Tab>
-            <Tab text="Proveedores">
+            <Tab fx:id="TabProvee" text="Proveedores">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -221,7 +221,7 @@
                      </children></AnchorPane>
               </content>
             </Tab>
-            <Tab text="Producto">
+            <Tab fx:id="TabProd" text="Producto">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

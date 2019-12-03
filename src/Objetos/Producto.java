@@ -31,7 +31,7 @@ public class Producto extends RecursiveTreeObject<Producto>{
 
     public String GetCod() { return Cod.get();}
 
-    public void setStock(StringProperty Stock){this.Stock = Stock;}
+    public void setStock(String Stock){this.Stock.set(Stock);}
 
     public String GetID(){
         return ID.get();

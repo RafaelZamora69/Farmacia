@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.KeyCode;
@@ -246,6 +247,15 @@ public class ExtrasController implements Initializable {
     @FXML
     private JFXButton BtnNuevoProd;
 
+    @FXML
+    private Tab TablClient;
+    @FXML
+    private Tab TabEmp;
+    @FXML
+    private Tab TabPromo;
+    @FXML
+    private Tab TabProvee;
+
 
     private static final ObservableList<Empleado> LEmpleados = FXCollections.observableArrayList();
     private static final ObservableList<Cliente> LClientes = FXCollections.observableArrayList();
@@ -262,6 +272,14 @@ public class ExtrasController implements Initializable {
         CargarComboBox();
         CargarTablas();
         CargarListas();
+        if(PrincipalController.Jerarquia.equals("Inventario")){
+            TablClient.setDisable(true);
+            TabEmp.setDisable(true);
+            TabPromo.setDisable(true);
+            TabProvee.setDisable(true);
+        } else if(PrincipalController.Jerarquia.equals("Encargado de turno")){
+            TabEmp.setDisable(true);
+        }
     }
 
     private void CargarComboBox() {

@@ -6,8 +6,6 @@ import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import tray.notification.NotificationType;
 
 import javax.print.*;
 import javax.swing.*;
@@ -39,7 +38,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
-public class CajaRegistradoraController extends Application implements Initializable {
+public class CajaRegistradoraController implements Initializable {
 
     double total = 0,puntos = 0;
     boolean lleno = false , existe = false;
@@ -68,20 +67,9 @@ public class CajaRegistradoraController extends Application implements Initializ
     public CajaRegistradoraController() throws SQLException {
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Stage s = new Stage();
-        Parent r = FXMLLoader.load(getClass().getResource("CajaRegistradora.fxml"));
-        Scene scene = new Scene(r);
-        s.setResizable(false);
-        s.setTitle("");
-        s.setScene(scene);
-        s.show();
-    }
-
     public void salir(MouseEvent mouseEvent) throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Principal.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
@@ -145,12 +133,12 @@ public class CajaRegistradoraController extends Application implements Initializ
                 ps = con.prepareStatement("SELECT idProducto,Cod_Barras,Descripcion,Precio_Compra,Precio_venta FROM producto WHERE Cod_Barras = ? ");
                 ps.setString(1, codBarras);
                 rs = ps.executeQuery();
-                while (rs.next()) {
+                if (rs.next()) {
                     if (lleno == true ){
                         for (Producto p : lista) {
                             if (p.GetCod().equals(codBarras)) {
                                 int n = Integer.parseInt(p.GetStock());
-                                p.setStock(new SimpleStringProperty(String.valueOf(n + 1)));
+                                p.setStock(String.valueOf(n + 1));
                                 total += Double.parseDouble(p.GetVenta());
                                 tfTotal.setText("$"+total);
                                 existe = true;
@@ -176,6 +164,8 @@ public class CajaRegistradoraController extends Application implements Initializ
                             tfTotal.setText("$" + total);
                         }
                     }
+                } else {
+                    Alertas.MostrarAlerta("No existe este producto", NotificationType.WARNING, "Aviso");
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -184,13 +174,14 @@ public class CajaRegistradoraController extends Application implements Initializ
     }
 
     public void vender(ActionEvent actionEvent) throws IOException {
+        double cambio = 0;
         String ticket = "===================="
                 +"\t\t\t\t\tFARMACIAS VERACRUZANAS\n";
         Object [] pago ={"Efectivo","Tarjeta"};
         Object formaPago = JOptionPane.showInputDialog(null,"Selecciona una forma de pago", "",JOptionPane.QUESTION_MESSAGE,null,pago, pago[0]);
         if (formaPago.toString().equals("Efectivo")) {
             double cantidad = Double.parseDouble(JOptionPane.showInputDialog(null, "Con cuanto paga?"));
-            double cambio = cantidad-total;
+            cambio = cantidad-total;
         }
         if(formaPago.toString().equals("Tarjeta")){
 
@@ -238,6 +229,8 @@ public class CajaRegistradoraController extends Application implements Initializ
             System.out.println("Error al imprimir");
         }
        limpiarVentana();
+        Alertas.MostrarAlerta("Se ha ingresado la alerta correctamente", NotificationType.SUCCESS, "Correcto");
+        JOptionPane.showMessageDialog(null,"Cambio: $" + String.valueOf(cambio));
     }
 
     public void limpiarVentana(){

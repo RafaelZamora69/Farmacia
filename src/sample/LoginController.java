@@ -105,13 +105,14 @@ public class LoginController implements Initializable {
         try{
             Connection con = Conexion.getConnection();
             PreparedStatement statement;
-            statement = con.prepareStatement("select Nombre from Empleado where Usuario = ? and Password = sha1(?)");
+            statement = con.prepareStatement("select Nombre, Jerarquia from Empleado where Usuario = ? and Password = sha1(?)");
             statement.setString(1, this.TxtUser.getText());
             statement.setString(2, this.TxtPass.getText());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 //Cosas je
                 PrincipalController.Nombre = rs.getString(1);
+                PrincipalController.Jerarquia = rs.getString(2);
                 Stage Main = new Stage();
                 Parent Mroot = FXMLLoader.load(getClass().getResource("Principal.fxml"));
                 Scene scene = new Scene(Mroot);

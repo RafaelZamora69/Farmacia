@@ -13,10 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -88,6 +85,13 @@ public class InventarioController implements Initializable {
 
     @FXML
     private TreeTableColumn<ProductoCompra, String> Prov;
+
+    @FXML
+    private Tab TabCompraProd;
+    @FXML
+    private Tab TabModProd;
+    @FXML
+    private Tab TabInventario;
 
     @FXML
     private JFXComboBox<String> ModProveedor, ModPresen, ModCateg;
