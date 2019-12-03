@@ -382,10 +382,11 @@ public class ExtrasController implements Initializable {
             statement.setString(1, NNombreEmp.getText());
             statement.setString(2, NTelEmp.getText());
             statement.setString(3, NUsuEmp.getText());
+            statement.setString(4, NPassEmp.getText());
             statement.setString(5, NPuestoEmp.getValue());
             statement.execute();
             LEmpleados.add(new Empleado(String.valueOf(Integer.parseInt(LEmpleados.get(LEmpleados.size() - 1).GetID()) + 1), NNombreEmp.getText(), NTelEmp.getText(), NUsuEmp.getText()));
-            Alertas.MostrarAlerta("Empleado registrado", NotificationType.ERROR, "Exito");
+            Alertas.MostrarAlerta("Empleado registrado", NotificationType.SUCCESS, "Exito");
         } catch (SQLException e) {
             e.printStackTrace();
         }
