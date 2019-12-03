@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -24,6 +25,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 import javax.print.*;
@@ -42,7 +44,7 @@ public class CajaRegistradoraController extends Application implements Initializ
     double total = 0,puntos = 0;
     boolean lleno = false , existe = false;
     String codBarras = "", cliente = "";
-    Connection con = Conexion.getConnection("KarVm", "Karla123");
+    Connection con = Conexion.getConnection();
     ResultSet rs;
     PreparedStatement ps;
 
@@ -77,8 +79,14 @@ public class CajaRegistradoraController extends Application implements Initializ
         s.show();
     }
 
-    public void salir(MouseEvent mouseEvent) {
-        System.exit(0);
+    public void salir(MouseEvent mouseEvent) throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.show();
+        ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
     }
 
     @Override
@@ -233,7 +241,7 @@ public class CajaRegistradoraController extends Application implements Initializ
     }
 
     public void limpiarVentana(){
-        lista.removeAll();
+        lista.clear();
         lleno = false;
         existe = false;
         total = 0.00;
@@ -260,7 +268,7 @@ public class CajaRegistradoraController extends Application implements Initializ
         }
         if (esNumerico(cliente) && Integer.parseInt(cliente) <= numClientes){
             try {
-                ps = con.prepareStatement("Select * from `reporte clientes` where idCliente = ?");
+                ps = con.prepareStatement("Select * from `reporte clientes` where idCliente = ? and idCliente != 1");
                 ps.setString(1,cliente);
                 rs =ps.executeQuery();
                 while (rs.next()){

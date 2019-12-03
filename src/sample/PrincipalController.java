@@ -59,13 +59,19 @@ public class PrincipalController implements Initializable {
     }
 
     public void AbrirExtras(MouseEvent mouseEvent) throws IOException {
-        Pane pane = FXMLLoader.load(getClass().getResource("Extras.fxml"));
+        Parent pane = FXMLLoader.load(getClass().getResource("Extras.fxml"));
         this.Content.getChildren().setAll(pane);
+        ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
     }
 
     public void AbrirCaja(MouseEvent mouseEvent) throws IOException {
-        Pane pane = FXMLLoader.load(getClass().getResource("CajaRegistradora.fxml"));
-        this.Content.getChildren().setAll(pane);
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("CajaRegistradora.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.show();
+        ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
     }
 
     public void AbrirInventario(MouseEvent mouseEvent) throws IOException {
