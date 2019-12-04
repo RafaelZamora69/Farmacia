@@ -133,6 +133,20 @@ insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Tota
 insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (7, 16, 180, 229, 229, 1, 1);
 insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (7, 13, 15, 24, 24, 2, 1);
 insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (7, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (8, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (9, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (10, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (11, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (12, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (13, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (14, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (15, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (16, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (17, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (18, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (19, 19, 103, 108, 108, 1, 1);
+insert into Detalle_Venta(idVenta, idProducto, Precio_Compra, Precio_Venta, Total, Cantidad, promocion) values (20, 19, 103, 108, 108, 1, 1);
+
 select * from Detalle_Venta;
 
 insert into Compra(idProveedor, idCompra, Total_Compra, Fecha) values(1,1,1150.00,"2019-09-30");
