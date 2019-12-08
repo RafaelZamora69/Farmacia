@@ -4,6 +4,7 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -248,6 +249,33 @@ public class ExtrasController implements Initializable {
     private JFXButton BtnNuevoProd;
 
     @FXML
+    private JFXTextField TxtFiltroCliente;
+
+    @FXML
+    private JFXTextField TxtFiltroEmpleados;
+
+    @FXML
+    private JFXTextField TxtFiltroProveedor;
+
+    @FXML
+    private JFXTreeTableView<FinalizarCompraController.Proveedor> TableProveedor;
+
+    @FXML
+    private TreeTableColumn<FinalizarCompraController.Proveedor, String> IdProveedor;
+
+    @FXML
+    private TreeTableColumn<FinalizarCompraController.Proveedor, String> NombreProveedor;
+
+    @FXML
+    private TreeTableColumn<FinalizarCompraController.Proveedor, String> DirProv;
+
+    @FXML
+    private TreeTableColumn<FinalizarCompraController.Proveedor, String> TelProv;
+
+    @FXML
+    private TreeTableColumn<FinalizarCompraController.Proveedor, String> CorrProv;
+
+    @FXML
     private Tab TablClient;
     @FXML
     private Tab TabEmp;
@@ -255,12 +283,15 @@ public class ExtrasController implements Initializable {
     private Tab TabPromo;
     @FXML
     private Tab TabProvee;
+    @FXML
+    private Tab TabProd;
 
 
     private static final ObservableList<Empleado> LEmpleados = FXCollections.observableArrayList();
     private static final ObservableList<Cliente> LClientes = FXCollections.observableArrayList();
     private static final ObservableList<Promocion> LPromocion = FXCollections.observableArrayList();
     private static final ObservableList<Promocion> LNPromocion = FXCollections.observableArrayList();
+    private static final ObservableList<FinalizarCompraController.Proveedor> LProveedor = FXCollections.observableArrayList();
     private Connection ConTransact = Conexion.GetConexionPromocion();
     private Connection con = Conexion.getConnection();
 
@@ -279,6 +310,11 @@ public class ExtrasController implements Initializable {
             TabProvee.setDisable(true);
         } else if(PrincipalController.Jerarquia.equals("Encargado de turno")){
             TabEmp.setDisable(true);
+        } else if(PrincipalController.Jerarquia.equals("Vendedor")){
+            TabEmp.setDisable(true);
+            TabPromo.setDisable(true);
+            TabProvee.setDisable(true);
+            TabProd.setDisable(true);
         }
     }
 
@@ -310,13 +346,20 @@ public class ExtrasController implements Initializable {
     private void CargarListas() {
         try {
             //Lista Empleados
+            LEmpleados.clear();
             ResultSet rs = con.createStatement().executeQuery("select idEmpleado, Nombre, Telefono, Jerarquia from Empleado;");
             while (rs.next()) {
                 LEmpleados.add(new Empleado(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
             }
+            LClientes.clear();
             rs = con.createStatement().executeQuery("select idCliente, Nombre, Direccion, Telefono, Puntos from Cliente where idCliente != 1");
             while (rs.next()) {
                 LClientes.add(new Cliente(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+            }
+            LProveedor.clear();
+            rs = con.createStatement().executeQuery("select idProveedor, Nombre, Direccion, Telefono, Correo from Proveedor");
+            while(rs.next()){
+                LProveedor.add(new FinalizarCompraController.Proveedor(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -333,6 +376,12 @@ public class ExtrasController implements Initializable {
         final TreeItem<Empleado> root = new RecursiveTreeItem<>(LEmpleados, RecursiveTreeObject::getChildren);
         this.TableEmpleados.setRoot(root);
         this.TableEmpleados.setShowRoot(false);
+        this.TxtFiltroEmpleados.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            TableEmpleados.setPredicate((TreeItem<Empleado> t) -> {
+                Boolean flag = t.getValue().sGetNombre().getValue().contains(newValue);
+                return flag;
+            });
+        });
         //Clientes
         IdCliente.setCellValueFactory((TreeTableColumn.CellDataFeatures<Cliente, String> param) -> param.getValue().getValue().sGetID());
         NombreCliente.setCellValueFactory((TreeTableColumn.CellDataFeatures<Cliente, String> param) -> param.getValue().getValue().sGetNombre());
@@ -342,6 +391,12 @@ public class ExtrasController implements Initializable {
         final TreeItem<Cliente> root2 = new RecursiveTreeItem<>(LClientes, RecursiveTreeObject::getChildren);
         this.TableClientes.setRoot(root2);
         this.TableClientes.setShowRoot(false);
+        this.TxtFiltroCliente.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            TableClientes.setPredicate((TreeItem<Cliente> t) -> {
+                Boolean flag = t.getValue().sGetNombre().getValue().contains(newValue);
+                return flag;
+            });
+        });
         //Promocion
         MIdProm.setCellValueFactory((TreeTableColumn.CellDataFeatures<Promocion, String> param) -> param.getValue().getValue().sGetIdProducto());
         MProdProm.setCellValueFactory((TreeTableColumn.CellDataFeatures<Promocion, String> param) -> param.getValue().getValue().sGetProducto());
@@ -354,6 +409,21 @@ public class ExtrasController implements Initializable {
         final TreeItem<Promocion> root4 = new RecursiveTreeItem<>(LNPromocion, RecursiveTreeObject::getChildren);
         this.TableCPromo.setRoot(root4);
         this.TableCPromo.setShowRoot(false);
+        //Proveedor
+        IdProveedor.setCellValueFactory((TreeTableColumn.CellDataFeatures<FinalizarCompraController.Proveedor, String> param) -> param.getValue().getValue().sGetId());
+        NombreProveedor.setCellValueFactory((TreeTableColumn.CellDataFeatures<FinalizarCompraController.Proveedor, String> param) -> param.getValue().getValue().sGetNombre());
+        DirProv.setCellValueFactory((TreeTableColumn.CellDataFeatures<FinalizarCompraController.Proveedor, String> param) -> param.getValue().getValue().sGetDireccion());
+        TelProv.setCellValueFactory((TreeTableColumn.CellDataFeatures<FinalizarCompraController.Proveedor, String> param) -> param.getValue().getValue().sGetTel());
+        CorrProv.setCellValueFactory((TreeTableColumn.CellDataFeatures<FinalizarCompraController.Proveedor, String> param) -> param.getValue().getValue().sGetCorreo());
+        final TreeItem<FinalizarCompraController.Proveedor> root5 = new RecursiveTreeItem<>(LProveedor, RecursiveTreeObject::getChildren);
+        this.TableProveedor.setRoot(root5);
+        this.TableProveedor.setShowRoot(false);
+        this.TxtFiltroProveedor.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            TableProveedor.setPredicate((TreeItem<FinalizarCompraController.Proveedor> t) -> {
+                Boolean flag = t.getValue().sGetNombre().getValue().contains(newValue);
+                return flag;
+            });
+        });
     }
 
     public void BuscarEmpleado(KeyEvent keyEvent) {
@@ -377,20 +447,24 @@ public class ExtrasController implements Initializable {
     }
 
     public void InsertarEmpleado(MouseEvent mouseEvent) {
-        try {
-            PreparedStatement statement = con.prepareStatement("insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values (?, ?, ?, sha1(?), ?)");
-            statement.setString(1, NNombreEmp.getText());
-            statement.setString(2, NTelEmp.getText());
-            statement.setString(3, NUsuEmp.getText());
-            statement.setString(4, NPassEmp.getText());
-            statement.setString(5, NPuestoEmp.getValue());
-            statement.execute();
-            LEmpleados.add(new Empleado(String.valueOf(Integer.parseInt(LEmpleados.get(LEmpleados.size() - 1).GetID()) + 1), NNombreEmp.getText(), NTelEmp.getText(), NUsuEmp.getText()));
-            Alertas.MostrarAlerta("Empleado registrado", NotificationType.SUCCESS, "Exito");
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(NNombreEmp.getText().equals("") || NTelEmp.getText().equals("") || NUsuEmp.getText().equals("") || NPassEmp.getText().equals("") || NPuestoEmp.getValue().equals("")){
+            Alertas.MostrarAlerta("Rellene los campos obligatorios", NotificationType.WARNING, "Aviso");
+        } else {
+            try {
+                PreparedStatement statement = con.prepareStatement("insert into Empleado (Nombre, Telefono, Usuario, Password, Jerarquia) values (?, ?, ?, sha1(?), ?)");
+                statement.setString(1, NNombreEmp.getText());
+                statement.setString(2, NTelEmp.getText());
+                statement.setString(3, NUsuEmp.getText());
+                statement.setString(4, NPassEmp.getText());
+                statement.setString(5, NPuestoEmp.getValue());
+                statement.execute();
+                LEmpleados.add(new Empleado(String.valueOf(Integer.parseInt(LEmpleados.get(LEmpleados.size() - 1).GetID()) + 1), NNombreEmp.getText(), NTelEmp.getText(), NUsuEmp.getText()));
+                Alertas.MostrarAlerta("Empleado registrado", NotificationType.SUCCESS, "Exito");
+                CargarListas();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     public void ActualizarEmpleado(MouseEvent mouseEvent) {
@@ -412,6 +486,7 @@ public class ExtrasController implements Initializable {
             }
             statement.executeUpdate();
             Alertas.MostrarAlerta("Empleado actualizado", NotificationType.SUCCESS, "Correcto");
+            CargarListas();
         } catch (SQLException e) {
             Alertas.MostrarAlerta("Ocurrió un problema al actualizar", NotificationType.ERROR, "Error");
             e.printStackTrace();
@@ -444,14 +519,16 @@ public class ExtrasController implements Initializable {
 
     public void ActualizarCliente(MouseEvent mouseEvent) {
         try {
-            PreparedStatement statement = con.prepareStatement("update Cliente set Nombre = ?, Direccion = ?, Telefono = ?, Rfc = ?, Edad = ?");
+            PreparedStatement statement = con.prepareStatement("update Cliente set Nombre = ?, Direccion = ?, Telefono = ?, Rfc = ?, Edad = ? where idCliente = ?");
             statement.setString(1, ENomCli.getText());
             statement.setString(2, EDirCli.getText());
             statement.setString(3, ETelCli.getText());
             statement.setString(4, ERfcCli.getText());
             statement.setString(5, EEdadCli.getText());
+            statement.setString(6, BuscarCli.getText());
             statement.executeUpdate();
             Alertas.MostrarAlerta("CLiente actualizado", NotificationType.SUCCESS, "Correcto");
+            CargarListas();
         } catch (SQLException e) {
             Alertas.MostrarAlerta("Ha ocurrido un error", NotificationType.ERROR, "Error!");
             e.printStackTrace();
@@ -460,22 +537,27 @@ public class ExtrasController implements Initializable {
     }
 
     public void AgregarCliente(MouseEvent mouseEvent) {
-        try{
-            PreparedStatement statement = con.prepareStatement("insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values (?, ?, ?, ?, 0, ?);");
-            statement.setString(1, NNomCli.getText());
-            statement.setString(2, NDirCli.getText());
-            statement.setString(3, NTelCli.getText());
-            statement.setString(4, NEdadCli.getText());
-            statement.setString(5, NRfcCli.getText());
-            statement.executeUpdate();
-            Alertas.MostrarAlerta("Cliente registrado", NotificationType.SUCCESS, "Correcto");
-            ResultSet rs = con.createStatement().executeQuery("select max(idCliente) from Cliente;");
-            if(rs.next()){
-                LClientes.add(new Cliente(rs.getString(1), NNomCli.getText(), NDirCli.getText(), NTelCli.getText(), "0"));
+        if(NNomCli.getText().equals("") || NDirCli.getText().equals("") || NTelCli.getText().equals("") || NEdadCli.getText().equals("")){
+            Alertas.MostrarAlerta("Rellene los campos obligatorios", NotificationType.WARNING, "Aviso");
+        } else {
+            try{
+                PreparedStatement statement = con.prepareStatement("insert into Cliente (Nombre, Direccion, Telefono, Edad, Puntos, Rfc) values (?, ?, ?, ?, 0, ?);");
+                statement.setString(1, NNomCli.getText());
+                statement.setString(2, NDirCli.getText());
+                statement.setString(3, NTelCli.getText());
+                statement.setString(4, NEdadCli.getText());
+                statement.setString(5, NRfcCli.getText());
+                statement.executeUpdate();
+                Alertas.MostrarAlerta("Cliente registrado", NotificationType.SUCCESS, "Correcto");
+                ResultSet rs = con.createStatement().executeQuery("select max(idCliente) from Cliente;");
+                if(rs.next()){
+                    LClientes.add(new Cliente(rs.getString(1), NNomCli.getText(), NDirCli.getText(), NTelCli.getText(), "0"));
+                }
+                CargarListas();
+            }catch(SQLException e){
+                Alertas.MostrarAlerta("Hubo un problema al registrar el cliente", NotificationType.ERROR, "Error");
+                e.printStackTrace();
             }
-        }catch(SQLException e){
-            Alertas.MostrarAlerta("Hubo un problema al registrar el cliente", NotificationType.ERROR, "Error");
-            e.printStackTrace();
         }
     }
 
@@ -512,6 +594,10 @@ public class ExtrasController implements Initializable {
     }
 
     public void CrearPromo(MouseEvent mouseEvent) {
+        if(CDescProm.getText().equals("")){
+            Alertas.MostrarAlerta("Debe rellenar los campos obligatorios", NotificationType.WARNING, "Aviso");
+            return;
+        }
         if (LNPromocion.isEmpty()) {
             Alertas.MostrarAlerta("No se puede ingresar una promoción sin articulos", NotificationType.ERROR, "Error");
             return;
@@ -594,6 +680,7 @@ public class ExtrasController implements Initializable {
             statement.setString(5, BuscarProveedor.getText());
             statement.executeUpdate();
             Alertas.MostrarAlerta("Proveedor actualizado", NotificationType.SUCCESS, "Éxito");
+            CargarListas();
         } catch (SQLException e) {
             Alertas.MostrarAlerta("Hubo un problema al actualizar el proveedor", NotificationType.ERROR, "Error");
             e.printStackTrace();
@@ -612,6 +699,7 @@ public class ExtrasController implements Initializable {
                 statement.setString(4, NDirProv.getText());
                 statement.executeUpdate();
                 Alertas.MostrarAlerta("Proveedor registrado", NotificationType.SUCCESS, "Éxito");
+                CargarListas();
             }
         } catch (SQLException e) {
             Alertas.MostrarAlerta("Hubo un problema al registrar el proveedor", NotificationType.ERROR, "Error");
@@ -698,22 +786,35 @@ public class ExtrasController implements Initializable {
     }
 
     public void GuardarProd(MouseEvent mouseEvent) {
-        try{
-            PreparedStatement statement = con.prepareStatement("insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) \n" +
-                    "values (?, ?, ?, ?, ?, ?, 0, ?, ?);");
-            statement.setString(1, CodBarras.getText());
-            statement.setString(2, ProdDEsc.getText());
-            statement.setString(3, ProdPresen.getValue());
-            statement.setInt(4, GetIdProveedor());
-            statement.setDouble(5, Double.parseDouble(ProdPCompra.getText()));
-            statement.setDouble(6, Double.parseDouble(ProdPVenta.getText()));
-            statement.setBoolean(7, ProdReceta.isSelected());
-            statement.setString(8, ProdCategoria.getValue());
-            statement.executeUpdate();
-            Alertas.MostrarAlerta("Producto registrado correctamente", NotificationType.SUCCESS, "Correcto");
-        }catch (SQLException e){
-            Alertas.MostrarAlerta("Hubo un error al registrar el producto", NotificationType.ERROR, "Error");
-            e.printStackTrace();
+        if(CodBarras.getText().equals("") || ProdDEsc.getText().equals("") || ProdPresen.getValue().equals("") || ProdPCompra.getText().equals("") || ProdPVenta.getText().equals("") || ProdCategoria.getValue().equals("")){
+            Alertas.MostrarAlerta("Debe rellenar todos los campos obligatorios", NotificationType.WARNING, "Error");
+            return;
+        } else {
+            try{
+                PreparedStatement statement = con.prepareStatement("select idProducto from Producto where Descripcion = ?");
+                statement.setString(1, ProdDEsc.getText());
+                ResultSet rs = statement.executeQuery();
+                if(rs.next()){
+                    Alertas.MostrarAlerta("Ya existe un producto con este nombre", NotificationType.WARNING, "Aviso");
+                    return;
+                } else {
+                    statement = con.prepareStatement("insert into Producto (Cod_Barras, Descripcion, Presentacion, Proveedor, Precio_Compra, Precio_Venta, Cantidad, Receta, Categoria) \n" +
+                            "values (?, ?, ?, ?, ?, ?, 0, ?, ?);");
+                    statement.setString(1, CodBarras.getText());
+                    statement.setString(2, ProdDEsc.getText());
+                    statement.setString(3, ProdPresen.getValue());
+                    statement.setInt(4, GetIdProveedor());
+                    statement.setDouble(5, Double.parseDouble(ProdPCompra.getText()));
+                    statement.setDouble(6, Double.parseDouble(ProdPVenta.getText()));
+                    statement.setBoolean(7, ProdReceta.isSelected());
+                    statement.setString(8, ProdCategoria.getValue());
+                    statement.executeUpdate();
+                    Alertas.MostrarAlerta("Producto registrado correctamente", NotificationType.SUCCESS, "Correcto");
+                }
+            }catch (SQLException e){
+                Alertas.MostrarAlerta("Hubo un error al registrar el producto", NotificationType.ERROR, "Error");
+                e.printStackTrace();
+            }
         }
     }
 

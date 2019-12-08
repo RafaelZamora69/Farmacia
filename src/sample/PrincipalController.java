@@ -54,13 +54,13 @@ public class PrincipalController implements Initializable {
     private AnchorPane Content;
 
     public static String Nombre, Jerarquia;
+    public static int Id;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if(Jerarquia.equals("Vendedor")){
             this.BtnInventario.setDisable(true);
-            this.BtnExtras.setDisable(true);
             this.BtnReportes.setDisable(true);
         } else if(Jerarquia.equals("Inventario")){
             this.BtnCaja.setDisable(true);

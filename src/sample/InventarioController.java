@@ -123,7 +123,6 @@ public class InventarioController implements Initializable {
         Prov.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoCompra, String> param) -> param.getValue().getValue().sGetProveedor());
         final TreeItem<ProductoCompra> root = new RecursiveTreeItem<>(LProductoCompra, RecursiveTreeObject::getChildren);
         this.TreeViewCompra.setEditable(true);
-        this.TreeViewCompra.getColumns().setAll(ID, Desc, Cant, Comp, Venta, Prov);
         this.TreeViewCompra.setRoot(root);
         this.TreeViewCompra.setShowRoot(false);
     }
@@ -204,10 +203,6 @@ public class InventarioController implements Initializable {
         this.TxtFiltrar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             TreeTable.setPredicate((TreeItem<Producto> t) -> {
                 Boolean flag = t.getValue().sGetDesc().getValue().contains(newValue);
-                return flag;
-            });
-            TreeTable.setPredicate((TreeItem<Producto> t) -> {
-                Boolean flag = t.getValue().sGetProveedor().getValue().contains(newValue);
                 return flag;
             });
         });

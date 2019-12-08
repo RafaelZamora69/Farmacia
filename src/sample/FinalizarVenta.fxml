@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.FinalizarVentaController">
+   <children>
+      <JFXTextField fx:id="TxtId" alignment="CENTER" layoutX="59.0" layoutY="49.0" onKeyPressed="#BuscarCliente" promptText="Id Cliente" />
+      <JFXTextField fx:id="TxtFiltro" alignment="CENTER" layoutX="394.0" layoutY="49.0" prefHeight="25.0" prefWidth="214.0" promptText="Filtrar Nombre" />
+      <Label layoutX="14.0" layoutY="193.0" text="Cliente: ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="LblClient" layoutX="78.0" layoutY="193.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="220.0" text="Puntos: ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="LblPts" layoutX="79.0" layoutY="220.0" text="0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="TxtPago" alignment="CENTER" layoutX="140.0" layoutY="117.0" onKeyPressed="#CargarCambio" promptText="Pago" />
+      <Label layoutX="15.0" layoutY="253.0" text="Total: $">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="LblTotal" layoutX="77.0" layoutY="253.0" text="0.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="280.0" text="Cambio: $">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="LblCambio" layoutX="101.0" layoutY="280.0" text="0.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="BtnFin" buttonType="RAISED" disable="true" layoutX="82.0" layoutY="427.0" onMouseClicked="#Vender" style="-fx-background-color: #009688;" text="Finalizar" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="BtnCerrar" buttonType="RAISED" layoutX="194.0" layoutY="427.0" onMouseClicked="#Cerrar" style="-fx-background-color: #e91e63;" text="Cerrar" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXTreeTableView fx:id="TableClientes" layoutX="302.0" layoutY="100.0" prefHeight="400.0" prefWidth="398.0">
+         <columns>
+            <TreeTableColumn fx:id="IdCliente" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ID" />
+            <TreeTableColumn fx:id="Nombre" prefWidth="250.0" style="-fx-alignment: CENTER;" text="Nombre" />
+            <TreeTableColumn fx:id="Puntos" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Puntos" />
+         </columns>
+      </JFXTreeTableView>
+      <JFXToggleButton fx:id="MetodoPago" disable="true" layoutX="3.0" layoutY="100.0" onMouseClicked="#Descuento" text="Puntos" />
+   </children>
+</AnchorPane>

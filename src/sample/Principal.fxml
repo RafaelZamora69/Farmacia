@@ -2,6 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -9,36 +11,76 @@
    <children>
       <AnchorPane fx:id="top" prefHeight="70.0" prefWidth="1200.0" style="-fx-background-color: #ce93d8;">
          <children>
-            <Label fx:id="Lbl" layoutX="14.0" layoutY="21.0" text="Farmacia" textFill="WHITE">
-               <font>
-                  <Font name="Roboto Light" size="24.0" />
-               </font>
-            </Label>
             <Label fx:id="LblName" layoutX="820.0" layoutY="21.0" prefHeight="29.0" prefWidth="366.0" text="Nombre" textFill="WHITE">
                <font>
                   <Font name="Roboto Light" size="18.0" />
                </font>
             </Label>
+            <ImageView fitHeight="70.0" fitWidth="104.0" layoutX="130.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Program%20Files%20(x86)/Farmacia/Imagenes/Farmacia.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="70.0" fitWidth="104.0" layoutX="742.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Program%20Files%20(x86)/Farmacia/Imagenes/Usuario.png" />
+               </image>
+            </ImageView>
          </children></AnchorPane>
       <AnchorPane fx:id="left" layoutY="70.0" prefHeight="700.0" prefWidth="130.0" style="-fx-background-color: #ce93d8;">
          <children>
-            <JFXButton fx:id="BtnExtras" buttonType="RAISED" layoutY="325.0" onMouseClicked="#AbrirExtras" prefHeight="40.0" prefWidth="130.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Operaciones" textFill="WHITE">
-               <font>
-                  <Font name="Roboto Light" size="18.0" />
-               </font></JFXButton>
-            <JFXButton fx:id="BtnCaja" buttonType="RAISED" layoutY="85.0" onMouseClicked="#AbrirCaja" prefHeight="40.0" prefWidth="130.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Caja Registradora" textFill="WHITE">
-               <font>
-                  <Font name="Roboto Light" size="14.0" />
-               </font></JFXButton>
-            <JFXButton fx:id="BtnInventario" buttonType="RAISED" layoutY="195.0" onMouseClicked="#AbrirInventario" prefHeight="40.0" prefWidth="130.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Inventario" textFill="WHITE">
-               <font>
-                  <Font name="Roboto Light" size="18.0" />
-               </font></JFXButton>
-            <JFXButton fx:id="BtnCerrar" buttonType="RAISED" layoutY="575.0" onMouseClicked="#Cerrar" prefHeight="40.0" prefWidth="130.0" ripplerFill="#b71c1c" style="-fx-background-color: #f44336;" text="Cerrar sesión" textFill="WHITE" />
-            <JFXButton fx:id="BtnReportes" buttonType="RAISED" layoutY="455.0" onMouseClicked="#AbrirReporte" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #9c27b0;" text="Reportes" textFill="WHITE">
+            <JFXButton fx:id="BtnExtras" buttonType="RAISED" contentDisplay="TOP" layoutY="309.0" onMouseClicked="#AbrirExtras" prefHeight="40.0" prefWidth="130.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Operaciones" textFill="WHITE">
                <font>
                   <Font name="Roboto Light" size="18.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/C:/Program%20Files%20(x86)/Farmacia/Imagenes/Operaciones.png" />
+                     </image>
+                  </ImageView>
+               </graphic></JFXButton>
+            <JFXButton fx:id="BtnCaja" buttonType="RAISED" contentDisplay="TOP" ellipsisString="" graphicTextGap="0.0" onMouseClicked="#AbrirCaja" prefHeight="40.0" prefWidth="130.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Caja Registradora" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/C:/Program%20Files%20(x86)/Farmacia/Imagenes/CajaRegistradora.png" />
+                     </image>
+                  </ImageView>
+               </graphic></JFXButton>
+            <JFXButton fx:id="BtnInventario" buttonType="RAISED" contentDisplay="TOP" layoutY="152.0" onMouseClicked="#AbrirInventario" prefHeight="40.0" prefWidth="130.0" ripplerFill="WHITE" style="-fx-background-color: #9c27b0;" text="Inventario" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/C:/Program%20Files%20(x86)/Farmacia/Imagenes/Inventario.png" />
+                     </image>
+                  </ImageView>
+               </graphic></JFXButton>
+            <JFXButton fx:id="BtnCerrar" buttonType="RAISED" contentDisplay="TOP" layoutY="631.0" onMouseClicked="#Cerrar" prefHeight="40.0" prefWidth="130.0" ripplerFill="#b71c1c" style="-fx-background-color: #f44336;" text="Cerrar sesión" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/C:/Program%20Files%20(x86)/Farmacia/Imagenes/Salir.png" />
+                     </image>
+                  </ImageView>
+               </graphic></JFXButton>
+            <JFXButton fx:id="BtnReportes" buttonType="RAISED" contentDisplay="TOP" layoutY="464.0" onMouseClicked="#AbrirReporte" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #9c27b0;" text="Reportes" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/C:/Program%20Files%20(x86)/Farmacia/Imagenes/Reportes.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </JFXButton>
          </children>
       </AnchorPane>

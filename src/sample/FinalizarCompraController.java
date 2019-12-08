@@ -147,16 +147,27 @@ public class FinalizarCompraController implements Initializable {
     }
 
 
-    public class Proveedor extends RecursiveTreeObject<Proveedor>{
-        StringProperty id, Nombre;
+    public static class Proveedor extends RecursiveTreeObject<Proveedor>{
+        StringProperty id, Nombre, Direccion, Tel, Correo;
 
         public Proveedor(String id, String Nombre){
             this.id = new SimpleStringProperty(id);
             this.Nombre = new SimpleStringProperty(Nombre);
         }
 
+        public Proveedor(String id, String Nombre, String Direccion, String Tel, String Correo){
+            this.id = new SimpleStringProperty(id);
+            this.Nombre = new SimpleStringProperty(Nombre);
+            this.Direccion = new SimpleStringProperty(Direccion);
+            this.Tel = new SimpleStringProperty(Tel);
+            this.Correo = new SimpleStringProperty(Correo);
+        }
+
         public StringProperty sGetId(){ return id; }
         public StringProperty sGetNombre(){ return Nombre; }
+        public StringProperty sGetDireccion(){ return Direccion; }
+        public StringProperty sGetTel(){ return Tel; }
+        public StringProperty sGetCorreo(){ return Correo; }
     }
 
 }

@@ -24,15 +24,15 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <JFXDatePicker fx:id="FechaDe" layoutX="38.0" layoutY="147.0" promptText="De" />
-                        <JFXDatePicker fx:id="FechaHasta" layoutX="38.0" layoutY="258.0" promptText="Hasta" />
+                        <JFXDatePicker fx:id="FechaDe" defaultColor="#9c27b0" layoutX="38.0" layoutY="147.0" promptText="De" />
+                        <JFXDatePicker fx:id="FechaHasta" defaultColor="#9c27b0" layoutX="38.0" layoutY="258.0" promptText="Hasta" />
                         <JFXTreeTableView fx:id="TableReporte" layoutX="447.0" layoutY="-1.0" prefHeight="313.0" prefWidth="653.0">
                            <columns>
-                              <TreeTableColumn fx:id="IDVenta" prefWidth="75.0" text="ID Venta" />
-                              <TreeTableColumn fx:id="Vendedor" prefWidth="200.0" text="Vendedor" />
-                              <TreeTableColumn fx:id="Fecha" prefWidth="100.0" text="Fecha" />
-                              <TreeTableColumn fx:id="TotalVenta" prefWidth="100.0" text="\$ Total" />
-                              <TreeTableColumn fx:id="Cliente" prefWidth="200.0" text="Cliente" />
+                              <TreeTableColumn fx:id="IDVenta" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ID Venta" />
+                              <TreeTableColumn fx:id="Vendedor" prefWidth="200.0" style="-fx-alignment: CENTER;" text="Vendedor" />
+                              <TreeTableColumn fx:id="Fecha" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Fecha" />
+                              <TreeTableColumn fx:id="TotalVenta" prefWidth="100.0" style="-fx-alignment: CENTER;" text="\$ Total" />
+                              <TreeTableColumn fx:id="Cliente" prefWidth="200.0" style="-fx-alignment: CENTER;" text="Cliente" />
                            </columns>
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -43,7 +43,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="Total" layoutX="277.0" layoutY="49.0" prefHeight="27.0" prefWidth="87.0" text="0.0">
+                        <Label fx:id="Total" layoutX="277.0" layoutY="51.0" prefHeight="27.0" prefWidth="87.0" text="0.0">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -67,11 +67,11 @@
                         </Label>
                         <JFXTreeTableView fx:id="TableDetalleVenta" layoutX="446.0" layoutY="343.0" prefHeight="320.0" prefWidth="655.0">
                            <columns>
-                              <TreeTableColumn fx:id="Detalle_IDVenta" prefWidth="75.0" text="ID Venta" />
-                              <TreeTableColumn fx:id="DetalleProducto" prefWidth="250.0" text="Producto" />
-                              <TreeTableColumn fx:id="DetallePrecio" text="Precio" />
-                              <TreeTableColumn fx:id="DetalleCantidad" text="Cantidad" />
-                              <TreeTableColumn fx:id="DetallePromocion" prefWidth="180.0" text="Promoción" />
+                              <TreeTableColumn fx:id="Detalle_IDVenta" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ID Venta" />
+                              <TreeTableColumn fx:id="DetalleProducto" prefWidth="250.0" style="-fx-alignment: CENTER;" text="Producto" />
+                              <TreeTableColumn fx:id="DetallePrecio" style="-fx-alignment: CENTER;" text="Precio" />
+                              <TreeTableColumn fx:id="DetalleCantidad" style="-fx-alignment: CENTER;" text="Cantidad" />
+                              <TreeTableColumn fx:id="DetallePromocion" prefWidth="180.0" style="-fx-alignment: CENTER;" text="Promoción" />
                            </columns>
                         </JFXTreeTableView>
                         <LineChart fx:id="ChartVentas" layoutX="1.0" layoutY="332.0" prefHeight="327.0" prefWidth="440.0" title="Ventas ">
@@ -90,8 +90,8 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <JFXDatePicker fx:id="FechaDeC" layoutX="20.0" layoutY="102.0" promptText="De" />
-                        <JFXDatePicker fx:id="FechaHastaC" layoutX="20.0" layoutY="190.0" promptText="Hasta" />
+                        <JFXDatePicker fx:id="FechaDeC" defaultColor="#9c27b0" layoutX="20.0" layoutY="102.0" promptText="De" />
+                        <JFXDatePicker fx:id="FechaHastaC" defaultColor="#9c27b0" layoutX="20.0" layoutY="190.0" promptText="Hasta" />
                         <JFXTextField fx:id="TxtCompra" alignment="CENTER" layoutX="20.0" layoutY="26.0" prefHeight="25.0" prefWidth="163.0" promptText="ID Compra, Fecha" />
                         <JFXButton fx:id="BtnCargarCompras" buttonType="RAISED" layoutX="212.0" layoutY="145.0" onMouseClicked="#CargarReporteCompras" prefHeight="30.0" prefWidth="65.0" ripplerFill="WHITE" style="-fx-background-color: #009688;" text="Buscar" textFill="WHITE" />
                         <Label layoutX="212.0" layoutY="25.0" text="Total de compras: ">
@@ -106,18 +106,18 @@
                         </Label>
                         <JFXTreeTableView fx:id="TableReporteCompra" layoutX="455.0" prefHeight="320.0" prefWidth="646.0">
                            <columns>
-                              <TreeTableColumn fx:id="IDCompra" prefWidth="75.0" text="ID Compra" />
-                              <TreeTableColumn fx:id="Proveedor" prefWidth="200.0" text="Proveedor" />
-                              <TreeTableColumn fx:id="TotalCompra" prefWidth="130.0" text="\$ Total" />
-                              <TreeTableColumn fx:id="FechaCompra" prefWidth="130.0" text="Fecha" />
+                              <TreeTableColumn fx:id="IDCompra" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ID Compra" />
+                              <TreeTableColumn fx:id="Proveedor" prefWidth="200.0" style="-fx-alignment: CENTER;" text="Proveedor" />
+                              <TreeTableColumn fx:id="TotalCompra" prefWidth="130.0" style="-fx-alignment: CENTER;" text="\$ Total" />
+                              <TreeTableColumn fx:id="FechaCompra" prefWidth="130.0" style="-fx-alignment: CENTER;" text="Fecha" />
                            </columns></JFXTreeTableView>
                         <JFXTreeTableView fx:id="TableDetalleCompra" layoutX="455.0" layoutY="332.0" prefHeight="331.0" prefWidth="646.0">
                            <columns>
-                              <TreeTableColumn fx:id="DtIDCompra" prefWidth="75.0" text="ID Compra" />
-                              <TreeTableColumn fx:id="ProductoCompra" minWidth="75.0" prefWidth="200.0" text="Producto" />
-                              <TreeTableColumn fx:id="PrecioProducto" prefWidth="100.0" text="Precio" />
-                              <TreeTableColumn fx:id="Cantidad" prefWidth="100.0" text="Cantidad" />
-                              <TreeTableColumn fx:id="TotalProd" prefWidth="100.0" text="Total" />
+                              <TreeTableColumn fx:id="DtIDCompra" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ID Compra" />
+                              <TreeTableColumn fx:id="ProductoCompra" minWidth="75.0" prefWidth="200.0" style="-fx-alignment: CENTER;" text="Producto" />
+                              <TreeTableColumn fx:id="PrecioProducto" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Precio" />
+                              <TreeTableColumn fx:id="Cantidad" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Cantidad" />
+                              <TreeTableColumn fx:id="TotalProd" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Total" />
                            </columns></JFXTreeTableView>
                         <LineChart fx:id="ChartCompras" layoutY="334.0" prefHeight="327.0" prefWidth="440.0">
                           <xAxis>
@@ -147,14 +147,14 @@
                      <children>
                         <JFXTreeTableView fx:id="TableUtilidad" prefHeight="400.0" prefWidth="1100.0">
                            <columns>
-                              <TreeTableColumn fx:id="UtilIdVenta" prefWidth="100.0" text="N° Venta" />
-                              <TreeTableColumn fx:id="UtilProd" prefWidth="250.0" text="Producto" />
-                              <TreeTableColumn fx:id="UtilPCompra" prefWidth="120.0" text="Precio De Compra" />
-                              <TreeTableColumn fx:id="UtilPVenta" prefWidth="120.0" text="Precio De Venta" />
-                              <TreeTableColumn fx:id="UtilCantidad" text="Cantidad " />
-                              <TreeTableColumn fx:id="UtilTotal" prefWidth="150.0" text="Total" />
-                              <TreeTableColumn fx:id="UtilPromo" prefWidth="180.0" text="Promocion" />
-                              <TreeTableColumn fx:id="UtilUtilidad" prefWidth="100.0" text="Utilidad" />
+                              <TreeTableColumn fx:id="UtilIdVenta" prefWidth="100.0" style="-fx-alignment: CENTER;" text="N° Venta" />
+                              <TreeTableColumn fx:id="UtilProd" prefWidth="250.0" style="-fx-alignment: CENTER;" text="Producto" />
+                              <TreeTableColumn fx:id="UtilPCompra" prefWidth="120.0" style="-fx-alignment: CENTER;" text="Precio De Compra" />
+                              <TreeTableColumn fx:id="UtilPVenta" prefWidth="120.0" style="-fx-alignment: CENTER;" text="Precio De Venta" />
+                              <TreeTableColumn fx:id="UtilCantidad" style="-fx-alignment: CENTER;" text="Cantidad " />
+                              <TreeTableColumn fx:id="UtilTotal" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Total" />
+                              <TreeTableColumn fx:id="UtilPromo" prefWidth="180.0" style="-fx-alignment: CENTER;" text="Promocion" />
+                              <TreeTableColumn fx:id="UtilUtilidad" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Utilidad" />
                            </columns>
                         </JFXTreeTableView>
                         <Label layoutX="14.0" layoutY="611.0" text="Utilidad Total: $">
@@ -167,8 +167,8 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <JFXDatePicker fx:id="UtilDeFecha" layoutX="14.0" layoutY="418.0" promptText="De" />
-                        <JFXDatePicker fx:id="UtilHastaFecha" layoutX="14.0" layoutY="534.0" promptText="Hasta" />
+                        <JFXDatePicker fx:id="UtilDeFecha" defaultColor="#9c27b0" layoutX="14.0" layoutY="418.0" promptText="De" />
+                        <JFXDatePicker fx:id="UtilHastaFecha" defaultColor="#9c27b0" layoutX="14.0" layoutY="534.0" promptText="Hasta" />
                         <JFXButton fx:id="BtnCargarUtil" buttonType="RAISED" layoutX="246.0" layoutY="479.0" onMouseClicked="#CargarUtilidad" style="-fx-background-color: #009688;" text="Cargar" textFill="WHITE">
                            <font>
                               <Font size="14.0" />

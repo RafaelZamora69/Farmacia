@@ -4,25 +4,22 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPane" prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: f3e5f5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
+<AnchorPane fx:id="AnchorPane" prefHeight="346.0" prefWidth="500.0" style="-fx-background-color: f3e5f5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
    <children>
-      <JFXTextField fx:id="TxtUser" alignment="CENTER" focusColor="#ce93d8" layoutX="180.0" layoutY="74.0" onKeyPressed="#IngresarT" prefHeight="27.0" prefWidth="165.0" promptText="Usuario" unFocusColor="BLACK" />
-      <JFXPasswordField fx:id="TxtPass" alignment="CENTER" focusColor="#ce93d8" layoutX="180.0" layoutY="137.0" onKeyPressed="#IngresarT" prefHeight="27.0" prefWidth="165.0" promptText="Contraseña" />
-      <JFXButton fx:id="BtnEntrar" buttonType="RAISED" layoutX="235.0" layoutY="206.0" onMouseClicked="#Ingresar" ripplerFill="#e1bee7" style="-fx-background-color: ce93d8;" text="Entrar" textFill="WHITE" />
-      <Label fx:id="LblTitle" layoutX="226.0" layoutY="26.0" text="Farmacia" textAlignment="CENTER">
-         <font>
-            <Font name="Roboto Light" size="18.0" />
-         </font>
-      </Label>
-      <JFXButton fx:id="BtnSalir" buttonType="RAISED" layoutX="14.0" layoutY="257.0" onMouseClicked="#Salir" style="-fx-background-color: #f44336;" text="Salir" textFill="WHITE">
+      <JFXTextField fx:id="TxtUser" alignment="CENTER" focusColor="#ce93d8" layoutX="177.0" layoutY="145.0" onKeyPressed="#IngresarT" prefHeight="27.0" prefWidth="165.0" promptText="Usuario" unFocusColor="BLACK" />
+      <JFXPasswordField fx:id="TxtPass" alignment="CENTER" focusColor="#ce93d8" layoutX="177.0" layoutY="208.0" onKeyPressed="#IngresarT" prefHeight="27.0" prefWidth="165.0" promptText="Contraseña" />
+      <JFXButton fx:id="BtnEntrar" buttonType="RAISED" layoutX="232.0" layoutY="277.0" onMouseClicked="#Ingresar" ripplerFill="#e1bee7" style="-fx-background-color: ce93d8;" text="Entrar" textFill="WHITE" />
+      <JFXButton fx:id="BtnSalir" buttonType="RAISED" layoutX="14.0" layoutY="303.0" onMouseClicked="#Salir" style="-fx-background-color: #f44336;" text="Salir" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="13.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="BtnAjustes" buttonType="RAISED" layoutX="427.0" layoutY="256.0" onMouseClicked="#AbrirAjustes" style="-fx-background-color: #757575;" text="Ajustes" textAlignment="CENTER" textFill="WHITE">
+      <JFXButton fx:id="BtnAjustes" buttonType="RAISED" layoutX="427.0" layoutY="302.0" onMouseClicked="#AbrirAjustes" style="-fx-background-color: #757575;" text="Ajustes" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="13.0" />
          </font>
@@ -30,6 +27,16 @@
       <Label fx:id="lblStatus" layoutX="19.0" layoutY="18.0" prefHeight="17.0" prefWidth="165.0">
          <font>
             <Font name="Roboto Light" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="100.0" fitWidth="200.0" layoutX="209.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/C:/Program%20Files%20(x86)/Farmacia/Imagenes/Login.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="339.0" layoutY="18.0" text="Farmacias Veracruzanas">
+         <font>
+            <Font size="14.0" />
          </font>
       </Label>
    </children>

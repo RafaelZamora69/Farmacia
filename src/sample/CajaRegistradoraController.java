@@ -8,7 +8,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +22,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import tray.notification.NotificationType;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,11 +35,10 @@ import java.util.ResourceBundle;
 
 public class CajaRegistradoraController implements Initializable {
     Connection con = Conexion.getConnection();
-
     @FXML
     public JFXTreeTableView<ProductoVenta> tablaVentas;
 
-    ObservableList<ProductoVenta> lista = FXCollections.observableArrayList();
+    public static final ObservableList<ProductoVenta> lista = FXCollections.observableArrayList();
 
     @FXML
     private JFXTextField tfBuscar;
@@ -77,9 +76,7 @@ public class CajaRegistradoraController implements Initializable {
     @FXML
     private JFXTextField TxtMod;
     int i = 1;
-    Double Total = 0.0;
-    public CajaRegistradoraController() throws SQLException {
-    }
+    Double Total = 0.0,  Aux = 0.0;
 
     public void salir(MouseEvent mouseEvent) throws IOException {
         Stage stage = new Stage();
@@ -97,31 +94,38 @@ public class CajaRegistradoraController implements Initializable {
     }
 
     private void CargarTabla(){
-        Num.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoVenta, String> param) -> param.getValue().getValue().GetNum());
-        IdProd.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoVenta, String> param) -> param.getValue().getValue().GetId());
-        NomProd.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoVenta, String> param) -> param.getValue().getValue().GetNombre());
-        CantProd.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoVenta, String> param) -> param.getValue().getValue().GetCant());
-        PrecioProd.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoVenta, String> param) -> param.getValue().getValue().GetPrecio());
+        Num.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoVenta, String> param) -> param.getValue().getValue().sGetNum());
+        IdProd.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoVenta, String> param) -> param.getValue().getValue().sGetId());
+        NomProd.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoVenta, String> param) -> param.getValue().getValue().sGetNombre());
+        CantProd.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoVenta, String> param) -> param.getValue().getValue().sGetCant());
+        PrecioProd.setCellValueFactory((TreeTableColumn.CellDataFeatures<ProductoVenta, String> param) -> param.getValue().getValue().sGetPrecio());
         final TreeItem<ProductoVenta> root = new RecursiveTreeItem<>(lista, RecursiveTreeObject::getChildren);
         this.tablaVentas.setRoot(root);
         this.tablaVentas.setShowRoot(false);
     }
 
-    public void vender(ActionEvent actionEvent) throws IOException {
-
+    public void vender(MouseEvent mouseEvent) throws IOException {
+        if(lista.isEmpty()){
+            Alertas.MostrarAlerta("No se puede realizar una venta vacía", NotificationType.WARNING, "Aviso");
+        } else {
+            FinalizarVentaController.Total = this.Total;
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("FinalizarVenta.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void limpiarVentana(){
         lista.clear();
-        tfBuscar.setText("");
-        lbCliente.setText(null);
-        lbPuntos.setText(null);
+        tfBuscar.clear();
         LblTotal.setText("0.0");
+        TxtCant.clear();
+        TxtElim.clear();
+        TxtMod.clear();
         i = 1;
-    }
-
-    public void cliente(MouseEvent mouseEvent) {
-
+        Total = 0.0;
     }
 
     public void buscar(KeyEvent keyEvent) {
@@ -129,20 +133,21 @@ public class CajaRegistradoraController implements Initializable {
             try {
                 PreparedStatement statement;
                 if(tfBuscar.getText().length() == 13){
-                    statement = con.prepareStatement("select idProducto, Descripcion, Precio_Venta from Producto where Cod_Barras = ?");
+                    statement = con.prepareStatement("select idProducto, Descripcion, Precio_Venta, Precio_Compra from Producto where Cod_Barras = ?");
                     statement.setString(1, tfBuscar.getText());
                 } else {
-                    statement = con.prepareStatement("select idProducto, Descripcion, Precio_Venta from Producto where idProducto = ?");
+                    statement = con.prepareStatement("select idProducto, Descripcion, Precio_Venta, Precio_Compra from Producto where idProducto = ?");
                     statement.setString(1, tfBuscar.getText());
                 }
                 ResultSet rs = statement.executeQuery();
                 if(rs.next()){
-                    lista.add(new ProductoVenta(String.valueOf(i), rs.getString(1), rs.getString(2), String.valueOf(1),rs.getString(3)));
+                    lista.add(new ProductoVenta(String.valueOf(i), rs.getString(1), rs.getString(2), String.valueOf(1),rs.getString(3), rs.getString(4)));
                     Total += Double.parseDouble(rs.getString(3));
                     i++;
                     TxtMod.setText("");
                     TxtCant.setText("1");
                 }
+                Aux = Integer.parseInt(lista.get(lista.size() - 1).GetCantidad()) * Double.parseDouble(lista.get(lista.size() - 1).GetPrecio());
                 LblTotal.setText(String.valueOf(Total));
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -151,34 +156,73 @@ public class CajaRegistradoraController implements Initializable {
     }
 
     public void SetEliminar(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)){
+            if(!"".equals(TxtElim.getText())){
+                try{
+                    Total -= Integer.parseInt(lista.get(Integer.parseInt(TxtElim.getText()) - 1).GetCantidad()) * Double.parseDouble(lista.get(Integer.parseInt(TxtElim.getText()) - 1).GetPrecio());
+                    LblTotal.setText(String.valueOf(Total));
+                    lista.remove(Integer.parseInt(TxtElim.getText()) - 1);
+                } catch (IndexOutOfBoundsException e){
+                    Alertas.MostrarAlerta("No hay un producto con este indice", NotificationType.ERROR, "Aviso");
+                }
+            }
+        }
     }
 
     public void SetCantidad(KeyEvent keyEvent) {
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
             if(!"".equals(TxtMod.getText())){
                 lista.get(Integer.parseInt(TxtMod.getText()) - 1).Cant.set(TxtCant.getText());
-            } else if(TxtMod.getText().equals("")){
+                if(Integer.parseInt(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad()) * Double.parseDouble(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetPrecio()) < Aux){
+                    Total -= Aux - Integer.parseInt(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad()) * Double.parseDouble(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetPrecio());
+                } else {
+                    Total += Integer.parseInt(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad()) * Double.parseDouble(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetPrecio()) - Aux;
+                }
+                Aux = Integer.parseInt(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad()) * Double.parseDouble(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetPrecio());
+            } else {
                 lista.get(lista.size() - 1).Cant.set(TxtCant.getText());
+                if((Integer.parseInt(lista.get(lista.size() - 1).GetCantidad()) * Double.parseDouble(lista.get(lista.size() - 1).GetPrecio()) < Aux)){
+                    Total -= Aux -Integer.parseInt(lista.get(lista.size() - 1).GetCantidad()) * Double.parseDouble(lista.get(lista.size() - 1).GetPrecio());
+                } else {
+                    Total += Integer.parseInt(lista.get(lista.size() - 1).GetCantidad()) * Double.parseDouble(lista.get(lista.size() - 1).GetPrecio()) - Aux;
+                }
+                Aux = Integer.parseInt(lista.get(lista.size() - 1).GetCantidad()) * Double.parseDouble(lista.get(lista.size() - 1).GetPrecio());
             }
+            LblTotal.setText(String.valueOf(Total));
         }
     }
 
     public void Modificar(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)){
+            if(!"".equals(TxtMod.getText())){
+                try{
+                    TxtCant.setText(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad());
+                } catch (IndexOutOfBoundsException e){
+                    Alertas.MostrarAlerta("No hay un producto con este índice", NotificationType.WARNING, "Aviso");
+                }
+            }
+        }
     }
 
     public class ProductoVenta extends RecursiveTreeObject<ProductoVenta> {
-        StringProperty Num, Id, Nombre, Cant, Precio;
-        public ProductoVenta(String Num, String Id, String Nombre, String Cant, String Precio){
+        StringProperty Num, Id, Nombre, Cant, Precio, Compra;
+        public ProductoVenta(String Num, String Id, String Nombre, String Cant, String Precio, String Compra){
             this.Num = new SimpleStringProperty(Num);
             this.Id = new SimpleStringProperty(Id);
             this.Nombre = new SimpleStringProperty(Nombre);
             this.Cant = new SimpleStringProperty(Cant);
             this.Precio = new SimpleStringProperty(Precio);
+            this.Compra = new SimpleStringProperty(Compra);
         }
-        public StringProperty GetNum(){ return Num; }
-        public StringProperty GetId(){ return Id; }
-        public StringProperty GetNombre(){ return Nombre; }
-        public StringProperty GetCant(){ return Cant; }
-        public StringProperty GetPrecio(){ return Precio; }
+        public StringProperty sGetNum(){ return Num; }
+        public StringProperty sGetId(){ return Id; }
+        public StringProperty sGetNombre(){ return Nombre; }
+        public StringProperty sGetCant(){ return Cant; }
+        public StringProperty sGetPrecio(){ return Precio; }
+        public String GetPrecio(){ return Precio.get(); }
+        public String GetCantidad(){ return Cant.get(); }
+        public String GetId(){ return Id.get(); }
+        public String GetCompra(){ return Compra.get(); }
+        public String GetNombre(){ return Nombre.get(); }
     }
 }

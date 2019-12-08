@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="iText">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/Librerias/iText" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/Librerias/iText" recursive="false" />
+  </library>
+</component>

@@ -21,7 +21,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <JFXTreeTableView fx:id="TreeTable" prefHeight="665.0" prefWidth="900.0" />
+                        <JFXTreeTableView fx:id="TreeTable" prefHeight="665.0" prefWidth="900.0" style="-fx-alignment: CENTER;" />
                         <JFXTextField fx:id="TxtFiltrar" alignment="CENTER" layoutX="920.0" layoutY="80.0" prefHeight="25.0" prefWidth="150.0" promptText="Descripción, proveedor" />
                      </children>
                   </AnchorPane>
@@ -60,13 +60,13 @@
                         </JFXButton>
                         <JFXTreeTableView fx:id="TreeViewCompra" prefHeight="300.0" prefWidth="1100.0">
                            <columns>
-                              <TreeTableColumn fx:id="Num" prefWidth="75.0" text="N°" />
-                              <TreeTableColumn fx:id="ID" prefWidth="75.0" text="ID" />
-                              <TreeTableColumn fx:id="Desc" prefWidth="250.0" text="Descripción" />
-                              <TreeTableColumn fx:id="Cant" prefWidth="130.0" text="Cantidad" />
-                              <TreeTableColumn fx:id="Comp" prefWidth="130.0" text="\$ Compra" />
-                              <TreeTableColumn fx:id="Venta" prefWidth="130.0" text="\$ Venta" />
-                              <TreeTableColumn fx:id="Prov" prefWidth="310.0" text="Proveedor" />
+                              <TreeTableColumn fx:id="Num" prefWidth="75.0" style="-fx-alignment: CENTER;" text="N°" />
+                              <TreeTableColumn fx:id="ID" prefWidth="75.0" style="-fx-alignment: CENTER;" text="ID" />
+                              <TreeTableColumn fx:id="Desc" prefWidth="250.0" style="-fx-alignment: CENTER;" text="Descripción" />
+                              <TreeTableColumn fx:id="Cant" prefWidth="130.0" style="-fx-alignment: CENTER;" text="Cantidad" />
+                              <TreeTableColumn fx:id="Comp" prefWidth="130.0" style="-fx-alignment: CENTER;" text="\$ Compra" />
+                              <TreeTableColumn fx:id="Venta" prefWidth="130.0" style="-fx-alignment: CENTER;" text="\$ Venta" />
+                              <TreeTableColumn fx:id="Prov" prefWidth="310.0" style="-fx-alignment: CENTER;" text="Proveedor" />
                            </columns></JFXTreeTableView>
                         <JFXTextField fx:id="TxtCod" alignment="CENTER" focusColor="#009688" layoutX="14.0" layoutY="419.0" onKeyPressed="#Agregar" prefHeight="25.0" prefWidth="221.0" promptText="Código de barras" />
                         <Label fx:id="lblTotal" layoutX="507.0" layoutY="378.0" prefHeight="35.0" prefWidth="101.0" text="0.0">
