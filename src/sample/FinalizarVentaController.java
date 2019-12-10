@@ -154,9 +154,9 @@ public class FinalizarVentaController implements Initializable {
                 statement.setInt(6, Integer.parseInt(Producto.GetCantidad()));
                 statement.executeUpdate();
             }
-            CrearTicket();
             Alertas.MostrarAlerta("Venta registrada", NotificationType.SUCCESS, "Éxito");
             BtnFin.setDisable(true);
+            CrearTicket();
         }catch (SQLException | IOException e){
             Alertas.MostrarAlerta("Ocurrió un error al registrar la venta", NotificationType.ERROR, "Error");
             e.printStackTrace();

@@ -132,20 +132,50 @@ public class CajaRegistradoraController implements Initializable {
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
             try {
                 PreparedStatement statement;
+                ResultSet rs;
                 if(tfBuscar.getText().length() == 13){
-                    statement = con.prepareStatement("select idProducto, Descripcion, Precio_Venta, Precio_Compra from Producto where Cod_Barras = ?");
+                    statement = con.prepareStatement("select Cantidad from Producto where Cod_Barras = ?");
                     statement.setString(1, tfBuscar.getText());
+                    rs = statement.executeQuery();
+                    if(rs.next()){
+                        if(Integer.parseInt(rs.getString(1)) > 0){
+                            statement = con.prepareStatement("select idProducto, Descripcion, Precio_Venta, Precio_Compra from Producto where Cod_Barras = ?");
+                            statement.setString(1, tfBuscar.getText());
+                        } else {
+                            Alertas.MostrarAlerta("Este producto está agotado", NotificationType.WARNING, "Aviso");
+                            tfBuscar.clear();
+                            return;
+                        }
+                    } else {
+                        Alertas.MostrarAlerta("Este producto no está registrado", NotificationType.ERROR, "Error");
+                        tfBuscar.clear();
+                        return;
+                    }
                 } else {
-                    statement = con.prepareStatement("select idProducto, Descripcion, Precio_Venta, Precio_Compra from Producto where idProducto = ?");
+                    statement = con.prepareStatement("select Cantidad from Producto where idProducto = ?");
                     statement.setString(1, tfBuscar.getText());
+                    rs = statement.executeQuery();
+                    if(rs.next()){
+                        if(Integer.parseInt(rs.getString(1)) > 0){
+                            statement = con.prepareStatement("select idProducto, Descripcion, Precio_Venta, Precio_Compra from Producto where idProducto = ?");
+                            statement.setString(1, tfBuscar.getText());
+                        } else {
+                            Alertas.MostrarAlerta("Este producto está agotado", NotificationType.WARNING, "Aviso");
+                            return;
+                        }
+                    } else {
+                        Alertas.MostrarAlerta("Este producto no está registrado", NotificationType.ERROR, "Error");
+                        return;
+                    }
                 }
-                ResultSet rs = statement.executeQuery();
+                rs = statement.executeQuery();
                 if(rs.next()){
                     lista.add(new ProductoVenta(String.valueOf(i), rs.getString(1), rs.getString(2), String.valueOf(1),rs.getString(3), rs.getString(4)));
                     Total += Double.parseDouble(rs.getString(3));
                     i++;
-                    TxtMod.setText("");
+                    TxtMod.clear();
                     TxtCant.setText("1");
+                    tfBuscar.clear();
                 }
                 Aux = Integer.parseInt(lista.get(lista.size() - 1).GetCantidad()) * Double.parseDouble(lista.get(lista.size() - 1).GetPrecio());
                 LblTotal.setText(String.valueOf(Total));
@@ -169,10 +199,21 @@ public class CajaRegistradoraController implements Initializable {
         }
     }
 
-    public void SetCantidad(KeyEvent keyEvent) {
+    public void SetCantidad(KeyEvent keyEvent) throws SQLException {
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
             if(!"".equals(TxtMod.getText())){
-                lista.get(Integer.parseInt(TxtMod.getText()) - 1).Cant.set(TxtCant.getText());
+                PreparedStatement statement = con.prepareStatement("select Cantidad from Producto where idProducto = ?");
+                statement.setString(1, lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetId());
+                ResultSet rs = statement.executeQuery();
+                if(rs.next()){
+                    if(Integer.parseInt(TxtCant.getText()) > Integer.parseInt(rs.getString(1))){
+                        Alertas.MostrarAlerta("No hay suficiente cantidad de este producto", NotificationType.WARNING, "Aviso");
+                        TxtCant.setText(rs.getString(1));
+                        lista.get(Integer.parseInt(TxtMod.getText()) - 1).Cant.set(rs.getString(1));
+                    } else {
+                        lista.get(Integer.parseInt(TxtMod.getText()) - 1).Cant.set(TxtCant.getText());
+                    }
+                }
                 if(Integer.parseInt(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad()) * Double.parseDouble(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetPrecio()) < Aux){
                     Total -= Aux - Integer.parseInt(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad()) * Double.parseDouble(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetPrecio());
                 } else {
@@ -180,7 +221,18 @@ public class CajaRegistradoraController implements Initializable {
                 }
                 Aux = Integer.parseInt(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetCantidad()) * Double.parseDouble(lista.get(Integer.parseInt(TxtMod.getText()) - 1).GetPrecio());
             } else {
-                lista.get(lista.size() - 1).Cant.set(TxtCant.getText());
+                PreparedStatement statement = con.prepareStatement("select Cantidad from Producto where idProducto = ?");
+                statement.setString(1, lista.get(lista.size() - 1).GetId());
+                ResultSet rs = statement.executeQuery();
+                if(rs.next()){
+                    if(Integer.parseInt(TxtCant.getText()) > Integer.parseInt(rs.getString(1))){
+                        Alertas.MostrarAlerta("No hay suficiente cantidad de este producto", NotificationType.WARNING, "Aviso");
+                        TxtCant.setText(rs.getString(1));
+                        lista.get(lista.size() - 1).Cant.set(rs.getString(1));
+                    } else {
+                        lista.get(lista.size() - 1).Cant.set(TxtCant.getText());
+                    }
+                }
                 if((Integer.parseInt(lista.get(lista.size() - 1).GetCantidad()) * Double.parseDouble(lista.get(lista.size() - 1).GetPrecio()) < Aux)){
                     Total -= Aux -Integer.parseInt(lista.get(lista.size() - 1).GetCantidad()) * Double.parseDouble(lista.get(lista.size() - 1).GetPrecio());
                 } else {
