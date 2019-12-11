@@ -48,7 +48,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="TxtFiltro" alignment="CENTER" layoutX="38.0" layoutY="37.0" promptText="ID venta, Fecha" />
+                        <JFXTextField fx:id="TxtFiltro" alignment="CENTER" layoutX="38.0" layoutY="37.0" promptText="ID venta" />
                         <JFXButton fx:id="BtnBuscar" buttonType="RAISED" layoutX="221.0" layoutY="201.0" onMouseClicked="#CargarReporteVentas" prefHeight="30.0" prefWidth="65.0" ripplerFill="WHITE" style="-fx-background-color: #009688;" text="Buscar" textFill="WHITE" />
                         <Label layoutX="213.0" layoutY="22.0" text="Ventas realizadas: ">
                            <font>
@@ -92,7 +92,7 @@
                      <children>
                         <JFXDatePicker fx:id="FechaDeC" defaultColor="#9c27b0" layoutX="20.0" layoutY="102.0" promptText="De" />
                         <JFXDatePicker fx:id="FechaHastaC" defaultColor="#9c27b0" layoutX="20.0" layoutY="190.0" promptText="Hasta" />
-                        <JFXTextField fx:id="TxtCompra" alignment="CENTER" layoutX="20.0" layoutY="26.0" prefHeight="25.0" prefWidth="163.0" promptText="ID Compra, Fecha" />
+                        <JFXTextField fx:id="TxtCompra" alignment="CENTER" layoutX="20.0" layoutY="26.0" prefHeight="25.0" prefWidth="163.0" promptText="ID Compra" />
                         <JFXButton fx:id="BtnCargarCompras" buttonType="RAISED" layoutX="212.0" layoutY="145.0" onMouseClicked="#CargarReporteCompras" prefHeight="30.0" prefWidth="65.0" ripplerFill="WHITE" style="-fx-background-color: #009688;" text="Buscar" textFill="WHITE" />
                         <Label layoutX="212.0" layoutY="25.0" text="Total de compras: ">
                            <font>

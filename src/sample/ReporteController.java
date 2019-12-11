@@ -219,10 +219,6 @@ public class ReporteController implements Initializable {
                 Boolean flag = t.getValue().sGetIdVenta().getValue().contains(newValue);
                 return flag;
             });
-            TableReporte.setPredicate((TreeItem<ObjetoReporte> t) -> {
-                Boolean flag = t.getValue().sGetFecha().getValue().contains(newValue);
-                return flag;
-            });
         });
         //Tabla Detalle de reporte Venta
         Detalle_IDVenta.setCellValueFactory((TreeTableColumn.CellDataFeatures<ObjetoDetalleReporte, String> param) -> param.getValue().getValue().GetIdVenta());
@@ -252,10 +248,6 @@ public class ReporteController implements Initializable {
         this.TxtCompra.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             TableReporteCompra.setPredicate((TreeItem<ObjetoCompra> t) -> {
                 Boolean flag = t.getValue().sGetIdCompra().getValue().contains(newValue);
-                return flag;
-            });
-            TableReporteCompra.setPredicate((TreeItem<ObjetoCompra> t) -> {
-                Boolean flag = t.getValue().sGetFecha().getValue().contains(newValue);
                 return flag;
             });
         });
