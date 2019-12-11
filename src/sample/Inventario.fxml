@@ -22,7 +22,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <JFXTreeTableView fx:id="TreeTable" prefHeight="665.0" prefWidth="900.0" style="-fx-alignment: CENTER;" />
-                        <JFXTextField fx:id="TxtFiltrar" alignment="CENTER" layoutX="920.0" layoutY="80.0" prefHeight="25.0" prefWidth="150.0" promptText="Descripción, proveedor" />
+                        <JFXTextField fx:id="TxtFiltrar" alignment="CENTER" layoutX="920.0" layoutY="80.0" prefHeight="25.0" prefWidth="150.0" promptText="Descripción" />
                      </children>
                   </AnchorPane>
                </content>
@@ -83,6 +83,11 @@
                         <JFXTextField fx:id="TxtPrecio" alignment="CENTER" layoutX="235.0" layoutY="513.0" onKeyPressed="#ActualizarTotalCompra" prefHeight="25.0" prefWidth="168.0" promptText="\$ Precio Compra" />
                         <JFXTextField fx:id="TxtMod" alignment="CENTER" focusColor="#ffc107" layoutX="14.0" layoutY="332.0" onKeyPressed="#Editar" promptText="Modificar" />
                         <JFXTextField fx:id="TxtEliminar" alignment="CENTER" focusColor="#f44336" layoutX="235.0" layoutY="332.0" onKeyPressed="#Eliminar" promptText="Eliminar" />
+                        <JFXButton fx:id="BtnLimpiar" buttonType="RAISED" layoutX="700.0" layoutY="436.0" onMouseClicked="#Limpiar" style="-fx-background-color: #ffeb3b;" text="Limpiar">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </AnchorPane>
                </content>

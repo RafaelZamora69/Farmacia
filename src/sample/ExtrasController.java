@@ -810,6 +810,13 @@ public class ExtrasController implements Initializable {
                     statement.setString(8, ProdCategoria.getValue());
                     statement.executeUpdate();
                     Alertas.MostrarAlerta("Producto registrado correctamente", NotificationType.SUCCESS, "Correcto");
+                    CodBarras.clear();
+                    ProdDEsc.clear();
+                    ProdPresen.setValue("");
+                    ProdPCompra.clear();
+                    ProdPVenta.clear();
+                    ProdReceta.setDisable(true);
+                    ProdCategoria.setValue("");
                 }
             }catch (SQLException e){
                 Alertas.MostrarAlerta("Hubo un error al registrar el producto", NotificationType.ERROR, "Error");
